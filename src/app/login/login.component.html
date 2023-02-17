@@ -1,0 +1,38 @@
+<div class="main-div">
+    <mat-card class="auth-card">
+      <mat-card-header>
+        <mat-card-title>Business X</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="row">
+            <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+              <input matInput placeholder="{{ 'business.login.user.placeholder' | translate }}"
+                     formControlName="username">
+              <mat-error *ngIf="form.get('username').hasError('required')">
+                {{ 'business.login.user.error' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col" [ngClass]="routeAnimationsElements">
+              <input matInput placeholder="{{ 'business.login.password.placeholder' | translate }}"
+                     formControlName="password" type="password">
+              <mat-error *ngIf="form.get('password').hasError('required')">
+                {{ 'business.login.password.error' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row d-flex pad">
+            <div class="buttons">
+              <button mat-raised-button color="primary" type="submit"
+                      [ngClass]="routeAnimationsElements">
+                {{ 'business.login.btn' | translate }}
+              </button>
+              <a class="register" [routerLink]="['/register']">Or register</a>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+   </mat-card>
+</div>

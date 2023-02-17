@@ -1,0 +1,6 @@
+@import '@angular/material/theming';
+
+@mixin busx-order-component-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+}

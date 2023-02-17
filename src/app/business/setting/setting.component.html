@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12"><h3>{{ 'business.settings.title' | translate }}</h3></div>
+  </div>
+  <br>
+  <ng-container *ngIf="settings$ | async as settings">
+    <div class="row">
+      <div class="col-md-6 group" [ngClass]="routeAnimationsElements">
+        <h4>{{ 'business.settings.general.title' | translate }}</h4>
+        <div class="icon-form-field">
+          <mat-icon color="accent"><fa-icon icon="language" color="accent"></fa-icon></mat-icon>
+          <mat-form-field>
+            <mat-select [placeholder]="'business.settings.general.placeholder' | translate"
+                        [ngModel]="settings.language"
+                        (selectionChange)="onLanguageSelect($event)"
+                        name="language">
+              <ng-container  *ngFor="let l of languages">
+                <!-- ngFor hack of missing ngLet of Angular -->
+                <mat-option *ngFor="let title of ['business.settings.language.' + l.value | translate]"
+                            [value]="l.value"
+                            [title]="title !== l.label
+                    ? title
+                    : ''">
+                  {{ l.label }}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+    <div class="col-md-6 group" [ngClass]="routeAnimationsElements">
+      <h4>{{ 'business.settings.themes.title' | translate }}</h4>
+      <div class="icon-form-field">
+        <mat-icon color="accent"><fa-icon icon="paint-brush" color="accent"></fa-icon></mat-icon>
+        <mat-form-field>
+          <mat-select [placeholder]="'business.settings.themes.placeholder' | translate"
+                      [ngModel]="settings.theme"
+                      (selectionChange)="onThemeSelect($event)"
+                      name="themes">
+            <mat-option *ngFor="let t of themes" [value]="t.value">
+              {{ 'business.settings.themes.' + t.label | translate }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    </div>
+  </ng-container>
+</div>

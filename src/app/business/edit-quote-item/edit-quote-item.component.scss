@@ -1,0 +1,10 @@
+@import '@angular/material/theming';
+
+.mat-form-field {
+  display: block;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
+}
