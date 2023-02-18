@@ -10,10 +10,16 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "module": "esnext",
-    "target": "es2021",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2018", "dom"],
-    "esModuleInterop": true
+    "target": "ES2022",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "esModuleInterop": true,
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
