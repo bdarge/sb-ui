@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {routeAnimations} from '../../core/animations/route.animations';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { routeAnimations } from '../../core/animations/route.animations';
 
 @Component({
   selector: 'app-home',
@@ -11,10 +11,7 @@ import {routeAnimations} from '../../core/animations/route.animations';
 export class HomeComponent implements OnInit {
   tabs = [
     {
-      link: 'order', label: 'business.tab.order', data: {title: 'Orders'}
-    },
-    {
-      link: 'quote', label: 'business.tab.quote', data: {title: 'Quotes'}
+      link: 'transaction', label: 'business.tab.transaction', data: {title: 'Transactions'}
     },
     {
       link: 'customer', label: 'business.tab.customer', data: {title: 'Customers'}
@@ -25,5 +22,4 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

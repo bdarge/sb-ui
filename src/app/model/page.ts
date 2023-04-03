@@ -8,10 +8,10 @@ export interface PageRequest {
 }
 
 export interface Page<T> {
-  content: T[];
-  totalElements: number;
-  size: number;
-  number: number;
+  data: T[];
+  total: number;
+  limit: number;
+  page: number;
 }
 
 export type PaginationEndpoint<T, Q> = (req: PageRequest, query: Q) => Observable<Page<T>>

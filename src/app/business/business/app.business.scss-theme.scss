@@ -1,47 +1,49 @@
-@import '@angular/material/theming';
+@use 'sass:map';
+@use '@angular/material' as mat;
 
 @mixin business-component-theme($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
+  $color-config: mat.get-color-config($theme);
+  $primary: map.get($color-config, primary);
+  $accent: map.get($color-config, accent);
 
   app-business {
     mat-sidenav-container {
       mat-toolbar {
         button {
           &.active {
-            color: mat-color($accent, default-contrast);
-            background-color: mat-color($accent);
+            color: mat.get-color-from-palette($accent, default-contrast);
+            background-color: mat.get-color-from-palette($accent);
           }
         }
 
         .link {
-          color: mat-color($primary, default-contrast);
+          color: mat.get-color-from-palette($primary, default-contrast);
         }
       }
 
       mat-sidenav {
         .mat-list-item {
           &.active {
-            color: mat-color($accent, default-contrast);
-            background-color: mat-color($accent) !important;
+            color: mat.get-color-from-palette($accent, default-contrast);
+            background-color: mat.get-color-from-palette($accent) !important;
 
             &:hover {
-              background-color: mat-color($accent, darker) !important;
+              background-color: mat.get-color-from-palette($accent, darker) !important;
             }
           }
         }
       }
 
       .footer {
-        color: mat-color($primary, lighter);
-        background-color: mat-color($primary, darker);
+        color: mat.get-color-from-palette($primary, lighter);
+        background-color: mat.get-color-from-palette($primary, darker);
 
         .links,
         .signature {
           a {
-            color: mat-color($primary, lighter);
+            color: mat.get-color-from-palette($primary, lighter);
             &:hover {
-              color: mat-color($accent);
+              color: mat.get-color-from-palette($accent);
             }
           }
         }
@@ -49,20 +51,20 @@
     }
 
     .nav-responsive {
-      border-bottom: 1px solid mat-color($primary);
+      border-bottom: 1px solid mat.get-color-from-palette($primary);
     }
 
-    mat-select {
-      line-height: 48px;
-      margin: 0 20px;
-      width: 100%;
-    }
+    //mat-select {
+    //  line-height: 48px;
+    //  margin: 0 20px;
+    //  width: 100%;
+    //}
   }
 
   .nav-responsive-overlay {
     .active {
-      color: mat-color($accent, default-contrast);
-      background-color: mat-color($accent);
+      color: mat.get-color-from-palette($accent, default-contrast);
+      background-color: mat.get-color-from-palette($accent);
     }
   }
 }

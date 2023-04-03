@@ -1,17 +1,14 @@
-import { ActivationEnd, Router } from '@angular/router';
-import {Injectable, NgZone} from '@angular/core';
+import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { select, Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
-import { combineLatest, interval, merge, of } from 'rxjs';
+import { merge, of } from 'rxjs';
 import {
   tap,
   withLatestFrom,
-  map,
-  distinctUntilChanged,
-  mapTo,
-  filter
+  distinctUntilChanged
 } from 'rxjs/operators';
 
 import { selectSettingsState } from '../core.state';
@@ -58,7 +55,7 @@ export class SettingsEffects {
     {dispatch: false}
   );
 
-  updateTheme = createEffect(
+  updateTheme$ = createEffect(
     () =>
       merge(INIT, this.actions$.pipe(ofType(actionSettingsChangeTheme))).pipe(
         withLatestFrom(this.store.pipe(select(selectTheme))),

@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CustomerComponent } from '../customer/customer.component';
-import { OrderComponent } from '../order/order.component';
-import {QuoteComponent} from '../quote/quote.component';
-import {HomeComponent} from './home.component';
+import { TransactionComponent } from '../transaction/transaction.component';
+import { HomeComponent } from './home.component';
 
 const routes: Routes = [{
   path: '',
@@ -11,7 +10,7 @@ const routes: Routes = [{
   children: [
     {
       path: '',
-      redirectTo: 'order',
+      redirectTo: 'transaction',
       pathMatch: 'full'
     },
     {
@@ -19,16 +18,12 @@ const routes: Routes = [{
       component: CustomerComponent
     },
     {
-      path: 'order',
-      component: OrderComponent
-    },
-    {
-      path: 'quote',
-      component: QuoteComponent
+      path: 'transaction',
+      component: TransactionComponent
     },
     {
       path: '**',
-      redirectTo: 'order'
+      redirectTo: 'transaction'
     }
     ]
 }];

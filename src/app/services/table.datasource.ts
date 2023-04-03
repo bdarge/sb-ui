@@ -1,10 +1,11 @@
 // inspired by https://nils-mehlhorn.de/posts/angular-material-pagination-datasource
 import { tap } from 'rxjs/operators';
-import {BehaviorSubject, combineLatest, Observable, Subject} from 'rxjs'
-import {switchMap, startWith, map, shareReplay, finalize} from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs'
+import { switchMap, startWith, map, shareReplay, finalize } from 'rxjs/operators';
 import { Page, PaginationEndpoint } from '../model/page';
-import {DataSource} from '@angular/cdk/collections';
-import {Sort} from '@angular/material/sort';
+import { DataSource } from '@angular/cdk/collections';
+import { Sort } from '@angular/material/sort';
+// import { MatTableDataSource } from "@angular/material/table";
 
 export class TableDatasource<T, Q> implements DataSource<T> {
   readonly DEFAULT_SIZE = 5;
@@ -58,9 +59,8 @@ export class TableDatasource<T, Q> implements DataSource<T> {
   }
 
   connect(): Observable<T[]> {
-    return this.page$.pipe(map(page => page.content));
+    return this.page$.pipe(map(page => page.data));
   }
 
   disconnect(): void {}
-
 }

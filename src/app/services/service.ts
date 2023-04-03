@@ -1,12 +1,12 @@
-import {from, Observable, throwError} from 'rxjs';
-import {Item} from '../model/Item';
-import {Customer} from '../model/customer';
-import {Page, PageRequest, Query} from '../model/page';
+import { Observable } from 'rxjs';
+import { TransactionItem } from '../model/transactionItem';
+import { Customer, Customers } from '../model/customer';
+import { Page, PageRequest, Query } from '../model/page';
 
-export type ItemsEndpoint = (id: string) => Observable<Item[]>
+export type ItemsEndpoint = (id: string) => Observable<TransactionItem[]>
 
 export interface ICustomerService {
-  filterCustomer(query: Query): Observable<Customer[]>
+  get(query: Query): Observable<Customers>
   delete(customer: Customer): Observable<boolean>
   add(customer: Customer): Observable<Customer>
   update(customer: Customer): Observable<Customer>
@@ -22,11 +22,11 @@ export interface IService<T, Q> {
 
   page(request: PageRequest, query: Query): Observable<Page<T>>
 
-  getItems(id: string): Observable<Item[]>
+  getItems(id: string): Observable<TransactionItem[]>
 
-  updateItem(item: Q): Observable<Item>
+  updateItem(item: Q): Observable<TransactionItem>
 
-  createItem(item: Q): Observable<Item>
+  createItem(item: Q): Observable<TransactionItem>
 
   deleteItem(item: Q): Observable<boolean>
 }

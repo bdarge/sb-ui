@@ -13,7 +13,7 @@ describe('App', () => {
     expect(getCurrentRouteUrl()).toEqual('login');
   });
 
-  it('should redirect to "order" route', () => {
+  it('should redirect to "transaction" route', () => {
     page.navigateTo();
 
     element(by.css('input[type=email]')).sendKeys('test123@fake.com');

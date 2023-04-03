@@ -1,9 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators} from '@angular/forms';
+import { Component, Inject, OnInit} from '@angular/core';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {Customer} from '../../model/customer';
-import {NotificationService} from '../../core/core.module';
-import {CustomerWebService} from '../../http/customer-web.service';
+import { Customer} from '../../model/customer';
+import { NotificationService} from '../../core/core.module';
+import { CustomerWebService} from '../../http/customer-web.service';
 
 @Component({
   selector: 'app-edit-customer',

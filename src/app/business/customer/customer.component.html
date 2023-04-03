@@ -65,8 +65,8 @@
     </mat-table>
 
     <mat-paginator *ngIf="ds.page$ | async as page"
-                   [length]="page.totalElements"
-                   [pageSize]="page.size"
+                   [length]="page.total"
+                   [pageSize]="page.limit"
                    [pageSizeOptions]="[3, 5, 10]"
                    (page)="ds.fetch($event.pageIndex, $event.pageSize)"
                    [ngClass]="routeAnimationsElements">

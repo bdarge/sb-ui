@@ -1,0 +1,144 @@
+<div class="container">
+  <button mat-raised-button color="primary" (click)="add()">{{ "business.transaction.btn.add" | translate }}</button>
+  <br/>
+  <br/>
+  <mat-form-field [ngClass]="routeAnimationsElements">
+    <input matInput placeholder="{{ 'business.transaction.search' | translate}}" #search>
+  </mat-form-field>
+
+  <div class="bs-container mat-elevation-z8">
+    <mat-table class="disposition-table" [dataSource]="dataSource" matSort [ngClass]="routeAnimationsElements" multiTemplateDataRows>
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let elt">
+          <button mat-button class="btn-link" aria-label="edit" (click)="edit(elt)">
+            <fa-icon icon="edit"></fa-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let elt">
+          <button mat-button class="btn-link" aria-label="delete" (click)="deleteOrder(elt)">
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Order number  -->
+      <ng-container matColumnDef="transactionNumber">
+        <mat-header-cell *matHeaderCellDef>{{'business.grid.head.transaction' | translate}}</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let transaction">
+          {{transaction.model.description}} <br> Transaction Number: {{transaction.model.id}}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Customer Id  -->
+      <ng-container matColumnDef="customer">
+        <mat-header-cell *matHeaderCellDef>{{'business.grid.head.customer' | translate}}</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let transaction">
+          {{transaction.model.customer.name}}
+        </mat-cell>
+      </ng-container>
+
+      <!-- CreatedAt  -->
+      <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef sortActionDescription="Sort by Creation Date" mat-sort-header>{{'business.grid.head.created' | translate}}</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let transaction">
+          {{transaction.model.createdAt | date:'medium'}}
+        </mat-cell>
+      </ng-container>
+
+      <!-- Show/hide Transaction Item  -->
+      <ng-container matColumnDef="transactionItem">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let elt">
+          <fa-icon icon="{{expandedElement === elt? 'angle-up': 'angle-down'}}"
+                   (click)="toggleRow(elt)" size="x"
+                   matTooltip="show or hide transaction items..."
+                   [matTooltipShowDelay]="showDelay.value"
+                   [matTooltipHideDelay]="hideDelay.value"></fa-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+        <mat-cell *matCellDef="let d">
+          <div class="transaction-items">
+            <div layout="row" layout-align="space-between center">
+              <div>
+                <button mat-raised-button (click)="editItem(d, null)">{{ "business.transaction.btn.transactionItems" | translate }}
+                </button>
+              </div>
+            </div>
+
+            <mat-table class="orderItems-table" [dataSource]="d.model.items" [ngClass]="routeAnimationsElements">
+              <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef>description</mat-header-cell>
+                <mat-cell class="description-cell"
+                          *matCellDef="let transactionItem">{{transactionItem.description}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="unit">
+                <mat-header-cell *matHeaderCellDef>unit /hrs</mat-header-cell>
+                <mat-cell class="description-cell"
+                          *matCellDef="let transactionItem">{{transactionItem.unit}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="unitPrice">
+                <mat-header-cell mat-header-cell *matHeaderCellDef>unitPrice</mat-header-cell>
+                <mat-cell class="description-cell"
+                          *matCellDef="let transactionItem">{{transactionItem.unitPrice | currency}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="qty">
+                <mat-header-cell *matHeaderCellDef>qty</mat-header-cell>
+                <mat-cell class="description-cell"
+                          *matCellDef="let transactionItem">{{transactionItem.qty}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="edit">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell class="description-cell" *matCellDef="let transactionItem">
+                  <button mat-button class="btn-link" aria-label="edit" (click)="editItem(d, transactionItem)">
+                    <fa-icon icon="edit"></fa-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="delete">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell class="description-cell" *matCellDef="let transactionItem">
+                  <button mat-button class="btn-link" aria-label="delete" (click)="deleteItem(d, transactionItem)">
+                    <fa-icon icon="trash"></fa-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+            <mat-row mat-header-row *matHeaderRowDef="displayedItemColumns; sticky: true"></mat-row>
+              <mat-row *matRowDef="let row; columns: displayedItemColumns"></mat-row>
+            </mat-table>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple
+               class="element-row">
+               [class.expanded]="expandedElement == row">
+      </mat-row>
+
+      <!--Set trigger conditions, and paint "odd" rows grey-->
+      <mat-row *matRowDef="let row; let odd = odd; columns: ['expandedDetail'];"
+          [ngClass]="{gray: odd}"
+          [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'">
+      </mat-row>
+
+    </mat-table>
+
+    <mat-paginator *ngIf="dataSource.page$ | async as page"
+                   [length]="page.total"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="dataSource.fetch($event.pageIndex, $event.pageSize)"
+                   aria-label="Select page"
+                   [showFirstLastButtons]=true
+                   [ngClass]="routeAnimationsElements">
+    </mat-paginator>
+  </div>
+</div>
+

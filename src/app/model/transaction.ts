@@ -1,5 +1,7 @@
-import {Customer} from './customer';
-import {Account} from './account';
+import { Customer } from './customer';
+import { Account } from './account';
+import { TransactionItem } from "./transactionItem";
+import { Query } from "./page";
 
 export interface Transaction {
   id: string;
@@ -8,4 +10,13 @@ export interface Transaction {
   type: string;
   account: Account;
   customer: Customer;
+  comment: string;
+  deliveryDate: string;
+  invoiceNumber?: number;
+  items?: TransactionItem[];
+  currency: string;
+}
+
+export interface TranQuery extends Query {
+  requestType: string
 }

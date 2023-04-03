@@ -1,59 +1,57 @@
-@import 'styles-variables';
+@use '@angular/material' as mat;
 
+@include mat.core();
+
+mat.$theme-ignore-duplication-warnings: true;
+
+@import 'styles-variables';
 @import 'bootstrap/scss/bootstrap-reboot';
 @import 'bootstrap/scss/bootstrap-grid';
 @import 'styles-reset';
 
-@import '@angular/material/theming';
-
-@include mat-core();
-
-@import './themes/default-theme.scss';
-@import './themes/light-theme.scss';
-@import './themes/black-theme.scss';
-@import './themes/nature-theme.scss';
-
+@import 'themes/_default-theme';
+@import 'themes/_light-theme';
+@import 'themes/_black-theme';
+@import 'themes/_nature-theme';
 @import 'styles-reset.scss-theme';
 @import 'app/business/business/app.business.scss-theme';
 @import 'app/app.component.scss-theme';
-@import 'app/business/order/order.scss-theme';
+@import 'app/business/transaction/transaction.scss-theme';
 
-@mixin custom-components-theme($theme) {
+@mixin components-theme($theme) {
   @include busx-styles-reset-theme($theme);
   @include app-component-theme($theme);
   @include business-component-theme($theme);
-  @include busx-order-component-theme($theme);
 }
 
 .default-theme {
-  @include angular-material-theme($anms-theme);
-  @include custom-components-theme($anms-theme);
+  @include mat.all-component-themes($default-theme);
+  @include components-theme($default-theme);
 }
 
 .light-theme {
-  @include angular-material-theme($anms-light-theme);
-  @include custom-components-theme($anms-light-theme);
+  @include mat.all-component-themes($light-theme);
+  @include components-theme($light-theme);
 }
 
 .black-theme {
-  @include angular-material-theme($anms-black-theme);
-  @include custom-components-theme($anms-black-theme);
+  @include mat.all-component-themes($black-theme);
+  @include components-theme($black-theme);
 }
 
 .nature-theme {
-  @include angular-material-theme($anms-nature-theme);
-  @include custom-components-theme($anms-nature-theme);
-}
-
-.mat-cell {
-  padding: 8px 8px 8px 0;
+  @include mat.all-component-themes($anms-nature-theme);
+  @include components-theme($anms-nature-theme);
 }
 
 .spacer {flex: 1 1 auto;}
 
 html, body { height: 100%; }
-body { margin: 0; font-family: sans-serif; }
 
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .icon-form-field {
   position: relative;

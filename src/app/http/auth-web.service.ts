@@ -13,7 +13,7 @@ export class AuthWebService {
   }
 
   login({username, password}) {
-    const file = {username: username, password}
+    const file = {email: username, password}
     const options = {headers: {'Content-Type': 'application/json'}}
     return this.http.post(this.AUTH_URL + 'auth/login', JSON.stringify(file), options)
   }

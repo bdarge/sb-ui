@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+$b-black-primary: mat.define-palette(mat.$grey-palette, 700, 300, 900);
+$b-black-accent: mat.define-palette(mat.$blue-gray-palette, 400);
+$b-black-warn: mat.define-palette(mat.$red-palette, 500);
+
+$black-theme: mat.define-dark-theme((
+  color: (
+    primary: $b-black-primary,
+    accent: $b-black-accent,
+    warm: $b-black-warn
+  )
+));

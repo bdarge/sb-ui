@@ -10,3 +10,8 @@ export interface Customer {
   updatedAt: string;
   createdAt: string;
 }
+
+export interface Customers {
+  limit: number;
+  data: Customer[];
+}

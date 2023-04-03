@@ -6,11 +6,10 @@ import {
   selectTheme,
   LocalStorageService
 } from '../../core/core.module';
-import {actionSettingsChangeLanguage} from '../../core/settings/settings.actions';
-import {State} from '../../core/settings/settings.model';
-import {OverlayContainer} from '@angular/cdk/overlay';
-import {Account} from '../../model/account';
-import {Router} from '@angular/router';
+import { State } from '../../core/settings/settings.model';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Account } from '../../model/account';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-business',
@@ -35,11 +34,11 @@ export class BusinessComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private overlayContainer: OverlayContainer,
+    // private overlayContainer: OverlayContainer,
     private store: Store<State>,
     private localStorageSvc: LocalStorageService,
   ) {
-    this.theme$ = this.store.pipe(select(selectTheme))
+    // this.theme$ = this.store.pipe(select(selectTheme))
     const acct = this.localStorageSvc.getItem('USER') as Account
     const userName: string = acct?.email
     this.user$ = of(userName)

@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
-import { ICustomerService} from '../services/service';
-import { Observable} from 'rxjs';
-import { Customer} from '../model/customer';
+import { ICustomerService } from '../services/service';
+import { Observable } from 'rxjs';
+import { Customer, Customers } from "../model/customer";
 import { ENVIRONMENT } from '../../environments/environment';
-import { HttpClient, HttpParams} from '@angular/common/http';
-import { PageRequest, Page, Query} from 'app/model/page';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { PageRequest, Page, Query } from 'app/model/page';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerWebService implements ICustomerService {
-  readonly CUSTOMER_URL = `${ENVIRONMENT.apiBaseUrl}/customers`
+  readonly CUSTOMER_URL = `${ENVIRONMENT.apiBaseUrl}/customer`
 
   constructor(private http: HttpClient) {}
 
   page(request: PageRequest, query: Query): Observable<Page<Customer>> {
     const params = new HttpParams()
-      .set('page', JSON.stringify(request.page))
-      .set('size', JSON.stringify(request.size))
-      .set('sortDirection', request.sort.direction)
-      .set('sortProperty', request.sort.active)
-      .set('search', query.search)
+      .set('Page', JSON.stringify(request.page))
+      .set('Size', JSON.stringify(request.size))
+      .set('SortDirection', request.sort.direction)
+      .set('SortProperty', request.sort.active)
+      .set('Search', query.search)
 
     return this.http.get<Page<Customer>>(
       this.CUSTOMER_URL,
@@ -42,14 +42,14 @@ export class CustomerWebService implements ICustomerService {
     return this.http.patch<Customer>(this.CUSTOMER_URL + '/' + customer.id, customer);
   }
 
-  filterCustomer(query: Query): Observable<Customer[]> {
+  get(query: Query): Observable<Customers> {
     const params = new HttpParams()
-      .set('name', query.search)
+      .set('Search', query.search)
 
-    return this.http.get<Customer[]>(
+    return this.http.get<Customers>(
       this.CUSTOMER_URL,
       {
         params: params
-      })
+      });
   }
 }

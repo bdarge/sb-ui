@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { SettingsState, NIGHT_MODE_THEME } from './settings.model';
+import { SettingsState } from './settings.model';
 import {
   actionSettingsChangeLanguage,
   actionSettingsChangeTheme,

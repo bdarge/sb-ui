@@ -1,13 +1,13 @@
 import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject, from, Observable, of} from 'rxjs';
-import {Item} from '../model/Item';
+import {TransactionItem} from '../model/transactionItem';
 import {ItemsEndpoint} from './service';
 import {switchMap} from 'rxjs/operators';
 import {Query} from '../model/page';
 
-export class ItemDatasource implements DataSource<Item> {
+export class ItemDatasource implements DataSource<TransactionItem> {
   public query: BehaviorSubject<Query>
-  public page$: Observable<Item[]>
+  public page$: Observable<TransactionItem[]>
 
   constructor(
     query: Query,
@@ -18,7 +18,7 @@ export class ItemDatasource implements DataSource<Item> {
       ))
   }
 
-  connect(): Observable<Item[]> {
+  connect(): Observable<TransactionItem[]> {
     return this.page$
   }
 
