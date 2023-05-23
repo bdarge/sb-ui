@@ -1,0 +1,50 @@
+<div [formGroup]="form">
+  <div class="row">
+    <mat-form-field [ngClass]="routeAnimationsElements" class="col">
+      <input formControlName="street" matInput matTooltip="Street" placeholder="Street" (blur)="onTouched()" />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field [ngClass]="routeAnimationsElements" class="col">
+      <input
+        formControlName="postalCode"
+        matInput
+        matTooltip="Postal code"
+        placeholder="Postal Code"
+        (blur)="onTouched()"
+      />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field [ngClass]="routeAnimationsElements" class="col">
+      <input formControlName="city" matTooltip="City" matInput placeholder="City" (blur)="onTouched()"/>
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field [ngClass]="routeAnimationsElements" class="col">
+      <input formControlName="country" matTooltip="Country" matInput placeholder="Country" (blur)="onTouched()" />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field [ngClass]="routeAnimationsElements" class="col">
+      <input
+        formControlName="landline"
+        matInput
+        matTooltip="Landline"
+        placeholder="Landline"
+        (blur)="onTouched()"
+      />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field [ngClass]="routeAnimationsElements" class="col">
+      <input
+        formControlName="mobile"
+        matInput
+        matTooltip="Mobile Phone"
+        placeholder="Mobile Phone"
+        (blur)="onTouched()"
+      />
+    </mat-form-field>
+  </div>
+</div>
