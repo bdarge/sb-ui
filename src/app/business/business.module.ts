@@ -6,6 +6,8 @@ import { BusinessComponent } from './business/business.component';
 import { SharedModule } from '../shared/shared.module';
 import { FontAwesomeIconsModule } from '../shared/font.awesome.icons.module';
 import { HomeComponent } from './home/home.component';
+import { AddressFormComponent } from "./address-form/address-form.component";
+import { AboutmeComponent } from './aboutme/aboutme.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -18,7 +20,9 @@ import { HomeComponent } from './home/home.component';
     SettingComponent,
     ProfileComponent,
     BusinessComponent,
-    HomeComponent]
+    HomeComponent,
+    AddressFormComponent,
+    AboutmeComponent]
 })
 export class BusinessModule {
   constructor() {}

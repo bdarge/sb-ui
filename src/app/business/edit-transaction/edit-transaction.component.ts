@@ -8,6 +8,8 @@ import { debounceTime, delay, filter, map, takeUntil, tap } from "rxjs/operators
 import { TransactionWebService } from '../../http/transaction-web.service';
 import { CustomerWebService } from '../../http/customer-web.service';
 import { Transaction } from "../../model/transaction";
+import { User } from "../../model/user";
+import { Account } from "../../model/account";
 
 @Component({
   selector: 'app-edit-transaction',
@@ -19,7 +21,7 @@ export class EditTransactionComponent implements OnInit {
   public title: string;
   public customer: Customer;
   public currencies = ['USD', 'SEK'];
-  public tranTypes = ['order', 'quote'];
+  public tTypes = ['order', 'quote'];
   public customerSearchCtrl: FormControl<string> = new FormControl<string>('')
   public searching = false;
   public filteredCustomers: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1)
@@ -27,13 +29,13 @@ export class EditTransactionComponent implements OnInit {
 
   constructor(
     private fb: UntypedFormBuilder,
-    private tranService: TransactionWebService,
+    private tService: TransactionWebService,
     private customersService: CustomerWebService,
     private notificationService: NotificationService,
     private localStorageSvc: LocalStorageService,
     private dialogRef: MatDialogRef<EditTransactionComponent>,
     @Inject(MAT_DIALOG_DATA) {
-      id, description, type, currency, customer, deliveryDate
+      id, description, requestType, currency, customer, deliveryDate
     }: Transaction) {
 
     this.customer = customer;
@@ -44,7 +46,7 @@ export class EditTransactionComponent implements OnInit {
       id: [id],
       description: [description, Validators.required],
       customer: [customer, Validators.required],
-      type: [type, Validators.required],
+      requestType: [requestType, Validators.required],
       currency: [currency],
       deliveryDate: [deliveryDate, Validators.required]
     })
@@ -90,15 +92,12 @@ export class EditTransactionComponent implements OnInit {
 
   save() {
     if(this.form.valid) {
-      const user = this.localStorageSvc.getItem('USER');
-      if (user) {
-        this.form.value.user = user;
-      }
+      const account: Account = this.localStorageSvc.getItem('ACCOUNT');
 
       if(this.form.value.id) {
         this._edit()
       } else {
-        this._add()
+        this._add(account)
       }
     }
   }
@@ -112,8 +111,8 @@ export class EditTransactionComponent implements OnInit {
     this.onDestroy.complete();
   }
 
-  _add() {
-    this.tranService.add(this.form.value as Transaction)
+  _add(account: Account) {
+    this.tService.add(account, this.form.value as Transaction)
       .subscribe(() => {
         this.dialogRef.close()
       }, (err) => {
@@ -122,7 +121,7 @@ export class EditTransactionComponent implements OnInit {
   }
 
   _edit() {
-    this.tranService.update(this.form.value as Transaction)
+    this.tService.update(this.form.value as Transaction)
       .subscribe(() => {
         this.dialogRef.close()
       }, (err) => {

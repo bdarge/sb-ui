@@ -10,8 +10,8 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-select placeholder="Select Type" formControlName="currency">
-      <mat-option *ngFor="let type of tranTypes" [value]="type">
+    <mat-select placeholder="Select Type" formControlName="requestType">
+      <mat-option *ngFor="let type of tTypes" [value]="type">
         {{type}}
       </mat-option>
     </mat-select>
@@ -50,5 +50,5 @@
 
 <mat-dialog-actions align="end">
   <button mat-flat-button class="basic" (click)="close()">{{ "business.btn.cancel" | translate}}</button>
-  <button mat-flat-button color="primary"(click)="save()">{{ "business.btn.save" | translate}}</button>
+  <button mat-flat-button color="primary" (click)="save()">{{ "business.btn.save" | translate}}</button>
 </mat-dialog-actions>

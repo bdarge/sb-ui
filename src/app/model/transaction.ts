@@ -7,7 +7,7 @@ export interface Transaction {
   id: string;
   description: string;
   createdAt: string;
-  type: string;
+  requestType: string;
   account: Account;
   customer: Customer;
   comment: string;

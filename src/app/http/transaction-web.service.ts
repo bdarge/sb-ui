@@ -6,11 +6,13 @@ import { Page, PageRequest } from '../model/page';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ENVIRONMENT } from '../../environments/environment';
 import { TranQuery, Transaction } from "../model/transaction";
+import { User } from "../model/user";
+import { Account } from "../model/account";
 
 @Injectable()
 export class TransactionWebService implements IService<Transaction, TransactionItem> {
-  readonly TRANSACTION_URL = `${ENVIRONMENT.apiBaseUrl}/disposition`
-  readonly TRANSACTION_ITEM_URL = `${ENVIRONMENT.apiBaseUrl}/disposition-item`
+  readonly TRANSACTION_URL = `${ENVIRONMENT.apiBaseUrl}/transaction`
+  readonly TRANSACTION_ITEM_URL = `${ENVIRONMENT.apiBaseUrl}/transaction-item`
 
   constructor(public http: HttpClient) {
   }
@@ -31,18 +33,18 @@ export class TransactionWebService implements IService<Transaction, TransactionI
       })
   }
 
-  delete(trans:Transaction): Observable<boolean> {
-    return this.http.delete<boolean>(this.TRANSACTION_URL + '/' + trans.id)
+  delete(transaction:Transaction): Observable<boolean> {
+    return this.http.delete<boolean>(this.TRANSACTION_URL + '/' + transaction.id)
   }
 
-  update(trans:Transaction): Observable<Transaction> {
-    return this.http.patch<Transaction>(this.TRANSACTION_URL + '/' + trans.id, trans)
+  update(transaction:Transaction): Observable<Transaction> {
+    return this.http.patch<Transaction>(this.TRANSACTION_URL + '/' + transaction.id, transaction)
   }
 
-  add(trans:Transaction): Observable<Transaction> {
-    const copy = (JSON.parse(JSON.stringify(trans)));
-    copy.customerId = trans.customer.id;
-    copy.createdBy = trans.account.id;
+  add(account: Account, transaction:Transaction): Observable<Transaction> {
+    const copy = (JSON.parse(JSON.stringify(transaction)));
+    copy.customerId = transaction.customer.id;
+    copy.createdBy = account.userId;
     delete copy.customer;
     delete copy.user;
     return this.http.post<Transaction>(this.TRANSACTION_URL, copy);

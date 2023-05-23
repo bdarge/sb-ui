@@ -1,5 +1,7 @@
 export interface Account {
   email: string;
-  id: string;
-  userId: string;
+  accountId: number;
+  userId: number;
+  businessId: string;
+  roles: [string];
 }

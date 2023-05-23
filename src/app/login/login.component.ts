@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.form.value)
         .subscribe((result: any) => {
           const decoded = jwt_decode(result.token)
-          this.localStorageSvc.setItem('USER', decoded)
+          this.localStorageSvc.setItem('ACCOUNT', decoded)
           this.localStorageSvc.setItem('TOKEN', result.token)
           this.router.navigate(['business'])
         })

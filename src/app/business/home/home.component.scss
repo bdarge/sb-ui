@@ -2,14 +2,15 @@
 
 nav {
   margin-bottom: 20px;
-
-  .mat-tab-link {
+  align-items: flex-start;
+  flex-direction: column;
+  .mat-mdc-tab-link {
     min-width: 120px;
     padding: 0 15px;
   }
 
   @media (max-width: map-get($grid-breakpoints, md)) {
-    .mat-tab-link {
+    .mat-mdc-tab-link {
       min-width: 0;
     }
   }

@@ -5,14 +5,12 @@ import { switchMap, startWith, map, shareReplay, finalize } from 'rxjs/operators
 import { Page, PaginationEndpoint } from '../model/page';
 import { DataSource } from '@angular/cdk/collections';
 import { Sort } from '@angular/material/sort';
-// import { MatTableDataSource } from "@angular/material/table";
 
 export class TableDatasource<T, Q> implements DataSource<T> {
   readonly DEFAULT_SIZE = 5;
 
   public page$: Observable<Page<T>>;
   public query: BehaviorSubject<Q>;
-  // public loading$ = this.loading.asObservable();
 
   private pageNumber = new Subject<number>();
   private size: number;

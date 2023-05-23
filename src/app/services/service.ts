@@ -2,6 +2,8 @@ import { Observable } from 'rxjs';
 import { TransactionItem } from '../model/transactionItem';
 import { Customer, Customers } from '../model/customer';
 import { Page, PageRequest, Query } from '../model/page';
+import { User } from "../model/user";
+import { Account } from "../model/account";
 
 export type ItemsEndpoint = (id: string) => Observable<TransactionItem[]>
 
@@ -14,7 +16,7 @@ export interface ICustomerService {
 }
 
 export interface IService<T, Q> {
-  add(viewModel: T): Observable<T>
+  add(account: Account, viewModel: T): Observable<T>
 
   update(viewModel: T): Observable<T>
 

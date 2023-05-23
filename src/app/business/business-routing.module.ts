@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {SettingComponent} from './setting/setting.component';
-import {ProfileComponent} from './profile/profile.component';
-import {BusinessComponent} from './business/business.component';
+import { SettingComponent } from './setting/setting.component';
+import { ProfileComponent } from './profile/profile.component';
+import { BusinessComponent } from './business/business.component';
+import { AboutmeComponent } from "./aboutme/aboutme.component";
 
 const routes: Routes = [{
   path: '',
@@ -27,6 +28,10 @@ const routes: Routes = [{
     {
       path: 'profile',
       component: ProfileComponent,
+    },
+    {
+      path: 'about',
+      component: AboutmeComponent,
     },
     {
       path: '**',
