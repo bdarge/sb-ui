@@ -1,16 +1,15 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import {
-  FormControl, FormGroup, NgForm,
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
   ValidationErrors,
   Validators
 } from "@angular/forms";
-import {LocalStorageService, NotificationService, ROUTE_ANIMATIONS_ELEMENTS} from '../../core/core.module';
-import {ConfigWebService} from '../../http/config-web.service';
+import { LocalStorageService, NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
+import { ConfigWebService } from '../../http/config-web.service';
 import { debounceTime, distinctUntilChanged, tap } from "rxjs/operators";
-import { Address, User } from "../../model/user";
+import { User } from "../../model/user";
 import { Account } from "../../model/account";
 
 @Component({

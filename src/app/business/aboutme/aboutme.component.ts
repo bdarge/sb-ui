@@ -4,7 +4,7 @@ import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErr
 import { ConfigWebService } from "../../http/config-web.service";
 import { NotificationService } from "../../core/notifications/notification.service";
 import { LocalStorageService } from "../../core/local-storage/local-storage.service";
-import { Address, Business, BusinessAddress, User } from "../../model/user";
+import { BusinessAddress } from "../../model/user";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { Account } from "../../model/account";
 
@@ -15,7 +15,7 @@ import { Account } from "../../model/account";
 })
 export class AboutmeComponent {
 
-  protected readonly ROUTE_ANIMATIONS_ELEMENTS = ROUTE_ANIMATIONS_ELEMENTS;
+  protected readonly routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
   businessForm = this.fb.group({
     id: [''],
