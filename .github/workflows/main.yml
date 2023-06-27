@@ -6,7 +6,7 @@ name: Create and publish a Docker image
 
 on:
   push:
-    branches: 
+    branches:
       - 'main'
     tags:
       - v*
@@ -45,5 +45,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          target: prod
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
