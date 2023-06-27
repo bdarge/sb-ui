@@ -1,7 +1,7 @@
 import { Customer } from './customer';
 import { Account } from './account';
-import { TransactionItem } from "./transactionItem";
-import { Query } from "./page";
+import { TransactionItem } from './transactionItem';
+import { Query } from './page';
 
 export interface Transaction {
   id: string;

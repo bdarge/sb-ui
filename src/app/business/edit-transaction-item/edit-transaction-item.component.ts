@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TransactionWebService } from '../../http/transaction-web.service';
-import { TransactionItem } from "../../model/transactionItem";
-import { Transaction } from "../../model/transaction";
+import { TransactionItem } from '../../model/transactionItem';
+import { Transaction } from '../../model/transaction';
 
 @Component({
   selector: 'app-edit-transaction-item',

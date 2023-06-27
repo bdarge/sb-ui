@@ -5,9 +5,8 @@ import { TransactionItem } from '../model/transactionItem';
 import { Page, PageRequest } from '../model/page';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ENVIRONMENT } from '../../environments/environment';
-import { TranQuery, Transaction } from "../model/transaction";
-import { User } from "../model/user";
-import { Account } from "../model/account";
+import { TranQuery, Transaction } from '../model/transaction';
+import { Account } from '../model/account';
 
 @Injectable()
 export class TransactionWebService implements IService<Transaction, TransactionItem> {
@@ -19,7 +18,7 @@ export class TransactionWebService implements IService<Transaction, TransactionI
 
   page(request: PageRequest, query: TranQuery): Observable<Page<Transaction>> {
     const params = new HttpParams()
-      .set("RequestType", query.requestType)
+      .set('RequestType', query.requestType)
       .set('Page', JSON.stringify(request.page))
       .set('Limit', JSON.stringify(request.size))
       .set('SortDirection', request.sort.direction)

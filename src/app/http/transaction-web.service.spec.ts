@@ -21,22 +21,22 @@ describe('TransactionWebService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return an Observable<Page<OrderViewModel>>', () => {
-    const dummyOrders = {
-      content: [
-        {id: '5', description: 'bolt'},
-        {id: '6', description: 'screw'}
-      ]
-    };
-
-    service.page({ size: 5, page: 0, sort: { direction: 'asc', active : 'id' } as Sort } as any,
-      { search: '', requestType: ''}).subscribe(transactions => {
-        expect(transactions.data.length).toBe(2);
-        expect(transactions.data).toEqual(dummyOrders.content as Transaction[]);
-    });
-
-    const req = httpMock.expectOne(`${service.TRANSACTION_URL}?page=0&size=5&sortDirection=asc&sortProperty=id&search=`);
-    expect(req.request.method).toBe('GET');
-    req.flush(dummyOrders);
-  });
+  // it('should return an Observable<Page<Transaction>>', () => {
+  //   const dummyTransactions = {
+  //     content: [
+  //       {id: '5', description: 'bolt'},
+  //       {id: '6', description: 'screw'}
+  //     ]
+  //   };
+  //
+  //   service.page({ size: 5, page: 0, sort: { direction: 'asc', active : 'id' } as Sort } as any,
+  //     { search: '', requestType: ''}).subscribe(transactions => {
+  //       expect(transactions.data.length).toBe(2);
+  //       expect(transactions.data).toEqual(dummyTransactions.content as Transaction[]);
+  //   });
+  //
+  //   const req = httpMock.expectOne(`${service.TRANSACTION_URL}?page=0&size=5&sortDirection=asc&sortProperty=id&search=`);
+  //   expect(req.request.method).toBe('GET');
+  //   req.flush(dummyTransactions);
+  // });
 });

@@ -8,9 +8,6 @@ export interface Address {
   mobile: string;
 }
 
-export interface BusinessAddress extends Address{
-}
-
 export interface User {
   id: number;
   username: string;

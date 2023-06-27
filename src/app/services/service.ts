@@ -2,8 +2,7 @@ import { Observable } from 'rxjs';
 import { TransactionItem } from '../model/transactionItem';
 import { Customer, Customers } from '../model/customer';
 import { Page, PageRequest, Query } from '../model/page';
-import { User } from "../model/user";
-import { Account } from "../model/account";
+import { Account } from '../model/account';
 
 export type ItemsEndpoint = (id: string) => Observable<TransactionItem[]>
 

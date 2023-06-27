@@ -34,13 +34,13 @@ describe('CustomerComponent', () => {
       page(request: PageRequest, query: Query): Observable<Page<Customer>> {
         return from(new Promise<Page<Customer>>((resolve, reject) => {
           resolve({
-            content: [{
+            data: [{
               id: '1',
               name: 'alex'
             } as Customer],
-            totalElements: 1,
-            size: request.size,
-            number: request.page
+            total: 1,
+            limit: request.size,
+            page: request.page
           } as Page<Customer>)
         }))
       }

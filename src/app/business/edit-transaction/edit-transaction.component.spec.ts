@@ -10,8 +10,8 @@ import {NotificationService} from '../../core/notifications/notification.service
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {TransactionWebService} from '../../http/transaction-web.service';
 import {LocalStorageService} from '../../core/local-storage/local-storage.service';
-import {Order} from '../../model/order';
 import {CustomerWebService} from '../../http/customer-web.service';
+import {Transaction} from '../../model/transaction';
 
 describe('EditOrderComponent', () => {
   let component: EditTransactionComponent;
@@ -21,7 +21,7 @@ describe('EditOrderComponent', () => {
   const order = {
     id: '4',
     description: 'bolt'
-  } as Order
+  } as Transaction
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({

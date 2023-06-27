@@ -11,8 +11,8 @@ import { Page, Query } from '../../model/page';
 import { TransactionWebService } from '../../http/transaction-web.service';
 import { IModel, TransactionViewModel } from '../../model/transactionViewModel';
 import { switchMap} from 'rxjs/operators';
-import { TranQuery, Transaction } from "../../model/transaction";
-import { TransactionItem } from "../../model/transactionItem";
+import { TranQuery, Transaction } from '../../model/transaction';
+import { TransactionItem } from '../../model/transactionItem';
 
 @Component({
   selector: 'app-transaction',

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import { Address, Business, User } from "../model/user";
+import { Address, Business, User } from '../model/user';
 import {ENVIRONMENT} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import { map } from "rxjs/operators";
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ConfigWebService {
@@ -15,7 +15,6 @@ export class ConfigWebService {
   }
 
   mapUser(u: User): User {
-    console.log(u)
     return {
       id: u.id,
       username: u.username,
@@ -47,10 +46,9 @@ export class ConfigWebService {
       .pipe(map(this.mapUser))
   }
 
-  getBusiness(id: string) {
+  getBusiness(id: string): Observable<Business> {
     return this.http.get<Business>(this.BUSINESS_URL + '/' + id)
   }
-
   saveBusiness(value: Business): Observable<Business> {
     return this.http.patch<Business>(this.BUSINESS_URL + '/' + value.id, value)
   }

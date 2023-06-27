@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Self } from "@angular/core";
+import { Component, OnDestroy, OnInit, Self } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -6,12 +6,12 @@ import {
   FormControl,
   FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR,
   Validator
-} from "@angular/forms";
+} from '@angular/forms';
 import { ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
-import { Subscription } from "rxjs";
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'address-form',
+  selector: 'app-address-form',
   templateUrl: './address-form.component.html',
   styleUrls: ['./address-form.component.scss'],
   providers: [
@@ -29,6 +29,9 @@ import { Subscription } from "rxjs";
 })
 export class AddressFormComponent implements OnInit, ControlValueAccessor, OnDestroy, Validator  {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS
+
+  onChangeSubs: Subscription[] = [];
+
   form = new FormGroup({
     id: new FormControl<string>(''),
     street: new FormControl<string>(''),
@@ -41,12 +44,8 @@ export class AddressFormComponent implements OnInit, ControlValueAccessor, OnDes
 
   onTouched: Function = () => {};
 
-  onChangeSubs: Subscription[] = [];
-
-  constructor(private fb: FormBuilder) {
-  }
   ngOnDestroy(): void {
-    for (let sub of this.onChangeSubs) {
+    for (const sub of this.onChangeSubs) {
       sub.unsubscribe();
     }
   }
@@ -64,11 +63,17 @@ export class AddressFormComponent implements OnInit, ControlValueAccessor, OnDes
   }
 
   writeValue(value: any): void {
-    value && this.form.setValue(value, { emitEvent: false });
+    if (value) {
+      this.form.setValue(value, { emitEvent: false });
+    }
   }
 
   setDisabledState(disabled: boolean): void {
-    disabled ? this.form.disable() : this.form.enable();
+    if (disabled) {
+      this.form.disable()
+    } else {
+      this.form.enable();
+    }
   }
 
   validate(control: AbstractControl) {
@@ -79,11 +84,11 @@ export class AddressFormComponent implements OnInit, ControlValueAccessor, OnDes
 
     let errors : any = {};
 
-    errors = this.addControlErrors(errors, "street");
-    errors = this.addControlErrors(errors, "postalCode");
-    errors = this.addControlErrors(errors, "city");
-    errors = this.addControlErrors(errors, "mobile");
-    errors = this.addControlErrors(errors, "phone");
+    errors = this.addControlErrors(errors, 'street');
+    errors = this.addControlErrors(errors, 'postalCode');
+    errors = this.addControlErrors(errors, 'city');
+    errors = this.addControlErrors(errors, 'mobile');
+    errors = this.addControlErrors(errors, 'phone');
     return errors;
   }
 

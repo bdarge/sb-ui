@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ICustomerService } from '../services/service';
 import { Observable } from 'rxjs';
-import { Customer, Customers } from "../model/customer";
+import { Customer, Customers } from '../model/customer';
 import { ENVIRONMENT } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PageRequest, Page, Query } from 'app/model/page';

@@ -10,7 +10,7 @@ import {NotificationService} from '../../core/notifications/notification.service
 import {TransactionWebService} from '../../http/transaction-web.service';
 import {MAT_DIALOG_DATA, MatDialog,  MatDialogRef} from '@angular/material/dialog';
 import {CustomerWebService} from '../../http/customer-web.service';
-import { Transaction } from "../../model/transaction";
+import { Transaction } from '../../model/transaction';
 
 describe('EditTransactionItemComponent', () => {
   let component: EditTransactionItemComponent;

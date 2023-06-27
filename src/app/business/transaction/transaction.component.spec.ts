@@ -12,7 +12,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {Page, PageRequest, Query} from '../../model/page';
 import {from, Observable} from 'rxjs';
-import {Order} from '../../model/order';
+import {Transaction} from '../../model/transaction';
 
 describe('OrderComponent', () => {
   let component: TransactionComponent;
@@ -21,17 +21,17 @@ describe('OrderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     orderServiceStub = {
-      page(request: PageRequest, query: Query): Observable<Page<Order>> {
-        return from(new Promise<Page<Order>>((resolve, reject) => {
+      page(request: PageRequest, query: Query): Observable<Page<Transaction>> {
+        return from(new Promise<Page<Transaction>>((resolve, reject) => {
           resolve({
-            content: [{
+            data: [{
               id: '1',
               description: 'alex'
-            } as Order],
-            totalElements: 1,
-            size: request.size,
-            number: request.page
-          } as Page<Order>)
+            } as Transaction],
+            total: 1,
+            limit: request.size,
+            page: request.page
+          } as Page<Transaction>)
         }))
       }
     }

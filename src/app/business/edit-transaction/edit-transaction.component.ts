@@ -2,14 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormBuilder, FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Customer } from '../../model/customer';
-import { ReplaySubject, Subject } from "rxjs";
+import { ReplaySubject, Subject } from 'rxjs';
 import { LocalStorageService, NotificationService } from '../../core/core.module';
-import { debounceTime, delay, filter, map, takeUntil, tap } from "rxjs/operators";
+import { debounceTime, delay, filter, map, takeUntil, tap } from 'rxjs/operators';
 import { TransactionWebService } from '../../http/transaction-web.service';
 import { CustomerWebService } from '../../http/customer-web.service';
-import { Transaction } from "../../model/transaction";
-import { User } from "../../model/user";
-import { Account } from "../../model/account";
+import { Transaction } from '../../model/transaction';
+import { Account } from '../../model/account';
 
 @Component({
   selector: 'app-edit-transaction',
@@ -64,15 +63,14 @@ export class EditTransactionComponent implements OnInit {
         filter(search => !!search),
         tap(() => this.searching = true),
         debounceTime(200),
-        map(search => {
-         return this.customersService.get({ search })
+        map(search => this.customersService.get({ search })
             .pipe(map(d => {
               if (!d.data) {
                 return [];
               }
               return d.data;
             }))
-        }),
+        ),
         delay(500),
         takeUntil(this.onDestroy)
       )

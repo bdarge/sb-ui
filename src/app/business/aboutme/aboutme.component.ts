@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { ROUTE_ANIMATIONS_ELEMENTS } from "../../core/animations/route.animations";
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from "@angular/forms";
-import { ConfigWebService } from "../../http/config-web.service";
-import { NotificationService } from "../../core/notifications/notification.service";
-import { LocalStorageService } from "../../core/local-storage/local-storage.service";
-import { BusinessAddress } from "../../model/user";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { Account } from "../../model/account";
+import { ROUTE_ANIMATIONS_ELEMENTS } from '../../core/animations/route.animations';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { ConfigWebService } from '../../http/config-web.service';
+import { NotificationService } from '../../core/notifications/notification.service';
+import { LocalStorageService } from '../../core/local-storage/local-storage.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Account } from '../../model/account';
+import { Address } from '../../model/user';
 
 @Component({
   selector: 'app-aboutme',
@@ -14,8 +14,6 @@ import { Account } from "../../model/account";
   styleUrls: ['./aboutme.component.scss']
 })
 export class AboutmeComponent {
-
-  protected readonly routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
   businessForm = this.fb.group({
     id: [''],
@@ -33,6 +31,8 @@ export class AboutmeComponent {
     vat: [''],
   })
 
+  protected readonly routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
+
   constructor(private fb: UntypedFormBuilder,
               private configService: ConfigWebService,
               private notificationService: NotificationService,
@@ -42,14 +42,13 @@ export class AboutmeComponent {
 
   ngOnInit() {
     const acct = this.localStorageSvc.getItem('ACCOUNT') as Account
-    const adminRoles = [1, 2]
-    let isAdmin : boolean = false
     this.configService.getBusiness(acct.businessId)
       .subscribe(data => {
-        if (!acct.roles.includes("admin")) {
+        if (!acct.roles.includes('admin')) {
           this.businessForm.disable({ onlySelf: true });
         }
-        let d = {
+
+        const d = {
           id: data.id,
           name: data.name,
           vat: data.vat,
@@ -61,10 +60,10 @@ export class AboutmeComponent {
             city: data.city,
             postalCode: data.postalCode,
             country: data.country,
-            mobile: data.mobile || ""
-          } as BusinessAddress
+            mobile: data.mobile || ''
+          } as Address
         }
-        console.log(d)
+
         this.businessForm.patchValue(d)
 
         this.businessForm.valueChanges.pipe(
@@ -78,8 +77,7 @@ export class AboutmeComponent {
 
   save() {
     if (this.businessForm.valid) {
-      console.log("...", this.businessForm.value)
-      let m = {...this.businessForm.value, ...this.businessForm.value.address}
+      const m = {...this.businessForm.value, ...this.businessForm.value.address}
       delete m.address
       this.configService.saveBusiness(m)
         .subscribe((business) => {

@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
   ValidationErrors,
   Validators
-} from "@angular/forms";
+} from '@angular/forms';
 import { LocalStorageService, NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
 import { ConfigWebService } from '../../http/config-web.service';
-import { debounceTime, distinctUntilChanged, tap } from "rxjs/operators";
-import { User } from "../../model/user";
-import { Account } from "../../model/account";
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { User } from '../../model/user';
+import { Account } from '../../model/account';
 
 @Component({
   selector: 'app-profile',
@@ -35,13 +35,13 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     const acct = this.localStorageSvc.getItem('ACCOUNT') as Account
     const adminRoles = [1, 2]
-    let isAdmin : boolean = false
+    let isAdmin = false
     this.configService.getUser(acct.userId)
       .subscribe(data => {
         if (!data || !data.roles || !data.roles.find(r => r.id in adminRoles)) {
           this.userForm.disable({ onlySelf: true });
         } else {
-          if (data && data.roles && data.roles.find(r => r.id == 1)) {
+          if (data && data.roles && data.roles.find(r => r.id === 1)) {
             isAdmin = true
           }
         }
