@@ -27,7 +27,9 @@ ENV PUPPETEER_EXECUTABLE_PATH="`which chromium`"
 COPY .. .
 
 # install node modules and build assets
-RUN npm i && npm run build:prod
+RUN npm i
+
+RUN npm run build:prod
 
 # nginx state for serving content
 FROM arm64v8/nginx AS prod
