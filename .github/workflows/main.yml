@@ -22,6 +22,7 @@ jobs:
       contents: read
       packages: write
     env:
+        NODE_ENV: PROD
         IMAGE_NAME: sb-ui
         CI: false
     steps:
