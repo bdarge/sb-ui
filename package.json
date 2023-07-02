@@ -29,7 +29,7 @@
     "test": "npm run config && npm run lint && ng test --configuration=test --browsers=ChromeHeadlessCustom",
     "e2e": "ng e2e",
     "e2e:ci": "ng e2e",
-    "ci": "npm run clean && npm run lint && ng test --configuration=test --browsers ChromeHeadlessCustom --code-coverage && npm run build:prod -- --deploy-url /small-business/ --base-href /small-business",
+    "ci": "npm run clean && npm run lint && ng test --configuration=test --browsers ChromeHeadlessCustom --code-coverage && npm run build:prod -- --deploy-url / --base-href /",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "lint": "eslint --color -c eslintrc.json --ext .ts .",
     "cypress:open": "cypress open",
