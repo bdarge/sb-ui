@@ -23,6 +23,7 @@ jobs:
       packages: write
     env:
         IMAGE_NAME: sb-ui
+        CI: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
