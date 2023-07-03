@@ -5,11 +5,9 @@
 name: SB ui CI job
 
 on:
-  push:
-    branches:
-      - 'main'
-    tags:
-      - v*
+  release:
+    types:
+      - published
   workflow_dispatch:
 env:
   REGISTRY: ghcr.io
@@ -44,7 +42,6 @@ jobs:
     env:
         NODE_ENV: PROD
         IMAGE_NAME: sb-ui
-        CI: ""
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
