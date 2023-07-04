@@ -37,6 +37,8 @@ FROM arm64v8/nginx AS prod
 # Set working directory to nginx asset directory
 WORKDIR /usr/share/nginx/html
 
+LABEL org.opencontainers.image.source=https://github.com/bdarge/sb-ui
+
 # Remove default nginx static assets
 # RUN rm -rf ./*
 
