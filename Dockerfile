@@ -23,7 +23,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 ENV PUPPETEER_EXECUTABLE_PATH="`which chromium`"
 
-# Copy all files from current directory to working dir in image
+# Copy all files from current directory to working dir
 COPY .. .
 
 # install node modules and build assets
@@ -40,7 +40,7 @@ WORKDIR /usr/share/nginx/html
 LABEL org.opencontainers.image.source=https://github.com/bdarge/sb-ui
 
 # Remove default nginx static assets
-# RUN rm -rf ./*
+RUN rm -rf ./*
 
 # Copy static assets from builder stage
 COPY --from=builder /app/dist .
