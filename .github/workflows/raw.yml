@@ -45,8 +45,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2.2.0
+
       - name: Build image
-        run: docker build --file Dockerfile --tag $IMAGE_NAME \
+        run: docker buildx build --file Dockerfile --tag $IMAGE_NAME \
              --label "runnumber=${GITHUB_RUN_ID}" --target prod --platform linux/arm64 .
 
       - name: Log in to registry
