@@ -26,7 +26,9 @@ ENV PUPPETEER_EXECUTABLE_PATH="`which chromium`"
 RUN ls -al
 
 # Copy all files from current directory to working dir
-COPY .. .
+COPY . .
+
+RUN ls -al
 
 # install node modules and build assets
 RUN npm i
