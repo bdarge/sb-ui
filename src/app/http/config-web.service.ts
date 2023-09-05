@@ -1,17 +1,22 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import { Address, Business, User } from '../model/user';
-import {ENVIRONMENT} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
+import { Environment } from '../../environments/environment.interface'
+import {AppConfigService} from "../services/app.config.service";
+
 @Injectable()
 export class ConfigWebService {
-  readonly BUSINESS_URL = `${ENVIRONMENT.apiBaseUrl}/business`
-  readonly USER_URL = `${ENVIRONMENT.apiBaseUrl}/user`
-  readonly ACCOUNT_URL = `${ENVIRONMENT.apiBaseUrl}/accounts`
+  BUSINESS_URL: string
+  USER_URL: string
+  ACCOUNT_URL: string
 
-  constructor(public http: HttpClient) {
+  constructor(private http: HttpClient, private configService: AppConfigService) {
+    this.BUSINESS_URL = `${this.configService.config.apiUrl}/business`
+    this.USER_URL = `${this.configService.config.apiUrl}/user`
+    this.ACCOUNT_URL = `${this.configService.config.apiUrl}/accounts`
   }
 
   mapUser(u: User): User {

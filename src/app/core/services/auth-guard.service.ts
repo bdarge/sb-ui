@@ -1,17 +1,14 @@
-import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {Observable, of} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {LocalStorageService} from '../local-storage/local-storage.service';
-import {Auth} from './auth';
+import { inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { LocalStorageService } from '../local-storage/local-storage.service';
+import { Auth } from './auth';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
-  constructor(private router: Router,
-              private http: HttpClient,
-              private localStorageSvc: LocalStorageService) {}
+export class AuthGuardService {
+  constructor(private router: Router, private localStorageSvc: LocalStorageService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     if (this.isAuthenticated()) {
@@ -35,3 +32,6 @@ export class AuthGuardService implements CanActivate {
   }
 }
 
+export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
+  return inject(AuthGuardService).canActivate(next, state)
+}

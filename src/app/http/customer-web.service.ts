@@ -2,17 +2,22 @@ import { Injectable } from '@angular/core';
 import { ICustomerService } from '../services/service';
 import { Observable } from 'rxjs';
 import { Customer, Customers } from '../model/customer';
-import { ENVIRONMENT } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PageRequest, Page, Query } from 'app/model/page';
+import { Environment } from '../../environments/environment.interface'
+import {AppConfigService} from "../services/app.config.service";
+
+declare let __config: Environment;
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerWebService implements ICustomerService {
-  readonly CUSTOMER_URL = `${ENVIRONMENT.apiBaseUrl}/customer`
+  CUSTOMER_URL: string
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: AppConfigService) {
+    this.CUSTOMER_URL = `${this.configService.config.apiUrl}/customer`
+  }
 
   page(request: PageRequest, query: Query): Observable<Page<Customer>> {
     const params = new HttpParams()

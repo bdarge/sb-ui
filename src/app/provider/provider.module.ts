@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { GeneralService } from '../services/generalService';
+import { GeneralService } from '../services/general.service';
 import { TransactionWebService } from '../http/transaction-web.service';
 import { ConfigWebService } from '../http/config-web.service';
 import { CustomerWebService } from '../http/customer-web.service';

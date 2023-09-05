@@ -45,7 +45,9 @@ RUN rm -rf ./* 2> /dev/null
 # Copy static assets from builder stage
 COPY --from=builder /app/dist .
 
+COPY start.sh .
+
 EXPOSE 80
 
-# Containers run nginx with global directives and daemon off
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD [ "sh", "start.sh" ]
+

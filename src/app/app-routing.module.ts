@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
-import {LoginComponent} from './login/login.component';
-import {AuthGuardService} from './core/services/auth-guard.service';
-import {RegisterComponent} from './register/register.component';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './core/services/auth-guard.service';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
@@ -16,12 +16,12 @@ const routes: Routes = [
       import('./business/business.module').then(
         (m) => m.BusinessModule
       ),
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'register',

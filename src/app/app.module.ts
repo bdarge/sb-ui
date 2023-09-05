@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import '../polyfills';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule} from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -15,6 +15,12 @@ import { ProviderModule} from './provider/provider.module';
 import { ServiceModule} from './services/service.module';
 import { FontAwesomeIconsModule } from './shared/font.awesome.icons.module';
 import { RegisterComponent } from './register/register.component';
+import { AppConfigService } from "./services/app.config.service";
+
+export function initConfig(configService: AppConfigService) {
+  // load the config file in this function
+  return () => configService.load()
+}
 
 @NgModule({
   declarations: [
@@ -34,6 +40,14 @@ import { RegisterComponent } from './register/register.component';
 
     FlexLayoutModule,
     AppRoutingModule
+  ],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initConfig,
+      deps: [AppConfigService],
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })
