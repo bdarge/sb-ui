@@ -4,10 +4,7 @@ import { Observable } from 'rxjs';
 import { Customer, Customers } from '../model/customer';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PageRequest, Page, Query } from 'app/model/page';
-import { Environment } from '../../environments/environment.interface'
-import {AppConfigService} from "../services/app.config.service";
-
-declare let __config: Environment;
+import {AppConfigService} from '../services/app.config.service';
 
 @Injectable({
   providedIn: 'root'

@@ -6,8 +6,9 @@ import {Environment} from '../../environments/environment.interface'
   providedIn: 'root'
 })
 export class AppConfigService {
-  constructor(private http: HttpClient) {}
   config : Environment = {} as Environment
+  constructor(private http: HttpClient) {}
+
   async load(): Promise<Environment> {
     return this.http.get<Environment>('config/config.json')
       .toPromise()

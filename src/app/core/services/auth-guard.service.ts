@@ -32,6 +32,5 @@ export class AuthGuardService {
   }
 }
 
-export const AuthGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
-  return inject(AuthGuardService).canActivate(next, state)
-}
+export const AUTH_GUARD: CanActivateFn =
+  (next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => inject(AuthGuardService).canActivate(next, state)

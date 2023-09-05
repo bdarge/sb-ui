@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { Environment } from '../../environments/environment.interface'
-import {AppConfigService} from "../services/app.config.service";
+import {AppConfigService} from '../services/app.config.service';
 
 @Injectable()
 export class ConfigWebService {

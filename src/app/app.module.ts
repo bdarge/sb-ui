@@ -15,7 +15,7 @@ import { ProviderModule} from './provider/provider.module';
 import { ServiceModule} from './services/service.module';
 import { FontAwesomeIconsModule } from './shared/font.awesome.icons.module';
 import { RegisterComponent } from './register/register.component';
-import { AppConfigService } from "./services/app.config.service";
+import { AppConfigService } from './services/app.config.service';
 
 export function initConfig(configService: AppConfigService) {
   // load the config file in this function

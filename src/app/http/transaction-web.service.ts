@@ -6,7 +6,7 @@ import { Page, PageRequest } from '../model/page';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { TranQuery, Transaction } from '../model/transaction';
 import { Account } from '../model/account';
-import {AppConfigService} from "../services/app.config.service";
+import {AppConfigService} from '../services/app.config.service';
 
 @Injectable()
 export class TransactionWebService implements IService<Transaction, TransactionItem> {
