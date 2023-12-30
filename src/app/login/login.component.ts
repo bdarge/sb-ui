@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService} from '@ngx-translate/core';
 import { UntypedFormBuilder, Validators} from '@angular/forms';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode'
 import {
   LocalStorageService,
   NotificationService,
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       this.authService.login(this.form.value)
         .subscribe((result: any) => {
-          const decoded = jwt_decode(result.token)
+          const decoded = jwtDecode(result.token)
           this.localStorageSvc.setItem('ACCOUNT', decoded)
           this.localStorageSvc.setItem('TOKEN', result.token)
           this.router.navigate(['business'])

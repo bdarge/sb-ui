@@ -10,7 +10,7 @@ export class AppConfigService {
   constructor(private http: HttpClient) {}
 
   async load(): Promise<Environment> {
-    return this.http.get<Environment>('config/config.json')
+    return this.http.get<Environment>('/config/config.json')
       .toPromise()
       .then(data => {
         Object.assign(this.config, data);

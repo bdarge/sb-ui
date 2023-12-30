@@ -8,6 +8,7 @@
 mat-sidenav-container {
   height: 100%;
   width: 100%;
+  position: unset!important; // fix safari issue https://stackoverflow.com/a/55245999
 
   .toolbar {
     position: fixed;
@@ -52,7 +53,6 @@ mat-sidenav-container {
     mat-select {
       margin: 0 0 0 20px;
       width: 40px;
-      // font-size: 14px;
     }
 
     @media (max-width: map-get($grid-breakpoints, lg)) {

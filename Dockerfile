@@ -9,11 +9,7 @@ RUN npm i @angular/cli@latest -g
 CMD ["ng","serve","--host", "0.0.0.0"]
 
 # Name the node stage "builder"
-FROM node:16 AS builder
-
-ARG NODE_ENV
-
-ARG API_BASE_URL
+FROM node:20 AS builder
 
 # Set working directory
 WORKDIR /app
