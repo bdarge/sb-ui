@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Observable} from 'rxjs';
-import { select, Store} from '@ngrx/store';
-import { selectTheme} from './core/settings/settings.selectors';
+import { Observable } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { selectTheme } from './core/settings/settings.selectors';
 import { State} from './core/settings/settings.model';
 import { routeAnimations } from './core/animations/route.animations';
 import { Title } from '@angular/platform-browser';

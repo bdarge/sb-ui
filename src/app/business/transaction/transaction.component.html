@@ -1,16 +1,16 @@
 <div class="container">
-  <button mat-raised-button color="primary" (click)="add()">{{ "business.transaction.btn.add" | translate }}</button>
+  <button mat-raised-button color="primary" (click)="add()" data-testid="add-btn">{{ "business.transaction.btn.add" | translate }}</button>
   <br/>
   <br/>
   <mat-form-field [ngClass]="routeAnimationsElements">
     <input matInput placeholder="{{ 'business.transaction.search' | translate}}" #search
-           (input)="dataSource.queryBy({search: search.value})">
+           (input)="dataSource.queryBy({search: search.value})" data-testid="search-input">
   </mat-form-field>
 
   <div class="bs-container mat-elevation-z8">
     <table mat-table class="disposition-table"
                [dataSource]="dataSource" matSort
-               [ngClass]="routeAnimationsElements" multiTemplateDataRows>
+               [ngClass]="routeAnimationsElements" multiTemplateDataRows data-testid="tran-table">
       <!-- Order number  -->
       <ng-container matColumnDef="transactionNumber">
         <th mat-header-cell *matHeaderCellDef>{{'business.grid.head.transaction' | translate}}</th>

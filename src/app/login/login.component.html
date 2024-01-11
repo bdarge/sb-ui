@@ -8,7 +8,7 @@
           <div class="row">
             <mat-form-field class="col" [ngClass]="routeAnimationsElements">
               <input matInput placeholder="{{ 'business.login.user.placeholder' | translate }}"
-                     formControlName="username">
+                     formControlName="username" data-testid="login-username">
               <mat-error *ngIf="form.get('username').hasError('required')">
                 {{ 'business.login.user.error' | translate }}
               </mat-error>
@@ -17,7 +17,7 @@
           <div class="row">
             <mat-form-field class="col" [ngClass]="routeAnimationsElements">
               <input matInput placeholder="{{ 'business.login.password.placeholder' | translate }}"
-                     formControlName="password" type="password">
+                     formControlName="password" type="password" data-testid="login-password">
               <mat-error *ngIf="form.get('password').hasError('required')">
                 {{ 'business.login.password.error' | translate }}
               </mat-error>
@@ -26,10 +26,10 @@
           <div class="row d-flex pad">
             <div class="buttons">
               <button mat-raised-button color="primary" type="submit"
-                      [ngClass]="routeAnimationsElements">
+                      [ngClass]="routeAnimationsElements" data-testid="login-submit">
                 {{ 'business.login.btn' | translate }}
               </button>
-              <a class="register" [routerLink]="['/register']">Or register</a>
+              <a class="register" [routerLink]="['/register']" data-testid="register">Or register</a>
             </div>
           </div>
         </form>

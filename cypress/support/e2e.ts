@@ -1,5 +1,5 @@
 // ***********************************************************
-// This example support/e2e.ts is processed and
+// This example support/tests.ts is processed and
 // loaded automatically before your test files.
 //
 // This is a great place to put global configuration and
@@ -14,4 +14,4 @@
 // ***********************************************************
 
 // When a command from ./commands is ready to use, import with `import './commands'` syntax
-// import './commands';
+import './commands';
