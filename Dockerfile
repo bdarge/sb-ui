@@ -1,4 +1,4 @@
-FROM node:16 AS dev
+FROM node:18 AS dev
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ RUN npm i @angular/cli@latest -g
 CMD ["ng","serve","--host", "0.0.0.0"]
 
 # Name the node stage "builder"
-FROM node:20 AS builder
+FROM node:18 AS builder
 
 # Set working directory
 WORKDIR /app
