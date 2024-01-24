@@ -6,9 +6,10 @@ import {
   HttpRequest,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {catchError, Observable} from 'rxjs';
 import {LocalStorageService} from '../local-storage/local-storage.service';
 import {Router} from '@angular/router';
+import {tap} from "rxjs/operators";
 
 /** Passes token */
 @Injectable()
@@ -23,15 +24,19 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const token = this.localStorageSvc.getItem('TOKEN');
-    if (token) {
+    if (token && !request.url.includes('auth/refresh-token')) {
       const authReq = request.clone({
+        withCredentials: true,
         setHeaders: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         }
       });
-      return next.handle(authReq)
+      return next.handle(authReq);
     }
-    return next.handle(request)
+    const authReq = request.clone({
+      withCredentials: true,
+    });
+    return next.handle(authReq);
   }
 }

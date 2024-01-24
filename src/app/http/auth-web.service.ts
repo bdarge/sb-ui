@@ -3,25 +3,30 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../model/user';
 import { AppConfigService } from '../services/app.config.service'
+import { Environment } from "../../environments/environment.interface";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthWebService {
-  AUTH_URL = ''
+  config: Environment = null
 
   constructor(private http: HttpClient, private configService: AppConfigService) {
-    this.AUTH_URL = `${this.configService.config.apiUrl}/`
+    this.config = this.configService.config
   }
 
   login({username, password}) {
     const file = {email: username, password}
     const options = {headers: {'Content-Type': 'application/json'}}
-    return this.http.post(this.AUTH_URL + 'auth/login', JSON.stringify(file), options)
+    return this.http.post(this.config.apiUrl + '/auth/login', JSON.stringify(file), options)
   }
 
   register(value: any): Observable<User> {
     const options = {headers: {'Content-Type': 'application/json'}}
-    return this.http.post<User>(this.AUTH_URL + 'accounts', JSON.stringify(value), options)
+    return this.http.post<User>(this.config.apiUrl + '/accounts', JSON.stringify(value), options)
+  }
+
+  refreshToken(): Observable<User> {
+    return this.http.post<User>(this.config.apiUrl + '/auth/refresh-token', JSON.stringify({}))
   }
 }

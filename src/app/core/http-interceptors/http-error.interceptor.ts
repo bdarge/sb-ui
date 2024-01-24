@@ -6,27 +6,70 @@ import {
   HttpRequest,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { catchError, Observable, throwError } from 'rxjs';
+import { tap, switchMap } from 'rxjs/operators';
+import { AuthWebService } from "../../http/auth-web.service";
+import {error} from "@angular/compiler-cli/src/transformers/util";
+import {jwtDecode} from "jwt-decode";
+import {LocalStorageService} from "../local-storage/local-storage.service";
 
 /** Passes HttpErrorResponse to application-wide error handler */
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  private isRefreshing: boolean = false;
+
+  constructor(private injector: Injector, private auth: AuthWebService, private localStorageSvc: LocalStorageService) {
+  }
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      tap({
-        error: (err: any) => {
-          if (err instanceof HttpErrorResponse) {
-            const appErrorHandler = this.injector.get(ErrorHandler);
-            appErrorHandler.handleError(err);
+      catchError(
+        (error: any): Observable<any> => {
+          if (error instanceof HttpErrorResponse && !request.url.includes('auth/login') && error.status == 401) {
+            return this.handle401Error(request, next);
           }
+          return throwError(() => error);
         }
-      })
+      ),
+      tap({
+        error: (error) => {
+          // error is here, but we can only call side things.
+          const appErrorHandler = this.injector.get(ErrorHandler);
+          appErrorHandler.handleError(error);
+          return;
+        },
+      }),
     );
+  }
+
+  handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      return this.auth.refreshToken().pipe(
+        switchMap((result: any) => {
+          this.isRefreshing = false;
+          const decoded = jwtDecode(result.token);
+          this.localStorageSvc.setItem('ACCOUNT', decoded);
+          this.localStorageSvc.setItem('TOKEN', result.token);
+          const authReq = request.clone({
+            withCredentials: true,
+            setHeaders: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${result.token}`
+            }
+          });
+          return next.handle(authReq);
+        }),
+        catchError(
+          (error: any): Observable<any> => {
+            this.isRefreshing = false;
+            return throwError(() => error);
+          })
+      )
+    }
+    return next.handle(request);
   }
 }

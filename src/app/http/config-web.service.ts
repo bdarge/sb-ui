@@ -1,10 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Address, Business, User } from '../model/user';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-
-import { Environment } from '../../environments/environment.interface'
 import {AppConfigService} from '../services/app.config.service';
 
 @Injectable()

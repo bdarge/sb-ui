@@ -33,8 +33,7 @@ export class BusinessComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store<State>,
-    private localStorageSvc: LocalStorageService,
+    private localStorageSvc: LocalStorageService
   ) {
     const acct = this.localStorageSvc.getItem('ACCOUNT') as Account
     const userName: string = acct?.email

@@ -1,7 +1,7 @@
 import { Injectable, ErrorHandler } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from '../notifications/notification.service';
-import {GeneralService} from '../../services/general.service';
+import { GeneralService } from '../../services/general.service';
 
 /** Application-wide error handler that adds a UI notification to the error handling
  * provided by the default Angular ErrorHandler.
@@ -14,12 +14,14 @@ export class AppErrorHandler extends ErrorHandler {
   }
 
   handleError(error: Error | HttpErrorResponse) {
-    if (error instanceof HttpErrorResponse && error.status === 401) {
-      this.notificationsService.error('Session Expired.');
-      this.generalService.logOut();
-    } else {
-      this.notificationsService.error(error.message)
-      super.handleError(error);
+    if (error instanceof HttpErrorResponse) {
+      if (error.status === 401 || (error.url.includes('auth/refresh-token') && error.status === 403)) {
+        this.notificationsService.error('Your session has Expired.');
+        this.generalService.logOut();
+      }
+      return;
     }
+    this.notificationsService.error(error.message);
+    super.handleError(error);
   }
 }

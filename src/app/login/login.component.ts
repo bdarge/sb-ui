@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService} from '@ngx-translate/core';
 import { UntypedFormBuilder, Validators} from '@angular/forms';
 import { jwtDecode } from 'jwt-decode'
 import {
   LocalStorageService,
-  NotificationService,
   ROUTE_ANIMATIONS_ELEMENTS,
   routeAnimations
 } from '../core/core.module';
@@ -28,22 +26,22 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: UntypedFormBuilder,
-    private translate: TranslateService,
-    private notificationService: NotificationService,
     private authService: AuthWebService,
-    private localStorageSvc: LocalStorageService
-  ) { }
+    private localStorageSvc: LocalStorageService,
+  ) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   async submit() {
     if (this.form.valid) {
       this.authService.login(this.form.value)
         .subscribe((result: any) => {
           const decoded = jwtDecode(result.token)
-          this.localStorageSvc.setItem('ACCOUNT', decoded)
-          this.localStorageSvc.setItem('TOKEN', result.token)
-          this.router.navigate(['business'])
+          this.localStorageSvc.setItem('ACCOUNT', decoded);
+          this.localStorageSvc.setItem('TOKEN', result.token);
+          this.router.navigate(['business']);
         })
     }
   }
