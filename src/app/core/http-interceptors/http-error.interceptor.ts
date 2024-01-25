@@ -9,9 +9,8 @@ import {
 import { catchError, Observable, throwError } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
 import { AuthWebService } from "../../http/auth-web.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
-import {jwtDecode} from "jwt-decode";
-import {LocalStorageService} from "../local-storage/local-storage.service";
+import { jwtDecode} from "jwt-decode";
+import { LocalStorageService } from "../local-storage/local-storage.service";
 
 /** Passes HttpErrorResponse to application-wide error handler */
 @Injectable()
@@ -39,7 +38,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           // error is here, but we can only call side things.
           const appErrorHandler = this.injector.get(ErrorHandler);
           appErrorHandler.handleError(error);
-          return;
         },
       }),
     );

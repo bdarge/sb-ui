@@ -19,6 +19,8 @@ export class AppErrorHandler extends ErrorHandler {
         this.notificationsService.error('Your session has Expired.');
         this.generalService.logOut();
       }
+      this.notificationsService.error(error.statusText);
+      super.handleError(error);
       return;
     }
     this.notificationsService.error(error.message);
