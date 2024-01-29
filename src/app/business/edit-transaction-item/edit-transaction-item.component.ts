@@ -14,23 +14,23 @@ export class EditTransactionItemComponent implements OnInit {
   form: UntypedFormGroup;
   title: string;
   name: string;
-  orderId: string;
+  transactionId: string;
 
   constructor(
     private orderService: TransactionWebService,
     private fb: UntypedFormBuilder,
     private dialogRef: MatDialogRef<EditTransactionItemComponent>,
     @Inject(MAT_DIALOG_DATA) {
-      order, item
+      transaction, item
     }: {
-      order: Transaction, item: TransactionItem
+      transaction: Transaction, item: TransactionItem
     }) {
 
-    this.title = Object.keys(item).length === 0 ? 'business.transactionItem.add.title' : 'business.transactionItem.edit.title';
+    this.title = !item || Object.keys(item).length === 0 ? 'business.transactionItem.add.title' : 'business.transactionItem.edit.title';
 
-    this.name = order && order.customer ? order.customer.name: '';
+    this.name = transaction && transaction.customer ? transaction.customer.name: '';
 
-    this.orderId = order.id;
+    this.transactionId = transaction.id;
 
     this.form = this.fb.group({
       id: [item.id],
@@ -46,23 +46,22 @@ export class EditTransactionItemComponent implements OnInit {
 
   save() {
     if(this.form.valid) {
-      console.log('Dialog output:', this.form.value);
       if (this.form.value.id) {
-        return this._update({...this.form.value, orderId: this.orderId})
+        return this._update({...this.form.value, transactionId: this.transactionId} as TransactionItem)
       } else {
-        return this._create({...this.form.value, orderId: this.orderId})
+        return this._create({...this.form.value, transactionId: this.transactionId} as TransactionItem)
       }
     }
   }
 
-  _update (data) {
+  _update (data: TransactionItem) {
     this.orderService.updateItem(data)
       .subscribe(() => {
         this.dialogRef.close();
       });
   }
 
-  _create (data) {
+  _create (data: TransactionItem) {
     this.orderService.createItem(data)
       .subscribe(() => {
         this.dialogRef.close();

@@ -46,7 +46,6 @@ export class CustomerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
-        console.log('Dialog output:', data);
         this.customersService.update(data)
           .subscribe(() => {
             this.ds.fetch()

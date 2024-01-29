@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of} from 'rxjs';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
+import { of} from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LocalStorageService, NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
 import { EditTransactionComponent } from '../edit-transaction/edit-transaction.component';
@@ -33,20 +33,20 @@ export class TransactionComponent implements OnInit {
   displayedColumns = [ 'transactionNumber', 'customer', 'createdAt', 'edit', 'delete', 'transactionItem'];
   displayedItemColumns = ['description', 'unit', 'unitPrice', 'qty', 'edit', 'delete'];
   expandedElement: any;
-  transactionItems: Observable<TransactionItem[]>;
   showDelay = new UntypedFormControl();
   hideDelay = new UntypedFormControl();
   pageSizeOptions = [3, 5, 10];
 
-  constructor(private tService: TransactionWebService,
+  constructor(private transactionWebService: TransactionWebService,
               private localStorageSvc: LocalStorageService,
               private notificationService: NotificationService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private ref: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this.dataSource = new TableDatasource<TransactionViewModel, TranQuery>(
-      (request, query) => this.tService.page(request, query)
+      (request, query) => this.transactionWebService.page(request, query)
         .pipe(switchMap((item) => {
           const row: TransactionViewModel[] = []
           if (item.data) {
@@ -65,7 +65,7 @@ export class TransactionComponent implements OnInit {
         })),
       {active: 'id', direction: 'desc'},
       {search: '', requestType: ''}
-    )
+    );
   }
 
   /**
@@ -73,7 +73,7 @@ export class TransactionComponent implements OnInit {
    */
   toggleRow(row: TransactionViewModel, event: Event) {
     this.expandedElement = this.expandedElement === row ? null: row
-    event.stopPropagation()
+    event.stopPropagation();
   }
 
   edit(viewModel: TransactionViewModel) {
@@ -87,7 +87,7 @@ export class TransactionComponent implements OnInit {
     const dialogRef = this.dialog.open(EditTransactionComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(data => {
-      this.dataSource.fetch()
+      this.dataSource.fetch();
     });
   }
 
@@ -101,7 +101,7 @@ export class TransactionComponent implements OnInit {
     const dialogRef = this.dialog.open(EditTransactionComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(data => {
-      this.dataSource.fetch()
+      this.dataSource.fetch();
     });
   }
 
@@ -111,31 +111,36 @@ export class TransactionComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = '600px';
     dialogConfig.data = {
-      order: tranViewModel.model as Transaction,
-      item: item as TransactionItem
+      transaction: tranViewModel.model as Transaction,
+      item: item || {transactionId: tranViewModel.model.id} as TransactionItem
     };
 
     const dialogRef = this.dialog.open(EditTransactionItemComponent, dialogConfig);
 
-    // dialogRef.afterClosed().subscribe(() => {
-    //   tranViewModel.items.fetch({id: tranViewModel.model.id})
-    // });
+    dialogRef.afterClosed().subscribe(() => {
+      this._refreshItem(tranViewModel);
+    });
   }
 
-  deleteOrder(elt: TransactionViewModel) {
-
-    this.tService.delete(elt.model)
+  deleteTransaction(elt: TransactionViewModel) {
+    this.transactionWebService.delete(elt.model)
       .subscribe(() => {
-        this.dataSource.fetch()
+        this.dataSource.fetch();
       });
   }
 
-  deleteItem(tranViewModel: TransactionViewModel, orderItem: TransactionItem) {
-    // this.tService.deleteItem(orderItem)
-    //   .subscribe(() => {
-    //     console.log('deleteOrderItem');
-    //     console.log(orderItem);
-    //     tranViewModel.items.fetch({id: tranViewModel.model.id})
-    //   })
+  deleteItem(tranViewModel: TransactionViewModel, item: TransactionItem) {
+    this.transactionWebService.deleteItem(item)
+      .subscribe(() => {
+        this._refreshItem(tranViewModel);
+      })
+  }
+
+  _refreshItem(tranViewModel: TransactionViewModel) {
+    this.transactionWebService.getItems(tranViewModel.model.id)
+      .subscribe((result) => {
+        tranViewModel.model.items = result.data;
+        this.ref.detectChanges();
+      });
   }
 }

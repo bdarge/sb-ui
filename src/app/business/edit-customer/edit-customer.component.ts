@@ -79,7 +79,6 @@ export class EditCustomerComponent implements OnInit {
   private _edit() {
     this.customersService.update(this.form.value)
       .subscribe(() => {
-        console.log('updated ...')
         this.dialogRef.close(this.form.value);
       });
   }
@@ -87,7 +86,6 @@ export class EditCustomerComponent implements OnInit {
   private _add() {
     this.customersService.add(this.form.value)
       .subscribe(() => {
-        console.log('inserted ...')
         this.dialogRef.close(this.form.value);
       });
   }

@@ -50,7 +50,7 @@ export class EditTransactionComponent implements OnInit {
       deliveryDate: [deliveryDate, Validators.required]
     })
 
-    if(customer) {
+    if (customer) {
       this.filteredCustomers.next([customer])
     }
 
@@ -63,24 +63,27 @@ export class EditTransactionComponent implements OnInit {
         filter(search => !!search),
         tap(() => this.searching = true),
         debounceTime(200),
-        map(search => this.customersService.get({ search })
-            .pipe(map(d => {
-              if (!d.data) {
-                return [];
-              }
-              return d.data;
-            }))
+        map(search => this.customersService.get({search})
+          .pipe(map(d => {
+            if (!d.data) {
+              return [];
+            }
+            return d.data;
+          }))
         ),
         delay(500),
         takeUntil(this.onDestroy)
       )
-      .subscribe(next => {
-        this.searching = false;
-        next.subscribe(e => this.filteredCustomers.next(e))
-      }, error => {
-        this.searching = false;
-        // handle error...
-        this.notificationService.error(error && error.message ? error.message : 'Failed to load customers. ' + error);
+      .subscribe({
+        next : (v) => {
+          this.searching = false;
+          v.subscribe(e => this.filteredCustomers.next(e))
+        },
+        error: (error) => {
+          this.searching = false;
+          // handle error...
+          this.notificationService.error(error && error.message ? error.message : 'Failed to load customers. ' + error);
+        }
       });
   }
 
@@ -89,10 +92,10 @@ export class EditTransactionComponent implements OnInit {
   }
 
   save() {
-    if(this.form.valid) {
+    if (this.form.valid) {
       const account: Account = this.localStorageSvc.getItem('ACCOUNT');
 
-      if(this.form.value.id) {
+      if (this.form.value.id) {
         this._edit()
       } else {
         this._add(account)
@@ -111,19 +114,17 @@ export class EditTransactionComponent implements OnInit {
 
   _add(account: Account) {
     this.tService.add(account, this.form.value as Transaction)
-      .subscribe(() => {
-        this.dialogRef.close()
-      }, (err) => {
-        this.notificationService.error(err && err.message ? err.message : 'Failed to save transaction. ' + err);
+      .subscribe({
+        next: () => this.dialogRef.close(),
+        error: (err) => this.notificationService.error(err && err.message ? err.message : 'Failed to save transaction. ' + err)
       });
   }
 
   _edit() {
     this.tService.update(this.form.value as Transaction)
-      .subscribe(() => {
-        this.dialogRef.close()
-      }, (err) => {
-        this.notificationService.error(err && err.message ? err.message : 'Failed to save transaction. ' + err);
+      .subscribe({
+        next: () => this.dialogRef.close(),
+        error: (err) => this.notificationService.error(err && err.message ? err.message : 'Failed to save transaction. ' + err)
       });
   }
 }

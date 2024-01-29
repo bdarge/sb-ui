@@ -47,7 +47,7 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell class="description-cell" *matCellDef="let elt">
-          <button mat-button class="btn-link" aria-label="delete" (click)="deleteOrder(elt); $event.stopPropagation()">
+          <button mat-button class="btn-link" aria-label="delete" (click)="deleteTransaction(elt); $event.stopPropagation()">
             <fa-icon icon="trash"></fa-icon>
           </button>
         </td>

@@ -1,4 +1,15 @@
 @use '@angular/material' as mat;
+
+:host mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .mat-form-field {
   display: block;
+}
+
+.full-width {
+  width: 100%;
 }

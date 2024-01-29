@@ -23,11 +23,11 @@ export interface IService<T, Q> {
 
   page(request: PageRequest, query: Query): Observable<Page<T>>
 
-  getItems(id: string): Observable<TransactionItem[]>
+  getItems(id: string): Observable<Page<Q>>
 
-  updateItem(item: Q): Observable<TransactionItem>
+  updateItem(item: Q): Observable<Q>
 
-  createItem(item: Q): Observable<TransactionItem>
+  createItem(item: Q): Observable<Q>
 
   deleteItem(item: Q): Observable<boolean>
 }
