@@ -1,4 +1,4 @@
-FROM node:18 AS dev
+FROM node:20.11.1-alpine3.19 AS dev
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ RUN npm i @angular/cli@latest -g
 CMD ["ng","serve","--host", "0.0.0.0"]
 
 # Name the node stage "builder"
-FROM node:18 AS builder
+FROM node:20.11.1-alpine3.19 as builder
 
 # Set working directory
 WORKDIR /app
@@ -28,7 +28,7 @@ RUN npm i
 RUN npm run build:prod
 
 # nginx state for serving content
-FROM arm64v8/nginx AS prod
+FROM nginx:1.25.4-alpine AS prod
 
 # Set working directory to nginx asset directory
 WORKDIR /usr/share/nginx/html
