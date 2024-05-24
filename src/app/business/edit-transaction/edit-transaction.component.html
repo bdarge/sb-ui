@@ -1,50 +1,51 @@
 <h2 mat-dialog-title>{{title | translate}}</h2>
 <mat-dialog-content class="mat-typography" [formGroup]="form">
-  <mat-form-field class="full-width">
-    <input matInput
-           placeholder="Description"
-           formControlName="description">
+  <mat-form-field class="full-width" appearance="outline">
+    <input matInput placeholder="Description" formControlName="description">
     <mat-error *ngIf="form.get('description').hasError('required')">
       required
     </mat-error>
+    <mat-label>description</mat-label>
   </mat-form-field>
-
-  <mat-form-field>
-    <mat-select placeholder="Select Type" formControlName="requestType">
-      <mat-option *ngFor="let type of tTypes" [value]="type">
-        {{type}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-select placeholder="Select Customer" formControlName="customer" [compareWith]="compareObjects">
       <mat-option>
-        <ngx-mat-select-search [formControl]="customerSearchCtrl"
-                               i18n-search-customer
-                               [placeholderLabel]="'Search'"
-                               noEntriesFoundLabel="'No customer found'"
-                               [searching]="searching"></ngx-mat-select-search>
+        <ngx-mat-select-search [formControl]="customerSearchCtrl" i18n-search-customer [placeholderLabel]="'Search'"
+          noEntriesFoundLabel="'No customer found'" [searching]="searching"></ngx-mat-select-search>
       </mat-option>
       <mat-option *ngFor="let customer of (filteredCustomers | async) as data" [value]="customer">
         {{customer.name}}
       </mat-option>
     </mat-select>
+    <mat-label>customer</mat-label>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-select placeholder="Select Type" formControlName="requestType">
+      @for (r of requestTypes; track r) {
+      <mat-option [value]="r">{{r | uppercase }}</mat-option>
+      }
+    </mat-select>
+    <mat-error *ngIf="form.get('requestType').hasError('required')">
+      required
+    </mat-error>
+    <mat-label>request type</mat-label>
   </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Select delivery date"  [matDatepicker]="myDatepicker" formControlName="deliveryDate"
-           (click)="myDatepicker.open()">
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="Select delivery date" [matDatepicker]="myDatepicker" formControlName="deliveryDate"
+      (click)="myDatepicker.open()">
     <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
     <mat-datepicker #myDatepicker></mat-datepicker>
+    <mat-label>delivery date</mat-label>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-select placeholder="Select currency" formControlName="currency">
-      <mat-option *ngFor="let currency of currencies" [value]="currency">
-        {{currency}}
-      </mat-option>
+      @for (c of currencies; track c) {
+      <mat-option [value]="c.value">{{c.label}}</mat-option>
+      }
     </mat-select>
+    <mat-label>currency</mat-label>
   </mat-form-field>
 </mat-dialog-content>
 

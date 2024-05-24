@@ -7,7 +7,7 @@ import { EditCustomerComponent } from '../edit-customer/edit-customer.component'
 import { EditTransactionItemComponent } from '../edit-transaction-item/edit-transaction-item.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FontAwesomeIconsModule } from '../../shared/font.awesome.icons.module';
-
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -21,7 +21,11 @@ import { FontAwesomeIconsModule } from '../../shared/font.awesome.icons.module';
     imports: [
         SharedModule,
         HomeRoutingModule,
-        FontAwesomeIconsModule
+        FontAwesomeIconsModule,
+        NgxMaskDirective
+    ],
+    providers: [
+        provideNgxMask()
     ]
 })
 export class HomeModule { }

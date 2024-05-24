@@ -4,22 +4,23 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { AnimationsService } from './animations/animations.service';
 import { NotificationService } from './notifications/notification.service';
 import { LocalStorageService } from './local-storage/local-storage.service';
-import { ROUTE_ANIMATIONS_ELEMENTS, routeAnimations }  from './animations/route.animations';
+import { ROUTE_ANIMATIONS_ELEMENTS, routeAnimations } from './animations/route.animations';
 
 import {
   AppState,
   metaReducers,
   reducers
 } from './core.state';
-import {SettingsEffects} from './settings/settings.effects';
-import {EffectsModule} from '@ngrx/effects';
-import {StoreModule} from '@ngrx/store';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { SettingsEffects } from './settings/settings.effects';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import {
   selectSettingsLanguage,
-  selectTheme
+  selectTheme,
+  selectCurrency
 } from './settings/settings.selectors';
 import {
   FaIconLibrary,
@@ -46,19 +47,20 @@ import {
   faCog,
   faBars
 } from '@fortawesome/free-solid-svg-icons';
-import {HttpErrorInterceptor} from './http-interceptors/http-error.interceptor';
-import {AppErrorHandler} from './error-handler/app-error-handler.service';
-import {HttpRequestInterceptor} from './http-interceptors/http.interceptor';
+import { HttpErrorInterceptor } from './http-interceptors/http-error.interceptor';
+import { AppErrorHandler } from './error-handler/app-error-handler.service';
+import { HttpRequestInterceptor } from './http-interceptors/http.interceptor';
 
 export {
   AppState,
   LocalStorageService,
   AnimationsService,
   NotificationService,
-  selectTheme,
   ROUTE_ANIMATIONS_ELEMENTS,
   routeAnimations,
-  selectSettingsLanguage
+  selectTheme,
+  selectSettingsLanguage,
+  selectCurrency
 };
 
 @NgModule({
@@ -67,7 +69,7 @@ export {
     AnimationsService,
     NotificationService,
     LocalStorageService,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: AppErrorHandler },
   ],
@@ -128,7 +130,7 @@ export class CoreModule {
   constructor(
     @Optional()
     @SkipSelf()
-      parentModule: CoreModule,
+    parentModule: CoreModule,
     faIconLibrary: FaIconLibrary
   ) {
     if (parentModule) {

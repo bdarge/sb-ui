@@ -1,20 +1,23 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { SettingsState } from './settings.model';
 import {
-  actionSettingsChangeLanguage,
-  actionSettingsChangeTheme,
+  actionChangeLanguage,
+  actionChangeTheme,
+  actionChangeCurrency
 } from './settings.actions';
 
 export const initialState: SettingsState = {
   language: 'en',
-  theme: 'DEFAULT-THEME'
+  theme: 'DEFAULT-THEME',
+  currency: 'usd'
 };
 
 const reducer = createReducer(
   initialState,
   on(
-    actionSettingsChangeLanguage,
-    actionSettingsChangeTheme,
+    actionChangeLanguage,
+    actionChangeTheme,
+    actionChangeCurrency,
     (state, action) => ({ ...state, ...action })
    )
 )

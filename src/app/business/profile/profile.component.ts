@@ -26,9 +26,9 @@ export class ProfileComponent implements OnInit {
   })
 
   constructor(private fb: UntypedFormBuilder,
-              private configService: ConfigWebService,
-              private notificationService: NotificationService,
-              private localStorageSvc: LocalStorageService) {
+    private configService: ConfigWebService,
+    private notificationService: NotificationService,
+    private localStorageSvc: LocalStorageService) {
 
   }
 
@@ -37,38 +37,42 @@ export class ProfileComponent implements OnInit {
     const adminRoles = [1, 2]
     let isAdmin = false
     this.configService.getUser(acct.userId)
-      .subscribe(data => {
-        if (!data || !data.roles || !data.roles.find(r => r.id in adminRoles)) {
-          this.userForm.disable({ onlySelf: true });
-        } else {
-          if (data && data.roles && data.roles.find(r => r.id === 1)) {
-            isAdmin = true
+      .subscribe({
+        next: (data) => {
+          if (!data || !data.roles || !data.roles.find(r => r.id in adminRoles)) {
+            this.userForm.disable({ onlySelf: true });
+          } else {
+            if (data && data.roles && data.roles.find(r => r.id === 1)) {
+              isAdmin = true
+            }
           }
+
+          this.userForm.patchValue(data || {})
+
+          this.userForm.valueChanges.pipe(
+            debounceTime(1000),
+            distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)))
+            .subscribe((f) => {
+              this.save()
+            })
+        }, error: (e) => {
+          this.notificationService.error(e ? e.message : 'Failed to get user profile. ' + e)
         }
-
-        this.userForm.patchValue(data || {})
-
-        this.userForm.valueChanges.pipe(
-          debounceTime(1000),
-          distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)))
-          .subscribe((f) => {
-            this.save()
-          })
-      }, err => {
-        this.notificationService.error(err ? err.message : 'Failed to get user profile. ' + err)
       })
   }
 
   save() {
     if (this.userForm.valid) {
       this.configService.saveUser(this.userForm.value as User)
-        .subscribe((user) => {
-          if (user) {
-            this.userForm.patchValue(user as User,  { emitEvent: false });
-            this.notificationService.info('saved')
+        .subscribe({
+          next: (user) => {
+            if (user) {
+              this.userForm.patchValue(user as User, { emitEvent: false });
+              this.notificationService.info('saved')
+            }
+          }, error: (e) => {
+            this.notificationService.error(e ? e.message : 'failed to save. ' + e)
           }
-        }, err => {
-          this.notificationService.error(err ? err.message : 'failed to save. ' + err)
         });
     } else {
       this.validateAll(this.userForm)
@@ -88,7 +92,7 @@ export class ProfileComponent implements OnInit {
 
       const control = this.userForm.get(key)
       if (control instanceof UntypedFormControl) {
-        control.markAsTouched({onlySelf: true})
+        control.markAsTouched({ onlySelf: true })
       } else if (control instanceof UntypedFormGroup) {
         this.validateAll(control)
       }

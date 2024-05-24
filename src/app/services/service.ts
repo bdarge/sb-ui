@@ -23,7 +23,7 @@ export interface IService<T, Q> {
 
   page(request: PageRequest, query: Query): Observable<Page<T>>
 
-  getItems(id: string): Observable<Page<Q>>
+  getItems(id: number): Observable<Page<Q>>
 
   updateItem(item: Q): Observable<Q>
 

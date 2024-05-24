@@ -9,3 +9,11 @@
 .full-width {
   width: 100%;
 }
+
+mat-dialog-content > * {
+  margin: 5px 0;
+}
+
+mat-form-field {
+  width: 220px;
+}

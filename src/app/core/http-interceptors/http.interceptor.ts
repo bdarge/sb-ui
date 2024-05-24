@@ -1,22 +1,20 @@
-import { Injectable, Injector, ErrorHandler } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import {
   HttpEvent,
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
-  HttpErrorResponse
 } from '@angular/common/http';
-import {catchError, Observable} from 'rxjs';
-import {LocalStorageService} from '../local-storage/local-storage.service';
-import {Router} from '@angular/router';
-import {tap} from "rxjs/operators";
+import { Observable } from 'rxjs';
+import { LocalStorageService } from '../local-storage/local-storage.service';
+import { Router } from '@angular/router';
 
 /** Passes token */
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
   constructor(private injector: Injector,
-              private router: Router,
-              private localStorageSvc: LocalStorageService) {
+    private router: Router,
+    private localStorageSvc: LocalStorageService) {
   }
 
   intercept(

@@ -3,7 +3,7 @@
     <div class="col-sm-12"><h3>{{ 'business.settings.title' | translate }}</h3></div>
   </div>
   <br>
-  <ng-container *ngIf="settings$ | async as settings">
+  <ng-container *ngIf="settings$ | async as settings"> {{settings.language}}
     <div class="row">
       <div class="col-md-6 group" [ngClass]="routeAnimationsElements">
         <h4>{{ 'business.settings.general.title' | translate }}</h4>

@@ -2,6 +2,7 @@ import { createSelector } from '@ngrx/store';
 import { SettingsState } from './settings.model';
 import { selectSettingsState } from '../core.state';
 
+// based on feature
 export const selectSettings = createSelector(
   selectSettingsState,
   (state: SettingsState) => state
@@ -14,5 +15,13 @@ export const selectSettingsLanguage = createSelector(
 
 export const selectTheme = createSelector(
   selectSettings,
-  (settings) => settings.theme.toLowerCase()
+  (state: SettingsState) => state.theme.toLowerCase()
+);
+
+export const selectCurrency = createSelector(
+  selectSettings,
+  (state: SettingsState) => {
+    console.log(state)
+    return state.currency
+  }
 );

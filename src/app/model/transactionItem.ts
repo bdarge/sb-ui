@@ -1,8 +1,20 @@
 export class TransactionItem {
-  id: string;
+  id: number;
   description: string;
   qty: number;
   unit: string;
-  unitPrice: string;
-  transactionId: string;
+  currency: string;
+  unitPrice: number;
+  transactionId: number;
+}
+
+export interface Currency {
+  to: String;
+  base: String;
+  value: Number;
+}
+
+export interface CurrencyRequest {
+  base: String;
+  symbol: String;
 }

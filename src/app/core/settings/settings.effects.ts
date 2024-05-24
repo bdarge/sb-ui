@@ -16,11 +16,12 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
 import { AnimationsService } from '../animations/animations.service';
 
 import {
-  actionSettingsChangeLanguage, actionSettingsChangeTheme
+  actionChangeCurrency,
+  actionChangeLanguage, actionChangeTheme
 } from './settings.actions';
 
 import {
-  selectSettingsLanguage, selectTheme
+  selectSettingsLanguage, selectTheme, selectCurrency
 } from './settings.selectors';
 
 import { State } from './settings.model';
@@ -34,15 +35,16 @@ export class SettingsEffects {
     () =>
       this.actions$.pipe(
         ofType(
-          actionSettingsChangeLanguage,
-          actionSettingsChangeTheme
+          actionChangeLanguage,
+          actionChangeTheme,
+          actionChangeCurrency
         ),
         withLatestFrom(this.store.pipe(select(selectSettingsState))),
-        tap(([action, settings]) =>
+        tap(([_, settings]) =>
           this.localStorageService.setItem(SETTINGS_KEY, settings)
         )
       ),
-    {dispatch: false}
+    { dispatch: false }
   );
 
   setTranslateServiceLanguage = createEffect(
@@ -50,14 +52,16 @@ export class SettingsEffects {
       this.store.pipe(
         select(selectSettingsLanguage),
         distinctUntilChanged(),
-        tap(language => this.translateService.use(language))
+        tap(language => {
+          this.translateService.use(language)
+        })
       ),
-    {dispatch: false}
+    { dispatch: false }
   );
 
   updateTheme$ = createEffect(
     () =>
-      merge(INIT, this.actions$.pipe(ofType(actionSettingsChangeTheme))).pipe(
+      merge(INIT, this.actions$.pipe(ofType(actionChangeTheme))).pipe(
         withLatestFrom(this.store.pipe(select(selectTheme))),
         tap(([action, theme]) => {
           const classList = this.overlayContainer.getContainerElement()
@@ -71,7 +75,7 @@ export class SettingsEffects {
           classList.add(theme);
         })
       ),
-    {dispatch: false}
+    { dispatch: false }
   );
 
   constructor(

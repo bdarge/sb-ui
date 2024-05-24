@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { ROUTE_ANIMATIONS_ELEMENTS} from '../../core/core.module';
-import { animate, state, style, transition, trigger} from '@angular/animations';
-import { SettingsState, State} from '../../core/settings/settings.model';
-import { selectSettings} from '../../core/settings/settings.selectors';
-import {actionSettingsChangeLanguage, actionSettingsChangeTheme} from '../../core/settings/settings.actions';
+import { LocalStorageService, ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { SettingsState, State } from '../../core/settings/settings.model';
+import { selectSettings } from '../../core/settings/settings.selectors';
+import { actionChangeCurrency, actionChangeLanguage, actionChangeTheme } from '../../core/settings/settings.actions';
+import { Language } from 'app/model/user';
 
 
 @Component({
@@ -30,24 +31,32 @@ export class SettingComponent implements OnInit {
     { value: 'BLACK-THEME', label: 'dark' }
   ];
 
-  languages = [
-    { value: 'en', label: 'en' },
-    { value: 'sv', label: 'sv' }
-  ];
+  languages = []
+
+  languageObjs = []
 
   settings$: Observable<SettingsState>
 
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<State>, private localStorageSvc: LocalStorageService) { }
 
   ngOnInit() {
     this.settings$ = this.store.pipe(select(selectSettings));
+    this.languageObjs = this.localStorageSvc.getItem("LANGUAGES");
+
+    this.languageObjs.map((l) => {
+      this.languages.push({
+        value: l.name, label: l.name.toUpperCase()
+      })
+    });
   }
 
   onThemeSelect({ value: theme }) {
-    this.store.dispatch(actionSettingsChangeTheme({ theme }));
+    this.store.dispatch(actionChangeTheme({ theme }));
   }
 
   onLanguageSelect({ value: language }) {
-    this.store.dispatch(actionSettingsChangeLanguage({ language }));
+    this.store.dispatch(actionChangeLanguage({ language }));
+    let obj = this.languageObjs.find(i => i.name == language) as Language;
+    this.store.dispatch(actionChangeCurrency({ currency: obj.currency }));
   }
 }

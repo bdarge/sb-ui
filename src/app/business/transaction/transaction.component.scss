@@ -25,6 +25,12 @@ tr.element-row:not(.expanded-row):active {
   border-bottom-width: 0;
 }
 
+.disposition-table {
+  .mat-mdc-row .mat-mdc-cell {
+    cursor: pointer;
+  }
+}
+
 .element-detail {
   overflow: hidden;
   display: flex;
@@ -32,10 +38,40 @@ tr.element-row:not(.expanded-row):active {
   .element-detail-row {
     padding-top: 30px;
     padding-bottom: 30px;
+    display: flex;
+    align-items: flex-start;
   }
 
   .element-detail-row-table {
-    padding-bottom: 30px;
+    max-width: 100%;
+    // width: 650px;
+    overflow: auto;
+    margin-bottom: 20px;
+
+    table {
+      width: 900px;
+      word-break: break-all;
+      word-wrap: break-word;
+    }
+    .mat-column-description{
+      max-width: 90px;
+    }
+    .mat-column-unit{
+      max-width: 70px;
+    }
+    .mat-column-unitPrice{
+      max-width: 60px;
+    }
+    .mat-column-qty{
+      max-width: 60px;
+    }
+    .mat-mdc-row .mat-mdc-cell {
+      cursor: pointer;
+    }
+    .mat-mdc-row:hover .mat-mdc-cell {
+      border-color: currentColor;
+      font-weight: bold;
+    }
   }
 }
 

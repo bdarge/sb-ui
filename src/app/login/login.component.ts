@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators} from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { jwtDecode } from 'jwt-decode'
 import {
   LocalStorageService,
   ROUTE_ANIMATIONS_ELEMENTS,
   routeAnimations
 } from '../core/core.module';
-import {Router} from '@angular/router';
-import {AuthWebService} from '../http/auth-web.service';
+import { Router } from '@angular/router';
+import { AuthWebService } from '../http/auth-web.service';
+import { Language } from '../model/user';
 
 @Component({
   selector: 'app-login',
@@ -41,6 +42,10 @@ export class LoginComponent implements OnInit {
           const decoded = jwtDecode(result.token)
           this.localStorageSvc.setItem('ACCOUNT', decoded);
           this.localStorageSvc.setItem('TOKEN', result.token);
+          // get it from db? 
+          this.localStorageSvc.setItem('LANGUAGES', [
+            { 'name': 'en', 'currency': 'usd' } as Language,
+            { 'name': 'sv', 'currency': 'sek' } as Language]);
           this.router.navigate(['business']);
         })
     }

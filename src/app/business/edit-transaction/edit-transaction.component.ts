@@ -9,6 +9,8 @@ import { TransactionWebService } from '../../http/transaction-web.service';
 import { CustomerWebService } from '../../http/customer-web.service';
 import { Transaction } from '../../model/transaction';
 import { Account } from '../../model/account';
+import { Store } from '@ngrx/store';
+import { State } from 'app/core/settings/settings.model';
 
 @Component({
   selector: 'app-edit-transaction',
@@ -19,8 +21,8 @@ export class EditTransactionComponent implements OnInit {
   public form: UntypedFormGroup;
   public title: string;
   public customer: Customer;
-  public currencies = ['USD', 'SEK'];
-  public tTypes = ['order', 'quote'];
+  public currencies = [];
+  public requestTypes = ['order', 'quote'];
   public customerSearchCtrl: FormControl<string> = new FormControl<string>('')
   public searching = false;
   public filteredCustomers: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1)
@@ -32,6 +34,7 @@ export class EditTransactionComponent implements OnInit {
     private customersService: CustomerWebService,
     private notificationService: NotificationService,
     private localStorageSvc: LocalStorageService,
+    private store: Store<State>,
     private dialogRef: MatDialogRef<EditTransactionComponent>,
     @Inject(MAT_DIALOG_DATA) {
       id, description, requestType, currency, customer, deliveryDate
@@ -39,8 +42,17 @@ export class EditTransactionComponent implements OnInit {
 
     this.customer = customer;
 
-    this.title = id ? 'business.transaction.edit.title' : 'business.transaction.add.title';
-
+    if(!id) {
+      this.title = 'business.transaction.add.title'
+      let state: State
+      this.store.subscribe(s => state = s) 
+      if (state) {
+        currency = state.settings.currency;
+      }
+    } else {
+      this.title = 'business.transaction.edit.title'
+    }
+  
     this.form = this.fb.group({
       id: [id],
       description: [description, Validators.required],
@@ -55,6 +67,13 @@ export class EditTransactionComponent implements OnInit {
     }
 
     this.onDestroy = new Subject<void>();
+
+    let lst = this.localStorageSvc.getItem("LANGUAGES");
+    lst.map((l) => {
+      this.currencies.push({
+        value: l.currency, label: l.currency.toUpperCase()
+      })
+    });
   }
 
   ngOnInit() {
@@ -79,10 +98,10 @@ export class EditTransactionComponent implements OnInit {
           this.searching = false;
           v.subscribe(e => this.filteredCustomers.next(e))
         },
-        error: (error) => {
+        error: (e) => {
           this.searching = false;
           // handle error...
-          this.notificationService.error(error && error.message ? error.message : 'Failed to load customers. ' + error);
+          this.notificationService.error(e && e.message ? e.message : 'Failed to load customers. ' + e);
         }
       });
   }

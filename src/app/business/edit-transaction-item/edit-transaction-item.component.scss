@@ -10,3 +10,17 @@ textarea {
   height: 100px;
   resize: vertical;
 }
+
+mat-dialog-content > * {
+  margin: 5px 0;
+}
+
+.extra mat-form-field + mat-form-field {
+  margin-left: 10px;
+  width: 270px;
+}
+
+.extra {
+  display: flex;
+  align-items: flex-start;
+}

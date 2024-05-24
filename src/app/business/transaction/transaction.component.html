@@ -1,16 +1,22 @@
 <div class="container">
-  <button mat-raised-button color="primary" (click)="add()" data-testid="add-btn">{{ "business.transaction.btn.add" | translate }}</button>
-  <br/>
-  <br/>
+  <div class="row">
+    <div class="col-sm-6">
+      <button class="float-start" mat-raised-button color="primary" (click)="add()" data-testid="add-btn">{{
+        "business.transaction.btn.add" |
+        translate }}</button>
+    </div>
+  </div>
+
+  <br />
+  <br />
   <mat-form-field [ngClass]="routeAnimationsElements">
     <input matInput placeholder="{{ 'business.transaction.search' | translate}}" #search
-           (input)="dataSource.queryBy({search: search.value})" data-testid="search-input">
+      (input)="dataSource.queryBy({search: search.value})" data-testid="search-input">
   </mat-form-field>
 
   <div class="bs-container mat-elevation-z8">
-    <table mat-table class="disposition-table"
-               [dataSource]="dataSource" matSort
-               [ngClass]="routeAnimationsElements" multiTemplateDataRows data-testid="tran-table">
+    <table mat-table class="disposition-table" [dataSource]="dataSource" matSort [ngClass]="routeAnimationsElements"
+      multiTemplateDataRows data-testid="tran-table">
       <!-- Order number  -->
       <ng-container matColumnDef="transactionNumber">
         <th mat-header-cell *matHeaderCellDef>{{'business.grid.head.transaction' | translate}}</th>
@@ -29,7 +35,8 @@
 
       <!-- CreatedAt  -->
       <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by Creation Date" mat-sort-header>{{'business.grid.head.created' | translate}}</th>
+        <th mat-header-cell *matHeaderCellDef sortActionDescription="Sort by Creation Date" mat-sort-header>
+          {{'business.grid.head.created' | translate}}</th>
         <td mat-cell class="description-cell" *matCellDef="let transaction">
           {{transaction.model.createdAt | date:'medium'}}
         </td>
@@ -47,7 +54,8 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell class="description-cell" *matCellDef="let elt">
-          <button mat-button class="btn-link" aria-label="delete" (click)="deleteTransaction(elt); $event.stopPropagation()">
+          <button mat-button class="btn-link" aria-label="delete"
+            (click)="deleteTransaction(elt); $event.stopPropagation()">
             <fa-icon icon="trash"></fa-icon>
           </button>
         </td>
@@ -57,66 +65,54 @@
       <ng-container matColumnDef="transactionItem">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell class="description-cell" *matCellDef="let elt">
-          <fa-icon icon="{{expandedElement === elt? 'angle-up': 'angle-down'}}"
-                   (click)="toggleRow(elt, $event)" size="x"
-                   matTooltip="show or hide transaction items..."
-                   [matTooltipShowDelay]="showDelay.value"
-                   [matTooltipHideDelay]="hideDelay.value"></fa-icon>
+          <fa-icon icon="{{expandedElement === elt? 'angle-up': 'angle-down'}}" (click)="toggleRow(elt, $event)"
+            size="x" matTooltip="show or hide transaction items..." [matTooltipShowDelay]="showDelay.value"
+            [matTooltipHideDelay]="hideDelay.value"></fa-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-          <div class="element-detail"
-               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
             <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="space-between end">
-              <div class="element-detail-row" fxFlex="33">
-                  <button mat-raised-button color="primary" (click)="editItem(element, null)">
-                    {{ "business.transaction.btn.transactionItems" | translate }}
-                  </button>
+              <div class="element-detail-row">
+                <button mat-raised-button color="primary" (click)="editItem(element, null)">
+                  {{ "business.transaction.btn.transactionItems" | translate }}
+                </button>
               </div>
 
-              <div class="element-detail-row-table" fxFlex="67">
-                <table mat-table
-                       [dataSource]="element.model.items" [ngClass]="routeAnimationsElements">
+              <div class="element-detail-row-table" fxFlex="33">
+                <table mat-table [dataSource]="element.model.items" [ngClass]="routeAnimationsElements">
                   <ng-container matColumnDef="description">
-                    <th mat-header-cell *matHeaderCellDef>description</th>
-                    <td mat-cell class="description-cell"
-                              *matCellDef="let transactionItem">{{transactionItem.description}}</td>
+                    <th mat-header-cell *matHeaderCellDef>Description</th>
+                    <td mat-cell class="description-cell" *matCellDef="let transactionItem">
+                      {{transactionItem.description}}</td>
                   </ng-container>
                   <ng-container matColumnDef="unit">
-                    <th mat-header-cell *matHeaderCellDef>unit /hrs</th>
-                    <td mat-cell class="description-cell"
-                              *matCellDef="let transactionItem">{{transactionItem.unit}}</td>
+                    <th mat-header-cell *matHeaderCellDef>Unit /hrs</th>
+                    <td mat-cell class="unit-cell" *matCellDef="let transactionItem">{{transactionItem.unit}}
+                    </td>
                   </ng-container>
                   <ng-container matColumnDef="unitPrice">
-                    <th mat-header-cell *matHeaderCellDef>unitPrice</th>
-                    <td mat-cell class="description-cell"
-                              *matCellDef="let transactionItem">{{transactionItem.unitPrice | currency}}</td>
+                    <th mat-header-cell *matHeaderCellDef>Unit price</th>
+                    <td mat-cell class="unitprice-cell" *matCellDef="let transactionItem">
+                      {{currencySymbol(element.model.currency)}} {{transactionItem.unitPrice}}</td>
                   </ng-container>
                   <ng-container matColumnDef="qty">
-                    <th mat-header-cell *matHeaderCellDef>qty</th>
-                    <td mat-cell  class="description-cell"
-                              *matCellDef="let transactionItem">{{transactionItem.qty}}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="edit">
-                    <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell class="description-cell" *matCellDef="let transactionItem">
-                      <button mat-button class="btn-link" aria-label="edit" (click)="editItem(element, transactionItem)">
-                        <fa-icon icon="edit"></fa-icon>
-                      </button>
-                    </td>
+                    <th mat-header-cell *matHeaderCellDef>Qty</th>
+                    <td mat-cell class="qty-cell" *matCellDef="let transactionItem">{{transactionItem.qty}}</td>
                   </ng-container>
                   <ng-container matColumnDef="delete">
                     <th mat-header-cell *matHeaderCellDef></th>
-                    <td mat-cell class="description-cell" *matCellDef="let transactionItem">
-                      <button mat-button class="btn-link" aria-label="delete" (click)="deleteItem(element, transactionItem)">
+                    <td mat-cell class="delete-cell" *matCellDef="let transactionItem">
+                      <button mat-button class="btn-link" aria-label="delete"
+                        (click)="deleteItem(element, transactionItem)">
                         <fa-icon icon="trash"></fa-icon>
                       </button>
                     </td>
                   </ng-container>
                   <tr mat-header-row *matHeaderRowDef="displayedItemColumns; sticky: true"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedItemColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedItemColumns" (click)="editItem(element, row)"></tr>
                 </table>
               </div>
             </div>
@@ -126,27 +122,19 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 
-      <tr mat-row *matRowDef="let element; columns: displayedColumns;"
-               class="element-row"
-               [class.expanded-row]="expandedElement == element"
-               (click)="toggleRow(element, $event);">
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row"
+        [class.expanded-row]="expandedElement == element" (click)="toggleRow(element, $event);">
       </tr>
 
       <!--Set trigger conditions, and paint "odd" rows grey-->
-      <tr mat-row *matRowDef="let row; columns: ['expandedDetail'];"
-               class="detail-row">
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail'];" class="detail-row">
       </tr>
 
     </table>
 
-    <mat-paginator *ngIf="dataSource.page$ | async as page"
-                   [length]="page.total"
-                   [pageSizeOptions]="pageSizeOptions"
-                   (page)="dataSource.fetch($event.pageIndex, $event.pageSize)"
-                   aria-label="Select page"
-                   [showFirstLastButtons]=true
-                   [ngClass]="routeAnimationsElements">
+    <mat-paginator *ngIf="dataSource.page$ | async as page" [length]="page.total" [pageSizeOptions]="pageSizeOptions"
+      (page)="dataSource.fetch($event.pageIndex, $event.pageSize)" aria-label="Select page" [showFirstLastButtons]=true
+      [ngClass]="routeAnimationsElements">
     </mat-paginator>
   </div>
 </div>
-

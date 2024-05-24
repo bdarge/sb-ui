@@ -34,3 +34,8 @@ export interface Role {
   id: number;
   name: string;
 }
+
+export interface Language {
+  name: string;
+  currency: string;
+}

@@ -46,7 +46,7 @@ export function initConfig(configService: AppConfigService) {
       provide: APP_INITIALIZER,
       useFactory: initConfig,
       deps: [AppConfigService],
-      multi: true,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

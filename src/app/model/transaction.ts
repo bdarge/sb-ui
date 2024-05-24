@@ -4,7 +4,7 @@ import { TransactionItem } from './transactionItem';
 import { Query } from './page';
 
 export interface Transaction {
-  id: string;
+  id: number;
   description: string;
   createdAt: string;
   requestType: string;

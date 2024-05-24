@@ -1,7 +1,7 @@
 import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
-import { of} from 'rxjs';
+import { Observable, of} from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { LocalStorageService, NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
+import { LocalStorageService, ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
 import { EditTransactionComponent } from '../edit-transaction/edit-transaction.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { EditTransactionItemComponent } from '../edit-transaction-item/edit-transaction-item.component';
@@ -13,6 +13,10 @@ import { IModel, TransactionViewModel } from '../../model/transactionViewModel';
 import { switchMap} from 'rxjs/operators';
 import { TranQuery, Transaction } from '../../model/transaction';
 import { TransactionItem } from '../../model/transactionItem';
+import { SettingsState, State } from 'app/core/settings/settings.model';
+import { selectSettings } from '../../core/settings/settings.selectors';
+import { Store, select } from '@ngrx/store';
+import { getCurrencySymbol } from "@angular/common";
 
 @Component({
   selector: 'app-transaction',
@@ -31,17 +35,19 @@ export class TransactionComponent implements OnInit {
   title = 'Business X'
   dataSource: TableDatasource<IModel, Query>;
   displayedColumns = [ 'transactionNumber', 'customer', 'createdAt', 'edit', 'delete', 'transactionItem'];
-  displayedItemColumns = ['description', 'unit', 'unitPrice', 'qty', 'edit', 'delete'];
+  displayedItemColumns = ['description', 'unit', 'unitPrice', 'qty', 'delete'];
   expandedElement: any;
   showDelay = new UntypedFormControl();
   hideDelay = new UntypedFormControl();
   pageSizeOptions = [3, 5, 10];
+  setting$: Observable<SettingsState>;
+  currencies = [];
 
   constructor(private transactionWebService: TransactionWebService,
               private localStorageSvc: LocalStorageService,
-              private notificationService: NotificationService,
               private dialog: MatDialog,
-              private ref: ChangeDetectorRef) {
+              private ref: ChangeDetectorRef,
+              private store: Store<State>) {
   }
 
   ngOnInit() {
@@ -66,10 +72,17 @@ export class TransactionComponent implements OnInit {
       {active: 'id', direction: 'desc'},
       {search: '', requestType: ''}
     );
+    this.setting$ = this.store.pipe(select(selectSettings));
+    let lst = this.localStorageSvc.getItem("LANGUAGES");
+    lst.map((l) => {
+      this.currencies.push({
+        value: l.currency, label: l.currency.toUpperCase()
+      })
+    });
   }
 
   /**
-   * expand or collapse a row
+   * toggle a row's visibility
    */
   toggleRow(row: TransactionViewModel, event: Event) {
     this.expandedElement = this.expandedElement === row ? null: row
@@ -83,7 +96,7 @@ export class TransactionComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = '600px';
     dialogConfig.data = viewModel.model;
-
+    // console.log(viewModel);
     const dialogRef = this.dialog.open(EditTransactionComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(data => {
@@ -96,7 +109,13 @@ export class TransactionComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '600px';
-    dialogConfig.data = { currency: 'USD' } as Transaction;
+    let state: State
+    this.store.subscribe(s => state = s);
+    let currency = 'usd';
+    if (state) {
+      currency = state.settings.currency;
+    }
+    dialogConfig.data = { currency } as Transaction;
 
     const dialogRef = this.dialog.open(EditTransactionComponent, dialogConfig);
 
@@ -139,8 +158,14 @@ export class TransactionComponent implements OnInit {
   _refreshItem(tranViewModel: TransactionViewModel) {
     this.transactionWebService.getItems(tranViewModel.model.id)
       .subscribe((result) => {
-        tranViewModel.model.items = result.data;
+        if (result.data) {
+          tranViewModel.model.items = result.data.sort((a,b) => a.id - b.id);
+        }
         this.ref.detectChanges();
       });
+  }
+
+  currencySymbol(currency: string) {
+    return getCurrencySymbol(currency.toUpperCase(), "narrow");
   }
 }

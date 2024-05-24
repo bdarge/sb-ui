@@ -53,7 +53,7 @@ export class TransactionWebService implements IService<Transaction, TransactionI
     return this.http.delete<boolean>(`${this.TRANSACTION_URL}/${item.transactionId}/item/${item.id}`);
   }
 
-  getItems(transactionId: string): Observable<Page<TransactionItem>> {
+  getItems(transactionId: number): Observable<Page<TransactionItem>> {
     return this.http.get<Page<TransactionItem>>(`${this.TRANSACTION_URL}/${transactionId}/item`);
   }
 
