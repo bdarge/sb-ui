@@ -23,18 +23,18 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const token = this.localStorageSvc.getItem('TOKEN');
     if (token && !request.url.includes('auth/refresh-token')) {
-      const authReq = request.clone({
+      const inReq = request.clone({
         withCredentials: true,
         setHeaders: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         }
       });
-      return next.handle(authReq);
+      return next.handle(inReq);
     }
-    const authReq = request.clone({
+    const req = request.clone({
       withCredentials: true,
     });
-    return next.handle(authReq);
+    return next.handle(req);
   }
 }

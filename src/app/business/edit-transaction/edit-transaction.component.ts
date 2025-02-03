@@ -68,7 +68,7 @@ export class EditTransactionComponent implements OnInit {
 
     this.onDestroy = new Subject<void>();
 
-    let lst = this.localStorageSvc.getItem("LANGUAGES");
+    const lst = this.localStorageSvc.getItem('LANGUAGES');
     lst.map((l) => {
       this.currencies.push({
         value: l.currency, label: l.currency.toUpperCase()

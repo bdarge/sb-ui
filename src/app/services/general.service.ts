@@ -1,8 +1,8 @@
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Injectable, NgZone } from '@angular/core';
-import { LocalStorageService } from "../core/local-storage/local-storage.service";
-import {jwtDecode} from "jwt-decode/build/esm";
+import { LocalStorageService } from '../core/local-storage/local-storage.service';
+
 
 @Injectable()
 export class GeneralService {

@@ -6,7 +6,7 @@ import { CurrencyRequest, TransactionItem } from '../../model/transactionItem';
 import { Transaction } from '../../model/transaction';
 import { LocalStorageService } from '../../core/core.module';
 import { SbService } from 'app/http/sb.service';
-import { getCurrencySymbol } from "@angular/common";
+import { getCurrencySymbol } from '@angular/common';
 
 @Component({
   selector: 'app-edit-transaction-item',
@@ -49,7 +49,7 @@ export class EditTransactionItemComponent implements OnInit {
       qty: [item.qty, Validators.required]
     });
 
-    let lst = this.localStorageSvc.getItem("LANGUAGES");
+    const lst = this.localStorageSvc.getItem('LANGUAGES');
     lst.map((l) => {
       this.currencies.push({
         value: l.currency, label: l.currency.toUpperCase()
@@ -93,18 +93,19 @@ export class EditTransactionItemComponent implements OnInit {
   }
 
   currencyChange() {
-    if (this.currency == this.transaction.currency) {
+    if (this.currency === this.transaction.currency) {
       return;
     }
-    let req = {
-      "symbol": this.currency.toUpperCase(),
-      "base": this.transaction.currency.toUpperCase()
+    const req = {
+      'symbol': this.currency.toUpperCase(),
+      'base': this.transaction.currency.toUpperCase()
     } as CurrencyRequest
+
     this.sbSvc.convert(req).subscribe(
       {
         next: (response) => {
           if (response && response.value) {
-            let v = Math.round((response.value.valueOf() * this.form.get('unitPrice').value + Number.EPSILON) * 100) / 100
+            const v = Math.round((response.value.valueOf() * this.form.get('unitPrice').value + Number.EPSILON) * 100) / 100
             this.convertedCurrency = v;
           }
         },
@@ -115,6 +116,6 @@ export class EditTransactionItemComponent implements OnInit {
   }
 
   currencySymbol(currency: string) {
-    return getCurrencySymbol(currency, "narrow").toUpperCase();
+    return getCurrencySymbol(currency, 'narrow').toUpperCase();
   }
 }

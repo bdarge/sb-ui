@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../model/user';
 import { AppConfigService } from '../services/app.config.service'
-import { Environment } from "../../environments/environment.interface";
+import { Environment } from '../../environments/environment.interface';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class AuthWebService {
   config: Environment = null

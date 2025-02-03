@@ -16,7 +16,8 @@ import { TransactionItem } from '../../model/transactionItem';
 import { SettingsState, State } from 'app/core/settings/settings.model';
 import { selectSettings } from '../../core/settings/settings.selectors';
 import { Store, select } from '@ngrx/store';
-import { getCurrencySymbol } from "@angular/common";
+import { getCurrencySymbol } from '@angular/common';
+import { constant } from 'cypress/types/lodash';
 
 @Component({
   selector: 'app-transaction',
@@ -73,7 +74,7 @@ export class TransactionComponent implements OnInit {
       {search: '', requestType: ''}
     );
     this.setting$ = this.store.pipe(select(selectSettings));
-    let lst = this.localStorageSvc.getItem("LANGUAGES");
+    const lst = this.localStorageSvc.getItem('LANGUAGES');
     lst.map((l) => {
       this.currencies.push({
         value: l.currency, label: l.currency.toUpperCase()
@@ -109,11 +110,11 @@ export class TransactionComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '600px';
-    let state: State
-    this.store.subscribe(s => state = s);
+    let st: State
+    this.store.subscribe(s => st = s);
     let currency = 'usd';
-    if (state) {
-      currency = state.settings.currency;
+    if (st) {
+      currency = st.settings.currency;
     }
     dialogConfig.data = { currency } as Transaction;
 
@@ -166,6 +167,6 @@ export class TransactionComponent implements OnInit {
   }
 
   currencySymbol(currency: string) {
-    return getCurrencySymbol(currency.toUpperCase(), "narrow");
+    return getCurrencySymbol(currency.toUpperCase(), 'narrow');
   }
 }

@@ -8,14 +8,14 @@ import {
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
-import { AuthWebService } from "../../http/auth-web.service";
-import { jwtDecode} from "jwt-decode";
-import { LocalStorageService } from "../local-storage/local-storage.service";
+import { AuthWebService } from '../../http/auth-web.service';
+import { jwtDecode} from 'jwt-decode';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 /** Passes HttpErrorResponse to application-wide error handler */
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  private isRefreshing: boolean = false;
+  private isRefreshing = false;
 
   constructor(private injector: Injector, private auth: AuthWebService, private localStorageSvc: LocalStorageService) {
   }
@@ -27,7 +27,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(
         (error: any): Observable<any> => {
-          if (error instanceof HttpErrorResponse && !request.url.includes('auth/login') && error.status == 401) {
+          if (error instanceof HttpErrorResponse && !request.url.includes('auth/login') && error.status === 401) {
             return this.handle401Error(request, next);
           }
           return throwError(() => error);

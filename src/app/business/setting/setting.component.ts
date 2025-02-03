@@ -41,7 +41,7 @@ export class SettingComponent implements OnInit {
 
   ngOnInit() {
     this.settings$ = this.store.pipe(select(selectSettings));
-    this.languageObjs = this.localStorageSvc.getItem("LANGUAGES");
+    this.languageObjs = this.localStorageSvc.getItem('LANGUAGES');
 
     this.languageObjs.map((l) => {
       this.languages.push({
@@ -56,7 +56,7 @@ export class SettingComponent implements OnInit {
 
   onLanguageSelect({ value: language }) {
     this.store.dispatch(actionChangeLanguage({ language }));
-    let obj = this.languageObjs.find(i => i.name == language) as Language;
+    const obj = this.languageObjs.find(i => i.name === language) as Language;
     this.store.dispatch(actionChangeCurrency({ currency: obj.currency }));
   }
 }
