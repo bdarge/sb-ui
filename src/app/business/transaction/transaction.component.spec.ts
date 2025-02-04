@@ -13,21 +13,45 @@ import {TranslateModule} from '@ngx-translate/core';
 import {Page, PageRequest, Query} from '../../model/page';
 import {from, Observable} from 'rxjs';
 import {Transaction} from '../../model/transaction';
+import {Store} from '@ngrx/store';
 
-describe('OrderComponent', () => {
+describe('TransactionComponent', () => {
   let component: TransactionComponent;
   let fixture: ComponentFixture<TransactionComponent>;
-  let orderServiceStub: Partial<TransactionWebService>;
+  let tServiceStub = jasmine.createSpyObj(['page']);
+  const localStorageSvc = jasmine.createSpyObj(['setItem', 'getItem']);
+  localStorageSvc.getItem.and.returnValue([{name: 'en', currency: 'usd'}, {name: 'fr', currency: 'eu'}]);
+  const testStore = jasmine.createSpyObj('Store', ['pipe']);
 
   beforeEach(waitForAsync(() => {
-    orderServiceStub = {
+    const t = {
+      id: 4,
+      description: 'bolt',
+      createdAt: '1/1/2026',
+      requestType: 'order',
+      account: {accountId: 434, email: 'bob', userId: 323, businessId: '', roles: ['']},
+      customer: {
+        id: '434',
+        name: 'Tom',
+        street: '434 dummy',
+        postalCode: '20202',
+        city: 'aa',
+        country: 'usa',
+        email: 'w@d.com',
+        phone: '555-343-3434',
+        updatedAt: '3/23/2011',
+        createdAt: '3/23/2011'
+      },
+      comment: 'my comment',
+      deliveryDate: '2/1/2026',
+      invoiceNumber: 382938,
+      currency: 'USD',
+    } as Transaction
+    tServiceStub = {
       page(request: PageRequest, query: Query): Observable<Page<Transaction>> {
         return from(new Promise<Page<Transaction>>((resolve, reject) => {
           resolve({
-            data: [{
-              id: '1',
-              description: 'alex'
-            } as Transaction],
+            data: [t],
             total: 1,
             limit: request.size,
             page: request.page
@@ -45,12 +69,18 @@ describe('OrderComponent', () => {
       ],
       declarations: [ TransactionComponent ],
       providers: [
-        LocalStorageService,
+        {
+          provide: LocalStorageService,
+          useValue: localStorageSvc
+        },
         NotificationService,
         MatDialog,
         {
           provide: TransactionWebService,
-          useValue: orderServiceStub
+          useValue: tServiceStub
+        },
+        {
+          provide: Store, useValue: testStore
         }
       ]
     })

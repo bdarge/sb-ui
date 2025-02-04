@@ -1,7 +1,7 @@
 import { initialState, settingsReducer } from './settings.reducer';
 
 import {
-  actionSettingsChangeLanguage
+  actionChangeLanguage
 } from './settings.actions';
 
 describe('SettingsReducer', () => {
@@ -12,7 +12,7 @@ describe('SettingsReducer', () => {
   });
 
   it('should update language', () => {
-    const action = actionSettingsChangeLanguage({ language: 'sv' });
+    const action = actionChangeLanguage({ language: 'sv' });
     const state = settingsReducer(undefined, action);
     expect(state.language).toEqual('sv');
   });

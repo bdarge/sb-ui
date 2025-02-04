@@ -12,15 +12,39 @@ import {TransactionWebService} from '../../http/transaction-web.service';
 import {LocalStorageService} from '../../core/local-storage/local-storage.service';
 import {CustomerWebService} from '../../http/customer-web.service';
 import {Transaction} from '../../model/transaction';
+import { Store } from '@ngrx/store';
 
-describe('EditOrderComponent', () => {
+describe('EditTransactionComponent', () => {
   let component: EditTransactionComponent;
   let fixture: ComponentFixture<EditTransactionComponent>;
-  let orderServiceStub: Partial<TransactionWebService>;
-  let customerServiceStub: Partial<CustomerWebService>;
-  const order = {
-    id: '4',
-    description: 'bolt'
+  const tServiceStub: Partial<TransactionWebService> = jasmine.createSpyObj(['page']);
+  const customerServiceStub: Partial<CustomerWebService> = jasmine.createSpyObj(['page']);
+  const localStorageSvc = jasmine.createSpyObj(['setItem', 'getItem']);
+  localStorageSvc.getItem.and.returnValue([{name: 'en', currency: 'usd'}, {name: 'fr', currency: 'eu'}]);
+  const testStore = jasmine.createSpyObj(['Store', ['pipe'], 'subscribe']);
+
+  const t = {
+    id: 4,
+    description: 'bolt',
+    createdAt: '1/1/2026',
+    requestType: 'order',
+    account: {accountId: 434, email: 'bob', userId: 323, businessId: '', roles: ['']},
+    customer: {
+      id: '434',
+      name: 'Tom',
+      street: '434 dummy',
+      postalCode: '20202',
+      city: 'aa',
+      country: 'usa',
+      email: 'w@d.com',
+      phone: '555-343-3434',
+      updatedAt: '3/23/2011',
+      createdAt: '3/23/2011'
+    },
+    comment: 'my comment',
+    deliveryDate: '2/1/2026',
+    invoiceNumber: 382938,
+    currency: 'USD',
   } as Transaction
 
   beforeEach(waitForAsync(() => {
@@ -34,10 +58,12 @@ describe('EditOrderComponent', () => {
       ],
       declarations: [EditTransactionComponent],
       providers: [
-        LocalStorageService,
+        {
+          provide: LocalStorageService, useValue: localStorageSvc
+        },
         NotificationService,
         {
-          provide: TransactionWebService, useValue: orderServiceStub
+          provide: TransactionWebService, useValue: tServiceStub
         },
         {
           provide: CustomerWebService, useValue: customerServiceStub
@@ -48,7 +74,10 @@ describe('EditOrderComponent', () => {
         },
         {
           provide: MAT_DIALOG_DATA,
-          useValue: {order}
+          useValue: {t}
+        },
+        {
+          provide: Store, useValue: testStore
         }]
     })
       .compileComponents();

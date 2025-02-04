@@ -4,10 +4,13 @@ import { SettingComponent } from './setting.component';
 import {of} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {TranslateModule} from '@ngx-translate/core';
+import { LocalStorageService } from '../../core/local-storage/local-storage.service';
 
 describe('SettingComponent', () => {
   let component: SettingComponent;
   let fixture: ComponentFixture<SettingComponent>;
+  const localStorageSvc = jasmine.createSpyObj(['setItem', 'getItem']);
+  localStorageSvc.getItem.and.returnValue([{name: 'en'}, {name: 'fr'}])
   const testStore = jasmine.createSpyObj('Store', ['pipe']);
 
   beforeEach(waitForAsync(() => {
@@ -18,6 +21,10 @@ describe('SettingComponent', () => {
       ],
       declarations: [ SettingComponent ],
       providers: [
+        {
+          provide: LocalStorageService,
+          useValue: localStorageSvc
+        },
         {
           provide: Store, useValue: testStore
         }]

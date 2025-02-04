@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "./src",
+    "cypress",
+    ".eslintrc.js",
+    "set-env.ts",
+    "cypress.config.ts"
+  ],
+  "exclude": []
+}
