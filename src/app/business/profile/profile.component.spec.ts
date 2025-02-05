@@ -3,7 +3,7 @@ import { ProfileComponent } from './profile.component';
 import {SharedModule} from '../../shared/shared.module';
 import {FontAwesomeIconsModule} from '../../shared/font.awesome.icons.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {NotificationService} from '../../core/notifications/notification.service';
 import {MatDialog} from '@angular/material/dialog';
@@ -15,6 +15,7 @@ import { Account } from '../../model/account';
 import {AddressFormComponent} from '../address-form/address-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -60,31 +61,31 @@ describe('ProfileComponent', () => {
     getUserSpy = configWebServiceStub.getUser.and.returnValue(of(user))
 
     TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
+    declarations: [ProfileComponent, AddressFormComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [SharedModule,
         FormsModule,
         FontAwesomeIconsModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot()
-      ],
-      declarations: [ProfileComponent, AddressFormComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
+        TranslateModule.forRoot()],
+    providers: [
         {
-          provide: NotificationService
+            provide: NotificationService
         },
         {
-          provide: LocalStorageService, useValue: localStorageSvcStub
+            provide: LocalStorageService, useValue: localStorageSvcStub
         },
         {
-          provide: ConfigWebService, useValue: configWebServiceStub
+            provide: ConfigWebService, useValue: configWebServiceStub
         },
         {
-          provide: MatDialog
-        }]
-    })
+            provide: MatDialog
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

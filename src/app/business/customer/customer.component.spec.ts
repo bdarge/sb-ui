@@ -10,12 +10,13 @@ import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
 import {EditCustomerComponent} from '../edit-customer/edit-customer.component';
 import {NotificationService} from '../../core/notifications/notification.service';
 import {MatDialog} from '@angular/material/dialog';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {PageRequest, Page, Query} from '../../model/page';
 import {from, Observable, of} from 'rxjs';
 import {Customer} from '../../model/customer';
 import { FontAwesomeIconsModule } from 'app/shared/font.awesome.icons.module';
 import {CustomerWebService} from '../../http/customer-web.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('CustomerComponent', () => {
   let component: CustomerComponent;
@@ -47,23 +48,23 @@ describe('CustomerComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
+    declarations: [CustomerComponent, EditCustomerComponent],
+    imports: [SharedModule,
         FontAwesomeIconsModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot()
-      ],
-      declarations: [CustomerComponent, EditCustomerComponent],
-      providers: [
+        TranslateModule.forRoot()],
+    providers: [
         {
-          provide: NotificationService
+            provide: NotificationService
         }, {
-          provide: CustomerWebService, useValue: customerServiceStub
+            provide: CustomerWebService, useValue: customerServiceStub
         }, {
-          provide: MatDialog
-        }]
-    })
+            provide: MatDialog
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

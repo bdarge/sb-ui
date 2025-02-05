@@ -4,7 +4,7 @@ import { EditTransactionComponent } from './edit-transaction.component';
 import {SharedModule} from '../../shared/shared.module';
 import {FontAwesomeIconsModule} from '../../shared/font.awesome.icons.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {NotificationService} from '../../core/notifications/notification.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -13,6 +13,7 @@ import {LocalStorageService} from '../../core/local-storage/local-storage.servic
 import {CustomerWebService} from '../../http/customer-web.service';
 import {Transaction} from '../../model/transaction';
 import { Store } from '@ngrx/store';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('EditTransactionComponent', () => {
   let component: EditTransactionComponent;
@@ -49,37 +50,37 @@ describe('EditTransactionComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
+    declarations: [EditTransactionComponent],
+    imports: [SharedModule,
         FontAwesomeIconsModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot()
-      ],
-      declarations: [EditTransactionComponent],
-      providers: [
+        TranslateModule.forRoot()],
+    providers: [
         {
-          provide: LocalStorageService, useValue: localStorageSvc
+            provide: LocalStorageService, useValue: localStorageSvc
         },
         NotificationService,
         {
-          provide: TransactionWebService, useValue: tServiceStub
+            provide: TransactionWebService, useValue: tServiceStub
         },
         {
-          provide: CustomerWebService, useValue: customerServiceStub
+            provide: CustomerWebService, useValue: customerServiceStub
         },
         {
-          provide: MatDialogRef,
-          useValue: {}
+            provide: MatDialogRef,
+            useValue: {}
         },
         {
-          provide: MAT_DIALOG_DATA,
-          useValue: {t}
+            provide: MAT_DIALOG_DATA,
+            useValue: { t }
         },
         {
-          provide: Store, useValue: testStore
-        }]
-    })
+            provide: Store, useValue: testStore
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }));
 

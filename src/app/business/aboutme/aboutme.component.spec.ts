@@ -10,11 +10,12 @@ import {of} from 'rxjs';
 import {SharedModule} from '../../shared/shared.module';
 import {FontAwesomeIconsModule} from '../../shared/font.awesome.icons.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {AddressFormComponent} from '../address-form/address-form.component';
 import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AboutmeComponent', () => {
   let component: AboutmeComponent;
@@ -51,31 +52,31 @@ describe('AboutmeComponent', () => {
     getBusinessSpy = configWebServiceStub.getBusiness.and.returnValue(of(business))
 
     TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
+    declarations: [AboutmeComponent, AddressFormComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [SharedModule,
         FormsModule,
         FontAwesomeIconsModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot()
-      ],
-      declarations: [AboutmeComponent, AddressFormComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
+        TranslateModule.forRoot()],
+    providers: [
         {
-          provide: NotificationService
+            provide: NotificationService
         },
         {
-          provide: LocalStorageService, useValue: localStorageSvcStub
+            provide: LocalStorageService, useValue: localStorageSvcStub
         },
         {
-          provide: ConfigWebService, useValue: configWebServiceStub
+            provide: ConfigWebService, useValue: configWebServiceStub
         },
         {
-          provide: MatDialog
-        }]
-    })
+            provide: MatDialog
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   }))
 

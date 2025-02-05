@@ -4,7 +4,7 @@ import {BusinessComponent} from './business.component';
 import {SharedModule} from '../../shared/shared.module';
 import {FontAwesomeIconsModule} from '../../shared/font.awesome.icons.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {NotificationService} from '../../core/notifications/notification.service';
 import {LocalStorageService} from '../../core/local-storage/local-storage.service';
@@ -15,6 +15,7 @@ import { BusinessModule } from '../business.module';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('BusinessComponent', () => {
   let component: BusinessComponent;
@@ -27,28 +28,28 @@ describe('BusinessComponent', () => {
     testStore.pipe.and.returnValue(of(''))
 
     await TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
+    declarations: [BusinessComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    imports: [SharedModule,
         FontAwesomeIconsModule,
         BusinessModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
         TranslateModule.forRoot(),
-        RouterTestingModule
-      ],
-      declarations: [BusinessComponent],
-      providers: [
+        RouterTestingModule],
+    providers: [
         {
-          provide: Store, useValue: testStore
+            provide: Store, useValue: testStore
         },
         {
-          provide: NotificationService
+            provide: NotificationService
         },
         {
-          provide: LocalStorageService
-        }],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
+            provide: LocalStorageService
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
 
     const injector = getTestBed();

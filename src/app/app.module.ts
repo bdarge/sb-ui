@@ -3,7 +3,7 @@ import '../polyfills';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CoreModule} from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,33 +22,26 @@ export function initConfig(configService: AppConfigService) {
   return () => configService.load()
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent],
-  imports: [
-    BrowserAnimationsModule,
-    BrowserModule,
-    FontAwesomeIconsModule,
-    SharedModule,
-    ProviderModule,
-    ServiceModule,
-
-    HttpClientModule,
-    CoreModule,
-
-    FlexLayoutModule,
-    AppRoutingModule
-  ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initConfig,
-      deps: [AppConfigService],
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        LoginComponent,
+        RegisterComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserAnimationsModule,
+        BrowserModule,
+        FontAwesomeIconsModule,
+        SharedModule,
+        ProviderModule,
+        ServiceModule,
+        CoreModule,
+        FlexLayoutModule,
+        AppRoutingModule], providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initConfig,
+            deps: [AppConfigService],
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {}

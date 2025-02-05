@@ -4,7 +4,7 @@ import { EditTransactionItemComponent } from './edit-transaction-item.component'
 import {SharedModule} from '../../shared/shared.module';
 import {FontAwesomeIconsModule} from '../../shared/font.awesome.icons.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {NotificationService} from '../../core/notifications/notification.service';
 import {TransactionWebService} from '../../http/transaction-web.service';
@@ -13,6 +13,7 @@ import {CustomerWebService} from '../../http/customer-web.service';
 import { Transaction } from '../../model/transaction';
 import {LocalStorageService} from '../../core/local-storage/local-storage.service';
 import { Store } from '@ngrx/store';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('EditTransactionItemComponent', () => {
   let component: EditTransactionItemComponent;
@@ -55,44 +56,43 @@ describe('EditTransactionItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
+    declarations: [EditTransactionItemComponent],
+    imports: [SharedModule,
         FontAwesomeIconsModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot()
-      ],
-      declarations: [EditTransactionItemComponent],
-      providers: [
+        TranslateModule.forRoot()],
+    providers: [
         {
-          provide: LocalStorageService,
-          useValue: localStorageSvc
+            provide: LocalStorageService,
+            useValue: localStorageSvc
         },
         {
-          provide: NotificationService
+            provide: NotificationService
         },
         {
-          provide: TransactionWebService, useValue: tServiceStub
+            provide: TransactionWebService, useValue: tServiceStub
         },
         {
-          provide: CustomerWebService, useValue: customerServiceStub
+            provide: CustomerWebService, useValue: customerServiceStub
         },
         {
-          provide: MatDialog
+            provide: MatDialog
         },
         {
-          provide: MatDialogRef,
-          useValue: {}
+            provide: MatDialogRef,
+            useValue: {}
         },
         {
-          provide: MAT_DIALOG_DATA,
-          useValue: model
+            provide: MAT_DIALOG_DATA,
+            useValue: model
         },
         {
-          provide: Store, useValue: testStore
-        }
-      ]
-    })
+            provide: Store, useValue: testStore
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
   }));
 

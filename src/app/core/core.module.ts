@@ -14,7 +14,7 @@ import {
 import { SettingsEffects } from './settings/settings.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import {
@@ -63,69 +63,58 @@ export {
   selectCurrency
 };
 
-@NgModule({
-  declarations: [],
-  providers: [
-    AnimationsService,
-    NotificationService,
-    LocalStorageService,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: AppErrorHandler },
-  ],
-  imports: [
-    // angular
-    CommonModule,
-    HttpClientModule,
-    FormsModule,
-
-    // material
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatMenuModule,
-    MatIconModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatButtonModule,
-
-    // ngrx
-    StoreModule.forRoot(reducers, { metaReducers }),
-    EffectsModule.forRoot([
-      SettingsEffects
-    ]),
-
-    FontAwesomeModule,
-
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: httpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-  ],
-  exports: [
-    // angular
-    FormsModule,
-
-    // material
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatMenuModule,
-    MatIconModule,
-    MatSelectModule,
-    MatTooltipModule,
-    MatSnackBarModule,
-    MatButtonModule,
-
-    // 3rd party
-    FontAwesomeModule,
-    TranslateModule
-  ]
-})
+@NgModule({ declarations: [],
+    exports: [
+        // angular
+        FormsModule,
+        // material
+        MatSidenavModule,
+        MatToolbarModule,
+        MatListModule,
+        MatMenuModule,
+        MatIconModule,
+        MatSelectModule,
+        MatTooltipModule,
+        MatSnackBarModule,
+        MatButtonModule,
+        // 3rd party
+        FontAwesomeModule,
+        TranslateModule
+    ], imports: [
+        // angular
+        CommonModule,
+        FormsModule,
+        // material
+        MatSidenavModule,
+        MatToolbarModule,
+        MatListModule,
+        MatMenuModule,
+        MatIconModule,
+        MatSelectModule,
+        MatTooltipModule,
+        MatSnackBarModule,
+        MatButtonModule,
+        // ngrx
+        StoreModule.forRoot(reducers, { metaReducers }),
+        EffectsModule.forRoot([
+            SettingsEffects
+        ]),
+        FontAwesomeModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: httpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })], providers: [
+        AnimationsService,
+        NotificationService,
+        LocalStorageService,
+        { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+        { provide: ErrorHandler, useClass: AppErrorHandler },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class CoreModule {
   constructor(
     @Optional()

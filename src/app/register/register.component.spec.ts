@@ -9,9 +9,10 @@ import {Store} from '@ngrx/store';
 import {SharedModule} from '../shared/shared.module';
 import {FontAwesomeIconsModule} from '../shared/font.awesome.icons.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {RouterTestingModule} from '@angular/router/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -22,31 +23,31 @@ describe('RegisterComponent', () => {
   beforeEach(async () => {
     testStore.pipe.and.returnValue(of(''))
     await TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
+    declarations: [
+        RegisterComponent
+    ],
+    imports: [SharedModule,
         FontAwesomeIconsModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
         TranslateModule.forRoot(),
-        RouterTestingModule
-      ],
-      declarations: [
-        RegisterComponent
-      ],
-      providers: [
+        RouterTestingModule],
+    providers: [
         {
-          provide: Store, useValue: testStore
+            provide: Store, useValue: testStore
         },
         {
-          provide: LocalStorageService
+            provide: LocalStorageService
         },
         {
-          provide: NotificationService
+            provide: NotificationService
         },
         {
-          provide: AuthWebService, useValue: abstractServiceStub
-        }]
-    })
+            provide: AuthWebService, useValue: abstractServiceStub
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
   });
 

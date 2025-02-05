@@ -8,12 +8,13 @@ import {TransactionWebService} from '../../http/transaction-web.service';
 import {SharedModule} from '../../shared/shared.module';
 import {FontAwesomeIconsModule} from '../../shared/font.awesome.icons.module';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import {Page, PageRequest, Query} from '../../model/page';
 import {from, Observable} from 'rxjs';
 import {Transaction} from '../../model/transaction';
 import {Store} from '@ngrx/store';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TransactionComponent', () => {
   let component: TransactionComponent;
@@ -60,30 +61,29 @@ describe('TransactionComponent', () => {
       }
     }
     TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
+    declarations: [TransactionComponent],
+    imports: [SharedModule,
         FontAwesomeIconsModule,
         NoopAnimationsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot()
-      ],
-      declarations: [ TransactionComponent ],
-      providers: [
+        TranslateModule.forRoot()],
+    providers: [
         {
-          provide: LocalStorageService,
-          useValue: localStorageSvc
+            provide: LocalStorageService,
+            useValue: localStorageSvc
         },
         NotificationService,
         MatDialog,
         {
-          provide: TransactionWebService,
-          useValue: tServiceStub
+            provide: TransactionWebService,
+            useValue: tServiceStub
         },
         {
-          provide: Store, useValue: testStore
-        }
-      ]
-    })
+            provide: Store, useValue: testStore
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
   }));
 
