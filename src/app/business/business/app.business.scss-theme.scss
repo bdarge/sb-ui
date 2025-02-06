@@ -2,7 +2,7 @@
 @use '@angular/material' as mat;
 
 @mixin business-component-theme($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   $primary: map.get($color-config, primary);
   $accent: map.get($color-config, accent);
 
@@ -11,39 +11,39 @@
       mat-toolbar {
         button {
           &.active {
-            color: mat.get-color-from-palette($accent, default-contrast);
-            background-color: mat.get-color-from-palette($accent);
+            color: mat.m2-get-color-from-palette($accent, default-contrast);
+            background-color: mat.m2-get-color-from-palette($accent);
           }
         }
 
         .link {
-          color: mat.get-color-from-palette($primary, default-contrast);
+          color: mat.m2-get-color-from-palette($primary, default-contrast);
         }
       }
 
       mat-sidenav {
         .mat-list-item {
           &.active {
-            color: mat.get-color-from-palette($accent, default-contrast);
-            background-color: mat.get-color-from-palette($accent) !important;
+            color: mat.m2-get-color-from-palette($accent, default-contrast);
+            background-color: mat.m2-get-color-from-palette($accent) !important;
 
             &:hover {
-              background-color: mat.get-color-from-palette($accent, darker) !important;
+              background-color: mat.m2-get-color-from-palette($accent, darker) !important;
             }
           }
         }
       }
 
       .footer {
-        color: mat.get-color-from-palette($primary, lighter);
-        background-color: mat.get-color-from-palette($primary, darker);
+        color: mat.m2-get-color-from-palette($primary, lighter);
+        background-color: mat.m2-get-color-from-palette($primary, darker);
 
         .links,
         .signature {
           a {
-            color: mat.get-color-from-palette($primary, lighter);
+            color: mat.m2-get-color-from-palette($primary, lighter);
             &:hover {
-              color: mat.get-color-from-palette($accent);
+              color: mat.m2-get-color-from-palette($accent);
             }
           }
         }
@@ -51,7 +51,7 @@
     }
 
     .nav-responsive {
-      border-bottom: 1px solid mat.get-color-from-palette($primary);
+      border-bottom: 1px solid mat.m2-get-color-from-palette($primary);
     }
 
     //mat-select {
@@ -63,8 +63,8 @@
 
   .nav-responsive-overlay {
     .active {
-      color: mat.get-color-from-palette($accent, default-contrast);
-      background-color: mat.get-color-from-palette($accent);
+      color: mat.m2-get-color-from-palette($accent, default-contrast);
+      background-color: mat.m2-get-color-from-palette($accent);
     }
   }
 }

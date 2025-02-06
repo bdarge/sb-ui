@@ -4,28 +4,28 @@
 @import '../styles-variables';
 
 @mixin app-component-theme($theme) {
-  $color-config: mat.get-color-config($theme);
+  $color-config: mat.m2-get-color-config($theme);
   $primary: map.get($color-config, primary);
   $accent: map.get($color-config, accent);
   $warn: map.get($color-config, warn);
 
   .error-notification-overlay {
-    color: mat.get-color-from-palette($warn, default-contrast);
-    background-color: mat.get-color-from-palette($warn);
+    color: mat.m2-get-color-from-palette($warn, default-contrast);
+    background-color: mat.m2-get-color-from-palette($warn);
   }
 
   .info-notification-overlay {
-    color: mat.get-color-from-palette($accent, default-contrast);
-    background-color: mat.get-color-from-palette($accent);
+    color: mat.m2-get-color-from-palette($accent, default-contrast);
+    background-color: mat.m2-get-color-from-palette($accent);
   }
 
   .success-notification-overlay {
-    color: mat.get-color-from-palette($success-colors, default-contrast);
-    background-color: mat.get-color-from-palette($success-colors);
+    color: mat.m2-get-color-from-palette($success-colors, default-contrast);
+    background-color: mat.m2-get-color-from-palette($success-colors);
   }
 
   .warning-notification-overlay {
-    color: mat.get-color-from-palette($warning-colors, default-contrast);
-    background-color: mat.get-color-from-palette($warning-colors);
+    color: mat.m2-get-color-from-palette($warning-colors, default-contrast);
+    background-color: mat.m2-get-color-from-palette($warning-colors);
   }
 }
