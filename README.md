@@ -1,6 +1,6 @@
 # SB UI
 
-SB UI based on Angular 17.x
+SB UI based on Angular 19
 
 
 ### How to update minor, and patch versions
