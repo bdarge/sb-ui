@@ -1,4 +1,5 @@
-@import '../../../styles-variables';
+@use "sass:map";
+@use '../../../styles-variables' as v;
 
 .theme-wrapper {
   height: 100%;
@@ -55,7 +56,7 @@ mat-sidenav-container {
       width: 40px;
     }
 
-    @media (max-width: map-get($grid-breakpoints, lg)) {
+    @media (max-width: map.get(v.$grid-breakpoints, lg)) {
       .nav-button {
         min-width: 0;
         padding: 0 10px;
@@ -84,7 +85,7 @@ mat-sidenav-container {
     }
   }
 
-  @media (max-width: $toolbar-breakpoint) {
+  @media (max-width: v.$toolbar-breakpoint) {
     .content {
       margin-top: 56px !important;
     }

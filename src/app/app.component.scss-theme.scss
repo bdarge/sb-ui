@@ -1,7 +1,6 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
-
-@import '../styles-variables';
+@use '../styles-variables' as v;
 
 @mixin app-component-theme($theme) {
   $color-config: mat.m2-get-color-config($theme);
@@ -20,12 +19,12 @@
   }
 
   .success-notification-overlay {
-    color: mat.m2-get-color-from-palette($success-colors, default-contrast);
-    background-color: mat.m2-get-color-from-palette($success-colors);
+    color: mat.m2-get-color-from-palette(v.$success-colors, default-contrast);
+    background-color: mat.m2-get-color-from-palette(v.$success-colors);
   }
 
   .warning-notification-overlay {
-    color: mat.m2-get-color-from-palette($warning-colors, default-contrast);
-    background-color: mat.m2-get-color-from-palette($warning-colors);
+    color: mat.m2-get-color-from-palette(v.$warning-colors, default-contrast);
+    background-color: mat.m2-get-color-from-palette(v.$warning-colors);
   }
 }

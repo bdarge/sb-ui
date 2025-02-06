@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+
 $anms-primary: mat.m2-define-palette(mat.$m2-indigo-palette, 800, 300, 900);
 $anms-accent: mat.m2-define-palette(mat.$m2-light-blue-palette);
 $anms-warn: mat.m2-define-palette(mat.$m2-pink-palette, 600);

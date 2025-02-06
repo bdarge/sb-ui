@@ -1,48 +1,46 @@
 @use '@angular/material' as mat;
+@use 'styles-variables';
+@use 'bootstrap/scss/bootstrap-reboot';
+@use 'bootstrap/scss/bootstrap-grid';
+@use 'styles-reset';
+@use 'styles-theme' as t;
+@use 'themes/_default-theme' as d;
+@use 'themes/_light-theme' as l;
+@use 'themes/_black-theme' as b;
+@use 'themes/_nature-theme' as n;
+@use 'app/business/business/business.scss-theme' as bs;
+@use 'app/app.component.scss-theme' as a;
+@use 'app/business/transaction/transaction.scss-theme';
 
 @include mat.elevation-classes();
 @include mat.app-background();
 
 mat.$theme-ignore-duplication-warnings: true;
 
-@import 'styles-variables';
-@import 'bootstrap/scss/bootstrap-reboot';
-@import 'bootstrap/scss/bootstrap-grid';
-@import 'styles-reset';
-
-@import 'themes/_default-theme';
-@import 'themes/_light-theme';
-@import 'themes/_black-theme';
-@import 'themes/_nature-theme';
-@import 'styles-reset.scss-theme';
-@import 'app/business/business/app.business.scss-theme';
-@import 'app/app.component.scss-theme';
-@import 'app/business/transaction/transaction.scss-theme';
-
 @mixin components-theme($theme) {
-  @include busx-styles-reset-theme($theme);
-  @include app-component-theme($theme);
-  @include business-component-theme($theme);
+  @include t.busx-styles-reset-theme($theme);
+  @include a.app-component-theme($theme);
+  @include bs.business-component-theme($theme);
 }
 
 .default-theme {
-  @include mat.all-component-themes($default-theme);
-  @include components-theme($default-theme);
+  @include mat.all-component-themes(d.$default-theme);
+  @include components-theme(d.$default-theme);
 }
 
 .light-theme {
-  @include mat.all-component-themes($light-theme);
-  @include components-theme($light-theme);
+  @include mat.all-component-themes(l.$light-theme);
+  @include components-theme(l.$light-theme);
 }
 
 .black-theme {
-  @include mat.all-component-themes($black-theme);
-  @include components-theme($black-theme);
+  @include mat.all-component-themes(b.$black-theme);
+  @include components-theme(b.$black-theme);
 }
 
 .nature-theme {
-  @include mat.all-component-themes($anms-nature-theme);
-  @include components-theme($anms-nature-theme);
+  @include mat.all-component-themes(n.$nature-theme);
+  @include components-theme(n.$nature-theme);
 }
 
 .spacer {flex: 1 1 auto;}
@@ -68,5 +66,3 @@ body {
 .tooltip-red {
   background: #b71c1c;
 }
-
-
