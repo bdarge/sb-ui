@@ -6,9 +6,10 @@ import { NotificationService} from '../../core/core.module';
 import { CustomerWebService} from '../../http/customer-web.service';
 
 @Component({
-  selector: 'app-edit-customer',
-  templateUrl: './edit-customer.component.html',
-  styleUrls: ['./edit-customer.component.scss']
+    selector: 'app-edit-customer',
+    templateUrl: './edit-customer.component.html',
+    styleUrls: ['./edit-customer.component.scss'],
+    standalone: false
 })
 export class EditCustomerComponent implements OnInit {
 

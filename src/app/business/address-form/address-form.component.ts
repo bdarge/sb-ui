@@ -11,21 +11,22 @@ import { ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-address-form',
-  templateUrl: './address-form.component.html',
-  styleUrls: ['./address-form.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: AddressFormComponent
-    },
-    {
-      provide: NG_VALIDATORS,
-      multi: true,
-      useExisting: AddressFormComponent
-    },
-  ]
+    selector: 'app-address-form',
+    templateUrl: './address-form.component.html',
+    styleUrls: ['./address-form.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: AddressFormComponent
+        },
+        {
+            provide: NG_VALIDATORS,
+            multi: true,
+            useExisting: AddressFormComponent
+        },
+    ],
+    standalone: false
 })
 export class AddressFormComponent implements OnInit, ControlValueAccessor, OnDestroy, Validator  {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS

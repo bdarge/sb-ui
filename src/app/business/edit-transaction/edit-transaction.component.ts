@@ -13,9 +13,10 @@ import { Store } from '@ngrx/store';
 import { State } from 'app/core/settings/settings.model';
 
 @Component({
-  selector: 'app-edit-transaction',
-  templateUrl: './edit-transaction.component.html',
-  styleUrls: ['./edit-transaction.component.scss']
+    selector: 'app-edit-transaction',
+    templateUrl: './edit-transaction.component.html',
+    styleUrls: ['./edit-transaction.component.scss'],
+    standalone: false
 })
 export class EditTransactionComponent implements OnInit {
   public form: UntypedFormGroup;

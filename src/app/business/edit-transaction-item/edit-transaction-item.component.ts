@@ -9,9 +9,10 @@ import { SbService } from 'app/http/sb.service';
 import { getCurrencySymbol } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-transaction-item',
-  templateUrl: './edit-transaction-item.component.html',
-  styleUrls: ['./edit-transaction-item.component.scss']
+    selector: 'app-edit-transaction-item',
+    templateUrl: './edit-transaction-item.component.html',
+    styleUrls: ['./edit-transaction-item.component.scss'],
+    standalone: false
 })
 export class EditTransactionItemComponent implements OnInit {
   form: UntypedFormGroup;

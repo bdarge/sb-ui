@@ -10,9 +10,10 @@ import { Query} from '../../model/page';
 import { CustomerWebService} from '../../http/customer-web.service';
 
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss']
+    selector: 'app-customer',
+    templateUrl: './customer.component.html',
+    styleUrls: ['./customer.component.scss'],
+    standalone: false
 })
 export class CustomerComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;

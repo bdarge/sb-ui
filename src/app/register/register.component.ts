@@ -14,10 +14,11 @@ import Validation from '../core/validators/validators'
 import {SBErrorStateMatcher} from '../core/validators/error-state-matcher'
 
 @Component({
-  selector: 'app-register',
-  animations: [routeAnimations],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+    selector: 'app-register',
+    animations: [routeAnimations],
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    standalone: false
 })
 export class RegisterComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS

@@ -7,10 +7,11 @@ import { routeAnimations } from './core/animations/route.animations';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-root',
-  animations: [routeAnimations],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    animations: [routeAnimations],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
   title = 'Business X';

@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import '../polyfills';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CoreModule} from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -36,12 +36,10 @@ export function initConfig(configService: AppConfigService) {
         CoreModule,
         FlexLayoutModule,
         AppRoutingModule], providers: [
-        {
-            provide: APP_INITIALIZER,
-            useFactory: initConfig,
-            deps: [AppConfigService],
-            multi: true
-        },
+        provideAppInitializer(() => {
+        const initializerFn = (initConfig)(inject(AppConfigService));
+        return initializerFn();
+      }),
         provideHttpClient(withInterceptorsFromDi())
     ] })
 export class AppModule {}

@@ -10,11 +10,12 @@ import { Account } from '../../model/account';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-business',
-  animations: [routeAnimations],
-  templateUrl: './business.component.html',
-  styleUrls: ['./business.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-business',
+    animations: [routeAnimations],
+    templateUrl: './business.component.html',
+    styleUrls: ['./business.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class BusinessComponent implements OnInit {
   navigation = [
