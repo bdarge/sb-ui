@@ -1,15 +1,15 @@
-FROM node:22.13-alpine AS dev
+FROM node:22.13-alpine3.20 AS dev
 
 WORKDIR /app
 
-COPY package.json .
+COPY package.json yarn.lock ./
 
 RUN yarn global add @angular/cli@latest
 
 CMD ["ng","serve","--host", "0.0.0.0"]
 
 # Name the node stage "builder"
-FROM node:22.13-alpine as builder
+FROM node:22.13-alpine3.20 as builder
 
 # Set working directory
 WORKDIR /app
@@ -23,9 +23,7 @@ ENV PUPPETEER_EXECUTABLE_PATH="`which chromium`"
 COPY . .
 
 # install node modules and build assets
-RUN yarn
-
-RUN yarn run build:prod
+RUN yarn install && yarn run build:prod
 
 # nginx state for serving content
 FROM nginx:1.27-alpine AS prod
