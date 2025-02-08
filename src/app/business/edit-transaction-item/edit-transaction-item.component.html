@@ -19,7 +19,7 @@
 
   <div class="extra">
     <mat-form-field appearance="outline">
-      <input type="text" mask="0*.0*" matInput placeholder="unit price" formControlName="unitPrice" (input)="priceChanged($event)">
+      <input type="text" mask="0*.0*" matInput placeholder="unit price" formControlName="unitPrice" (input)="priceChanged()">
       <mat-label>unit price</mat-label>
       <mat-error *ngIf="form.get('unitPrice').hasError('required')">
         required
