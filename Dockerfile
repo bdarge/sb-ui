@@ -1,15 +1,15 @@
-FROM node:20.11.1-alpine3.19 AS dev
+FROM node:22.13-alpine AS dev
 
 WORKDIR /app
 
-COPY package*.json /app/
+COPY package.json .
 
-RUN npm i @angular/cli@latest -g
+RUN yarn global add @angular/cli@latest
 
 CMD ["ng","serve","--host", "0.0.0.0"]
 
 # Name the node stage "builder"
-FROM node:20.11.1-alpine3.19 as builder
+FROM node:22.13-alpine as builder
 
 # Set working directory
 WORKDIR /app
@@ -23,12 +23,12 @@ ENV PUPPETEER_EXECUTABLE_PATH="`which chromium`"
 COPY . .
 
 # install node modules and build assets
-RUN npm i
+RUN yarn
 
-RUN npm run build:prod
+RUN yarn run build:prod
 
 # nginx state for serving content
-FROM nginx:1.25.4-alpine AS prod
+FROM nginx:1.27-alpine AS prod
 
 # Set working directory to nginx asset directory
 WORKDIR /usr/share/nginx/html
@@ -46,4 +46,3 @@ COPY start.sh .
 EXPOSE 80
 
 CMD [ "sh", "start.sh" ]
-
