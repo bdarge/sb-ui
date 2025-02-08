@@ -6,6 +6,7 @@
     "name": "bdarge",
     "email": "bin.darge@gmail.com"
   },
+  "license": "MIT",
   "keywords": [
     "angular",
     "angular 19",
@@ -29,7 +30,7 @@
     "test": "yarn run config && yarn run lint && ng test --configuration=test --browsers=ChromeHeadlessCustom",
     "e2e": "ng e2e",
     "e2e:ci": "ng e2e",
-    "ci": "yarn run clean && yarn run lint && ng test --configuration=test --browsers ChromeHeadlessCustom --code-coverage && yarn run build:prod -- --deploy-url / --base-href /",
+    "ci": "yarn run clean && yarn run lint && ng test --configuration=test --browsers ChromeHeadlessCustom --code-coverage && yarn run build:prod --deploy-url / --base-href /",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "lint": "eslint --color -c eslintrc.json --ext .ts .",
     "cypress:open": "cypress open",
