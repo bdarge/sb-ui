@@ -18,9 +18,6 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     preprocessors: {
-      // source files, that you wanna generate coverage for
-      // do not include tests or libraries
-      // (these files will be instrumented by Istanbul)
       'src/**/*.js': ['coverage']
     },
     reporters: ['progress', 'coverage'],

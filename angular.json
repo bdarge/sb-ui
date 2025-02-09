@@ -111,7 +111,7 @@
             "main": "src/test.ts",
             "polyfills": "src/polyfills-test.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.cjs",
+            "karmaConfig": "karma.conf.cjs",
             "scripts": [],
             "styles": [
               "src/styles.scss"
@@ -124,7 +124,8 @@
               "src/favicon.256x256.png",
               "src/favicon.512x512.png"
             ],
-            "codeCoverage": true
+            "codeCoverage": true,
+            "watch": false
           },
           "configurations": {
             "test": {
