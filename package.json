@@ -21,7 +21,7 @@
   "type": "module",
   "scripts": {
     "clean": "rimraf ./dist",
-    "config": "node --loader ts-node/esm set-env.ts",
+    "config": "node -r ts-node/register --no-warnings --loader ts-node/esm set-env.ts",
     "ng": "ng",
     "start": "yarn run config && ng serve --open",
     "build": "yarn run config && ng build",
