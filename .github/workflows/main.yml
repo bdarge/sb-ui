@@ -13,7 +13,6 @@ jobs:
   test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    container: buildkite/puppeteer:latest
     strategy:
       matrix:
         node-version: [22.x]
