@@ -9,7 +9,7 @@ RUN yarn global add @angular/cli@latest
 CMD ["ng","serve","--host", "0.0.0.0"]
 
 # Name the node stage "builder"
-FROM node:22.13-alpine3.20 as builder
+FROM node:22.13-alpine3.20 AS builder
 
 # Set working directory
 WORKDIR /app
