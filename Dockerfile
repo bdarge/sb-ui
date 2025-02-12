@@ -22,10 +22,7 @@ ENV PUPPETEER_EXECUTABLE_PATH="`which chromium`"
 # Copy all files from current directory to working dir
 COPY . .
 
-RUN apk add --no-cache --virtual .gyp \
-        python \
-        make \
-        g++ \
+RUN apk add --no-cache --virtual .gyp python3 make g++
 
 # install node modules and build assets
 RUN yarn install && apk del .gyp && yarn run build:prod
