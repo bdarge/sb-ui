@@ -41,7 +41,7 @@ LABEL org.opencontainers.image.source=https://github.com/bdarge/sb-ui
 RUN rm -rf ./* 2> /dev/null
 
 # Copy static assets from builder stage
-COPY --from=builder /app/dist .
+COPY --from=builder /app/dist/browser .
 
 RUN ls -al
 
