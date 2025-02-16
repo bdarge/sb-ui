@@ -25,7 +25,9 @@ COPY . .
 RUN apk add --no-cache --virtual .gyp python3 make g++
 
 # install node modules and build assets
-RUN yarn install && apk del .gyp && yarn run build:prod
+RUN corepack enable && yarn && apk del .gyp && yarn run build:prod
+
+RUN ls -al dist
 
 # nginx state for serving content
 FROM nginx:1.27-alpine AS prod
@@ -41,7 +43,11 @@ RUN rm -rf ./* 2> /dev/null
 # Copy static assets from builder stage
 COPY --from=builder /app/dist .
 
+RUN ls -al
+
 COPY start.sh .
+
+COPY nginx.conf /etc/nginx
 
 EXPOSE 80
 

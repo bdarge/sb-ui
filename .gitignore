@@ -116,9 +116,18 @@ dist
 .yarn/install-state.gz
 .pnp.*
 .env
+.yarn/sdks
+.yarn/versions
+.yarn/plugins
+.yarn/patches
 
 .idea
 ssl
 
 cypress/videos
 cypress/screenshots
+
+.settings/
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
