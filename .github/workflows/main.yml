@@ -25,9 +25,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+      - run: npm i -g corepack@latest
       - run: corepack enable
-      - run: yarn
-      - run: yarn run ci
+      - run: pnpm install
+      - run: pnpm run ci
   build-and-push-image:
     runs-on: ubuntu-latest
     needs: test
