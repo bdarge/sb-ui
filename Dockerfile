@@ -1,33 +1,44 @@
-FROM node:22.13-alpine3.20 AS dev
+FROM node:22.14-alpine3.20 AS dev
 
-WORKDIR /app
+ENV PNPM_HOME="/pnpm"
 
-COPY package.json yarn.lock ./
+ENV PATH="$PNPM_HOME:$PATH"
 
-RUN yarn global add @angular/cli@latest
+RUN npm i -g corepack@latest
 
-CMD ["ng","serve","--host", "0.0.0.0"]
+RUN corepack enable
+
+USER node
+
+WORKDIR /home/node/app
+
+COPY --chown=node . .
+
+RUN pnpm install
+
+CMD pnpm run start
 
 # Name the node stage "builder"
-FROM node:22.13-alpine3.20 AS builder
-
-# Set working directory
-WORKDIR /app
+FROM node:22.14-alpine3.20 AS builder
 
 # skip chromium download, because of the error `The chromium binary is not available for arm64` error.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 ENV PUPPETEER_EXECUTABLE_PATH="`which chromium`"
 
-# Copy all files from current directory to working dir
-COPY . .
-
-RUN apk add --no-cache --virtual .gyp python3 make g++
-
 # install node modules and build assets
-RUN corepack enable && yarn && apk del .gyp && yarn run build:prod
+ENV PNPM_HOME="/pnpm"
 
-RUN ls -al dist
+ENV PATH="$PNPM_HOME:$PATH"
+
+RUN npm i -g corepack@latest
+
+RUN corepack enable
+
+# Set working directory
+WORKDIR /app
+
+COPY . .
 
 # nginx state for serving content
 FROM nginx:1.27-alpine AS prod
@@ -42,8 +53,6 @@ RUN rm -rf ./* 2> /dev/null
 
 # Copy static assets from builder stage
 COPY --from=builder /app/dist/browser .
-
-RUN ls -al
 
 COPY start.sh .
 
