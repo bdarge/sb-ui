@@ -40,6 +40,10 @@ WORKDIR /app
 
 COPY . .
 
+RUN pnpm install
+
+RUN pnpm build:prod
+
 # nginx state for serving content
 FROM nginx:1.27-alpine AS prod
 
