@@ -6,8 +6,8 @@ then
     echo "starting app prod in k8s"
     mv /usr/share/nginx/html/config/config.prod-k8s.json /usr/share/nginx/html/config/config.json
   else
-    echo "starting app prod"
-    mv /usr/share/nginx/html/config/config.prod.json /usr/share/nginx/html/config/config.json
+    echo "starting qa"
+    mv /usr/share/nginx/html/config/config.qa.json /usr/share/nginx/html/config/config.json
   fi
 elif [ "${ENVIRONMENT}" = "test" ]
 then
