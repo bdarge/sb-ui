@@ -36,6 +36,6 @@ export interface Role {
 }
 
 export interface Language {
-  name: string;
+  locale: string;
   currency: string;
 }

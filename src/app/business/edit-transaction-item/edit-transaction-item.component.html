@@ -1,53 +1,35 @@
 <h2 mat-dialog-title>{{title | translate}} <i>{{name}}</i></h2>
 
 <mat-dialog-content [formGroup]="form">
-  <mat-form-field appearance="outline">
-    <input matInput placeholder="description" formControlName="description">
-    <mat-label>description</mat-label>
-    <mat-error *ngIf="form.get('description').hasError('required')">
-      required
-    </mat-error>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <input matInput placeholder="unit" formControlName="unit">
-    <mat-label>unit</mat-label>
-    <mat-error *ngIf="form.get('unit').hasError('required')">
-      required
-    </mat-error>
-  </mat-form-field>
-
-  <div class="extra">
     <mat-form-field appearance="outline">
-      <input type="text" mask="0*.0*" matInput placeholder="unit price" formControlName="unitPrice" (input)="priceChanged()">
-      <mat-label>unit price</mat-label>
-      <mat-error *ngIf="form.get('unitPrice').hasError('required')">
-        required
-      </mat-error>
-      @if(form.get('unitPrice').value && currency != transaction.currency) {
-        <mat-hint>{{currencySymbol(currency)}} {{convertedCurrency}}</mat-hint>
+      <input matInput placeholder="description" formControlName="description">
+      <mat-label>description</mat-label>
+      @if (form.get('description').hasError("required")) {
+        <mat-error>required</mat-error>
       }
     </mat-form-field>
-    @if(form.get('unitPrice').value) {
-      <mat-form-field>
-        <mat-label>Change to see price in other currency</mat-label>
-        <mat-select [(value)]="currency" (selectionChange)="currencyChange()">
-          @for (c of currencies; track c) {
-            <mat-option [value]="c.value">{{c.label}}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-    }
-  </div>
 
-  <mat-form-field appearance="outline">
-    <input matInput mask="0*" placeholder="quantity" formControlName="qty">
-    <mat-label>quantity</mat-label>
-    <mat-error *ngIf="form.get('qty').hasError('required')">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="unit" formControlName="unit">
+      <mat-label>unit</mat-label>
+      <mat-error *ngIf="form.get('unit').hasError('required')">
       required
-    </mat-error>
-  </mat-form-field>
-
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input type="text" mask="separator.2" thousandSeparator=","  matInput placeholder="unit price" formControlName="unitPrice">
+      <mat-label>unit price</mat-label>
+      <mat-error *ngIf="form.get('unitPrice').hasError('required')">
+      required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput mask="0*" placeholder="quantity" formControlName="qty">
+      <mat-label>quantity</mat-label>
+      <mat-error *ngIf="form.get('qty').hasError('required')">
+      required
+      </mat-error>
+    </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

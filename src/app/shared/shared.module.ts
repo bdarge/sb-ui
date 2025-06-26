@@ -30,6 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatRippleModule } from '@angular/material/core';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { SbCurrencyPipe } from '.././sb-currency.pipe';
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatDialogModule,
     MatRippleModule,
     NgxMatSelectSearchModule,
-    MatGridListModule
+    MatGridListModule,
+    SbCurrencyPipe
   ],
   declarations: [
   ],
@@ -98,7 +100,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatDialogModule,
     MatRippleModule,
     NgxMatSelectSearchModule,
-    MatGridListModule
+    MatGridListModule,
+    SbCurrencyPipe
   ]
 })
 export class SharedModule {}

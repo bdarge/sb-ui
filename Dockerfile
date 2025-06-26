@@ -10,13 +10,15 @@ RUN corepack enable
 
 USER node
 
-WORKDIR /home/node/app
+WORKDIR /app
 
 COPY --chown=node . .
 
 RUN pnpm install
 
-CMD pnpm run start
+EXPOSE 4202
+
+CMD ["pnpm", "run", "start", "--host=0.0.0.0"]
 
 # Name the node stage "builder"
 FROM node:22.14-alpine3.20 AS builder
@@ -45,7 +47,7 @@ RUN pnpm install
 RUN pnpm build:prod
 
 # nginx state for serving content
-FROM nginx:1.27-alpine AS prod
+FROM nginx:1.28.0-alpine AS prod
 
 # Set working directory to nginx asset directory
 WORKDIR /usr/share/nginx/html

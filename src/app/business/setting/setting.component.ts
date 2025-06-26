@@ -46,7 +46,7 @@ export class SettingComponent implements OnInit {
 
     this.languageObjs.map((l) => {
       this.languages.push({
-        value: l.name, label: l.name.toUpperCase()
+        value: l.locale, label: l.locale.toUpperCase()
       })
     });
   }
@@ -57,7 +57,7 @@ export class SettingComponent implements OnInit {
 
   onLanguageSelect({ value: language }) {
     this.store.dispatch(actionChangeLanguage({ language }));
-    const obj = this.languageObjs.find(i => i.name === language) as Language;
+    const obj = this.languageObjs.find(i => i.locale === language) as Language;
     this.store.dispatch(actionChangeCurrency({ currency: obj.currency }));
   }
 }

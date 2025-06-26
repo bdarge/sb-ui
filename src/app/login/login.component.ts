@@ -45,8 +45,8 @@ export class LoginComponent implements OnInit {
           this.localStorageSvc.setItem('TOKEN', result.token);
           // get it from db? 
           this.localStorageSvc.setItem('LANGUAGES', [
-            { 'name': 'en', 'currency': 'usd' } as Language,
-            { 'name': 'sv', 'currency': 'sek' } as Language]);
+            { 'locale': 'en', 'currency': 'usd' } as Language,
+            { 'locale': 'sv', 'currency': 'sek' } as Language]);
           this.router.navigate(['business']);
         })
     }

@@ -81,15 +81,18 @@ export class AboutmeComponent {
       const m = {...this.businessForm.value, ...this.businessForm.value.address}
       delete m.address
       this.configService.saveBusiness(m)
-        .subscribe((business) => {
-          if (business) {
-            this.businessForm.patchValue(business,  { emitEvent: false });
-            this.notificationService.info('saved')
+        .subscribe({
+          next: (business) => {
+            if (business) {
+              this.businessForm.patchValue(business,  { emitEvent: false });
+              this.notificationService.info('saved')
+            }
+          },
+          error: (err) => {
+            this.notificationService.error(err ? err.message : 'failed to save. ' + err)
           }
-        }, err => {
-          this.notificationService.error(err ? err.message : 'failed to save. ' + err)
-        });
-    } else {
+    });
+   } else {
       this.validateAll(this.businessForm)
       this.notificationService.error('form is invalid.')
     }

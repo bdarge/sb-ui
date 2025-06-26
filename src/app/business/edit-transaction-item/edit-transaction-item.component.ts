@@ -2,11 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TransactionWebService } from '../../http/transaction-web.service';
-import { CurrencyRequest, TransactionItem } from '../../model/transactionItem';
+import { TransactionItem } from '../../model/transactionItem';
 import { Transaction } from '../../model/transaction';
 import { LocalStorageService } from '../../core/core.module';
-import { SbService } from 'app/http/sb.service';
-import { getCurrencySymbol } from '@angular/common';
+import { Language } from '../../model/user';
 
 @Component({
     selector: 'app-edit-transaction-item',
@@ -19,17 +18,16 @@ export class EditTransactionItemComponent implements OnInit {
   title: string;
   name: string;
   transactionId: number;
-  currency: string;
+  locale: string;
   transaction: Transaction;
   currencies = [];
-  convertedCurrency: Number = null;
+  convertedCurrency: string = null;
 
   constructor(
     private transactionService: TransactionWebService,
     private fb: UntypedFormBuilder,
     private localStorageSvc: LocalStorageService,
     private dialogRef: MatDialogRef<EditTransactionItemComponent>,
-    private sbSvc: SbService,
     @Inject(MAT_DIALOG_DATA) {
       transaction, item
     }: {
@@ -39,7 +37,6 @@ export class EditTransactionItemComponent implements OnInit {
     this.title = !item || Object.keys(item).length === 0 ? 'business.transactionItem.add.title' : 'business.transactionItem.edit.title';
     this.name = transaction && transaction.customer ? transaction.customer.name : '';
     this.transactionId = transaction.id;
-    this.currency = transaction.currency;
     this.transaction = transaction;
 
     this.form = this.fb.group({
@@ -48,13 +45,6 @@ export class EditTransactionItemComponent implements OnInit {
       unit: [item.unit],
       unitPrice: [item.unitPrice, Validators.required],
       qty: [item.qty, Validators.required]
-    });
-
-    const lst = this.localStorageSvc.getItem('LANGUAGES');
-    lst.map((l) => {
-      this.currencies.push({
-        value: l.currency, label: l.currency.toUpperCase()
-      })
     });
   }
 
@@ -89,34 +79,8 @@ export class EditTransactionItemComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  priceChanged() {
-    this.currencyChange();
-  }
-
-  currencyChange() {
-    if (this.currency === this.transaction.currency) {
-      return;
-    }
-    const req = {
-      'symbol': this.currency.toUpperCase(),
-      'base': this.transaction.currency.toUpperCase()
-    } as CurrencyRequest
-
-    this.sbSvc.convert(req).subscribe(
-      {
-        next: (response) => {
-          if (response && response.value) {
-            const v = Math.round((response.value.valueOf() * this.form.get('unitPrice').value + Number.EPSILON) * 100) / 100
-            this.convertedCurrency = v;
-          }
-        },
-        error: (e) => {
-          // do nothing
-        }
-      })
-  }
-
-  currencySymbol(currency: string) {
-    return getCurrencySymbol(currency, 'narrow').toUpperCase();
+  getLanguage(locale: string): Language {
+    const lst: Language[]  = this.localStorageSvc.getItem('LANGUAGES');
+    return lst.find(l => l.locale == locale);
   }
 }

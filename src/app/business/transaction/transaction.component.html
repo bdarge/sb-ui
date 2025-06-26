@@ -64,10 +64,15 @@
       <!-- Show/hide Transaction Item  -->
       <ng-container matColumnDef="transactionItem">
         <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell class="description-cell" *matCellDef="let elt">
-          <fa-icon icon="{{expandedElement === elt? 'angle-up': 'angle-down'}}" (click)="toggleRow(elt, $event)"
-            size="x" matTooltip="show or hide transaction items..." [matTooltipShowDelay]="showDelay.value"
-            [matTooltipHideDelay]="hideDelay.value"></fa-icon>
+        <td mat-cell class="description-cell" *matCellDef="let element">
+          <button
+            mat-icon-button
+            aria-label="expand row"
+            (click)="toggle(element); $event.stopPropagation()"
+            class="sb-toggle-button"
+            [class.sb-toggle-button-expanded]="isExpanded(element)">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
         </td>
       </ng-container>
 
@@ -79,8 +84,16 @@
                 <button mat-raised-button color="primary" (click)="editItem(element, null)">
                   {{ "business.transaction.btn.transactionItems" | translate }}
                 </button>
+                <mat-form-field>
+                  <mat-label>Currency</mat-label>
+                  <mat-select [value]="currencyId" (selectionChange)="currencyChanged($event.value)">
+                    @for (c of currencies; track c) {
+                      <mat-option [value]="c.value">{{c.label}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
               </div>
-
+              {{currencyId}}
               <div class="element-detail-row-table" fxFlex="33">
                 <table mat-table [dataSource]="element.model.items" [ngClass]="routeAnimationsElements">
                   <ng-container matColumnDef="description">
@@ -96,7 +109,7 @@
                   <ng-container matColumnDef="unitPrice">
                     <th mat-header-cell *matHeaderCellDef>Unit price</th>
                     <td mat-cell class="unitprice-cell" *matCellDef="let transactionItem">
-                      {{currencySymbol(element.model.currency)}} {{transactionItem.unitPrice}}</td>
+                       {{ transactionItem.unitPrice | sbCurrency: currency | async}}</td>
                   </ng-container>
                   <ng-container matColumnDef="qty">
                     <th mat-header-cell *matHeaderCellDef>Qty</th>
@@ -122,13 +135,12 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 
-      <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row"
-        [class.expanded-row]="expandedElement == element" (click)="toggleRow(element, $event);">
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="sb-element-row"
+        [class.sb-expanded-row]="isExpanded(element)" (click)="toggle(element)">
       </tr>
 
       <!--Set trigger conditions, and paint "odd" rows grey-->
-      <tr mat-row *matRowDef="let row; columns: ['expandedDetail'];" class="detail-row">
-      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail'];" class="detail-row"></tr>
 
     </table>
 
