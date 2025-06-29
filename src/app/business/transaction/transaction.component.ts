@@ -42,7 +42,7 @@ export class TransactionComponent implements OnInit {
   displayedColumns = ['transactionNumber', 'customer', 'createdAt', 'edit', 'delete', 'transactionItem'];
   displayedItemColumns = ['description', 'unit', 'unitPrice', 'qty', 'delete'];
   expandedElement: any;
-  position = new UntypedFormControl("below");
+  position = new UntypedFormControl('below');
   pageSizeOptions = [3, 5, 10];
   setting$: Observable<SettingsState>;
   currencies = [];
@@ -188,7 +188,7 @@ export class TransactionComponent implements OnInit {
 
   getLanguage(currency: string): Language {
     const lst: Language[] = this.localStorageSvc.getItem('LANGUAGES');
-    return lst.find(l => l.currency == currency);
+    return lst.find(l => l.currency === currency);
   }
 
   currencyChanged(toCurrency: string) {

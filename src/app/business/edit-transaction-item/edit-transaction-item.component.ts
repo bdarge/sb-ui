@@ -81,6 +81,6 @@ export class EditTransactionItemComponent implements OnInit {
 
   getLanguage(locale: string): Language {
     const lst: Language[]  = this.localStorageSvc.getItem('LANGUAGES');
-    return lst.find(l => l.locale == locale);
+    return lst.find(l => l.locale === locale);
   }
 }

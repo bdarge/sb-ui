@@ -3,7 +3,7 @@ import { SbCurrencyPipe } from './sb-currency.pipe';
 import { LocalStorageService } from './core/local-storage/local-storage.service';
 
 describe('SbCurrencyPipe', () => {
-  let service: LocalStorageService = jasmine.createSpyObj(['getItem']);
+  const service: LocalStorageService = jasmine.createSpyObj(['getItem']);
 
   beforeEach(() => {
     TestBed.configureTestingModule({

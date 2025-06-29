@@ -17,7 +17,7 @@ export class SbCurrencyPipe implements PipeTransform {
     return currency.pipe(
       switchMap((d) => {
         if (!d) {
-          return of("");
+          return of('');
         }
         const selected = this.getLanguage(d.to.toString());
         const result = Math.round((d.value.valueOf() * value + Number.EPSILON) * 100) / 100
@@ -28,7 +28,7 @@ export class SbCurrencyPipe implements PipeTransform {
 
   getLanguage(id: string): Language {
     const lst: Language[] = this.localStorageSvc.getItem('LANGUAGES');
-    return lst.find(l => l.currency == id);
+    return lst.find(l => l.currency === id);
   }
 }
 
