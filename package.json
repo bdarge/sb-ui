@@ -26,6 +26,8 @@
     "ng": "ng",
     "start": "pnpm run config && ng serve ",
     "build": "pnpm run config && ng build",
+    "build:dev": "pnpm build -c dev",
+    "build:prod": "pnpm build -c production",
     "test": "pnpm run config && pnpm run lint && ng test --configuration=test --browsers=ChromeHeadlessCustom",
     "e2e": "ng e2e",
     "e2e:ci": "ng e2e",
