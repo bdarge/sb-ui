@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Currency, CurrencyRequest } from 'app/model/transactionItem';
 import { AppConfigService } from 'app/services/app.config.service';
-import { Observable, of, switchMap, timer } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

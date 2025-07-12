@@ -1,12 +1,12 @@
-import { effect, Injectable, Signal, signal, WritableSignal } from '@angular/core';
-import { Currency } from 'app/model/transactionItem';
+import { Injectable, signal, WritableSignal } from '@angular/core';
+import { CurrencyRec } from 'app/model/transactionItem';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataSignalService {
 
-  currency: WritableSignal<Currency> = signal(null);
+  currencyRec: WritableSignal<CurrencyRec> = signal(null);
 
   constructor() { 
   }

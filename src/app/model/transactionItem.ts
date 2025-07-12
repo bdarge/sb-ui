@@ -14,6 +14,11 @@ export interface Currency {
   value: Number;
 }
 
+export interface CurrencyRec {
+  present: Currency;
+  previous: Currency;
+}
+
 export interface CurrencyRequest {
   base: String;
   symbol: String;

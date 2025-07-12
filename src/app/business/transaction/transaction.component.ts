@@ -12,7 +12,7 @@ import { TransactionWebService } from '../../http/transaction-web.service';
 import { IModel, TransactionViewModel } from '../../model/transactionViewModel';
 import { switchMap } from 'rxjs/operators';
 import { TranQuery, Transaction } from '../../model/transaction';
-import { Currency, CurrencyRequest, TransactionItem } from '../../model/transactionItem';
+import { Currency, CurrencyRec, CurrencyRequest, TransactionItem } from '../../model/transactionItem';
 import { SettingsState, State } from 'app/core/settings/settings.model';
 import { selectSettings } from '../../core/settings/settings.selectors';
 import { Store, select } from '@ngrx/store';
@@ -41,14 +41,14 @@ export class TransactionComponent implements OnInit {
   dataSource: TableDatasource<IModel, Query>;
   displayedColumns = ['transactionNumber', 'customer', 'createdAt', 'edit', 'delete', 'transactionItem'];
   displayedItemColumns = ['description', 'unit', 'unitPrice', 'qty', 'delete'];
-  expandedElement: any;
+  expandedElement: TransactionViewModel;
   position = new UntypedFormControl('below');
   pageSizeOptions = [3, 5, 10];
   setting$: Observable<SettingsState>;
   currencies = [];
   currencyId = null;
   previousCurrencyId = null;
-  currency = toObservable(this.signalSrv.currency);
+  currency = toObservable(this.signalSrv.currencyRec);
 
   constructor(private transactionWebService: TransactionWebService,
     private localStorageSvc: LocalStorageService,
@@ -106,8 +106,10 @@ export class TransactionComponent implements OnInit {
       return
     }
     this.currencyId = element.model.currency.toLowerCase()
-    this.signalSrv.currency.set(
-      { to: this.currencyId, value: 1, base: this.currencyId } as Currency
+    this.signalSrv.currencyRec.set(
+      {
+        present: { to: this.currencyId, value: 1, base: this.currencyId } as Currency
+      } as CurrencyRec
     );
   }
 
@@ -209,9 +211,19 @@ export class TransactionComponent implements OnInit {
     this.sbSvc.convert(req).subscribe({
       next: (response) => {
         if (response) {
-          this.signalSrv.currency.set(
-            { to: selected.currency, value: response.value.valueOf(), base: present.currency } as Currency
-          );
+          let previous = null;
+          if (this.expandedElement != null && this.expandedElement.model.currency != present.currency) {
+            // only if the previous is different from the original value.
+            previous = this.signalSrv.currencyRec().present
+          }
+          this.signalSrv.currencyRec.set({
+            present: { 
+              to: selected.currency,
+              value: response.value.valueOf(),
+              base: present.currency,
+            } as Currency,
+            previous
+        } as CurrencyRec );
         }
       }, error: (err) => {
         this.notificationSrv.error(`Failed to convert to ${toCurrency.toUpperCase()}`);
