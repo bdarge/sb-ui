@@ -106,36 +106,11 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-devkit/build-angular:web-test-runner",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills-test.ts",
             "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "karma.conf.cjs",
-            "scripts": [],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "assets": [
-              "src/assets",
-              "src/favicon.ico",
-              "src/favicon.png",
-              "src/favicon.icns",
-              "src/favicon.256x256.png",
-              "src/favicon.512x512.png"
-            ],
-            "codeCoverage": true,
-            "watch": false
-          },
-          "configurations": {
-            "test": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
-            }
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "codeCoverage": true
           }
         },
         "lint": {

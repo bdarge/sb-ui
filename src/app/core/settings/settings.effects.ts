@@ -40,8 +40,9 @@ export class SettingsEffects {
           actionChangeCurrency
         ),
         withLatestFrom(this.store.pipe(select(selectSettingsState))),
-        tap(([_, settings]) =>
-          this.localStorageService.setItem(SETTINGS_KEY, settings)
+        tap(([_, settings]) => {
+          this.localStorageService.setItem(SETTINGS_KEY, settings);
+          }
         )
       ),
     { dispatch: false }
@@ -81,10 +82,8 @@ export class SettingsEffects {
   constructor(
     private actions$: Actions,
     private store: Store<State>,
-    private router: Router,
     private overlayContainer: OverlayContainer,
     private localStorageService: LocalStorageService,
-    private animationsService: AnimationsService,
     private translateService: TranslateService
   ) {
   }

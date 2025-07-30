@@ -20,7 +20,5 @@ export const selectTheme = createSelector(
 
 export const selectCurrency = createSelector(
   selectSettings,
-  (state: SettingsState) => {
-    return state.currency
-  }
+  (state: SettingsState) => state.currency
 );

@@ -212,7 +212,7 @@ export class TransactionComponent implements OnInit {
       next: (response) => {
         if (response) {
           let previous = null;
-          if (this.expandedElement != null && this.expandedElement.model.currency != present.currency) {
+          if (this.expandedElement !== null && this.expandedElement.model.currency !== present.currency) {
             // only if the previous is different from the original value.
             previous = this.signalSrv.currencyRec().present
           }

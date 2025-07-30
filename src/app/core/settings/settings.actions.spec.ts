@@ -1,7 +1,6 @@
 import {
   actionChangeLanguage
 } from './settings.actions';
-import { NIGHT_MODE_THEME } from './settings.model';
 
 describe('Settings Actions', () => {
   it('should create ActionSettingsChangeLanguage action', () => {
