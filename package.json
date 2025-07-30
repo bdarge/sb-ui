@@ -32,7 +32,7 @@
     "test:watch": "ng test --watch",
     "e2e": "ng e2e",
     "e2e:ci": "ng e2e",
-    "ci": "pnpm run clean && pnpm lint && ng test --configuration=test --browsers ChromeHeadlessCustom --code-coverage && pnpm run build:prod --deploy-url / --base-href /",
+    "ci": "pnpm run clean && pnpm lint && ng test && pnpm run build:prod --deploy-url / --base-href /",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "lint": "eslint --color -c eslintrc.json --ext .ts .",
     "cypress:open": "cypress open",
