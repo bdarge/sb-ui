@@ -8,7 +8,7 @@ import {
 } from '../core/core.module';
 import { Router } from '@angular/router';
 import { AuthWebService } from '../http/auth-web.service';
-import { Language } from '../model/user';
+import { ConfigWebService } from 'app/http/config-web.service';
 
 @Component({
     selector: 'app-login',
@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private authService: AuthWebService,
     private localStorageSvc: LocalStorageService,
+    private configWebService: ConfigWebService
   ) {
   }
 
@@ -43,10 +44,9 @@ export class LoginComponent implements OnInit {
           const decoded = jwtDecode(result.token)
           this.localStorageSvc.setItem('ACCOUNT', decoded);
           this.localStorageSvc.setItem('TOKEN', result.token);
-          // get it from db? 
-          this.localStorageSvc.setItem('LANGUAGES', [
-            { 'locale': 'en', 'currency': 'usd' } as Language,
-            { 'locale': 'sv', 'currency': 'sek' } as Language]);
+          this.configWebService.getLangs().subscribe(result => {
+            this.localStorageSvc.setItem('LANGUAGES', result.data)
+          })
           this.router.navigate(['business']);
         })
     }

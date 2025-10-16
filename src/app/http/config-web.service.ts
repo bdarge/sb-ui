@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Address, Business, User } from '../model/user';
+import { Address, Business, User, LanguageResult } from '../model/user';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {AppConfigService} from '../services/app.config.service';
+import { AppConfigService } from '../services/app.config.service';
 
 @Injectable()
 export class ConfigWebService {
   BUSINESS_URL: string
   USER_URL: string
   ACCOUNT_URL: string
+  LANG_URL: string
 
   constructor(private http: HttpClient, private configService: AppConfigService) {
     this.BUSINESS_URL = `${this.configService.config.apiUrl}/business`
     this.USER_URL = `${this.configService.config.apiUrl}/user`
     this.ACCOUNT_URL = `${this.configService.config.apiUrl}/accounts`
+    this.LANG_URL = `${this.configService.config.apiUrl}/lang`
   }
 
   mapUser(u: User): User {
@@ -52,7 +54,12 @@ export class ConfigWebService {
   getBusiness(id: string): Observable<Business> {
     return this.http.get<Business>(this.BUSINESS_URL + '/' + id)
   }
+
   saveBusiness(value: Business): Observable<Business> {
     return this.http.patch<Business>(this.BUSINESS_URL + '/' + value.id, value)
+  }
+
+  getLangs(): Observable<LanguageResult> {
+    return this.http.get<LanguageResult>(this.LANG_URL);
   }
 }

@@ -25,7 +25,7 @@ export class SbCurrencyPipe implements PipeTransform {
            currentValue = Math.round(rec.previous.value.valueOf() * value)
         }
         const result = Math.round(rec.present.value.valueOf() * currentValue)
-        return of(Intl.NumberFormat(selected.locale, { style: 'currency', currency: selected.currency }).format(result))
+        return of(Intl.NumberFormat(selected.language, { style: 'currency', currency: selected.currency }).format(result))
       })
     )
   }

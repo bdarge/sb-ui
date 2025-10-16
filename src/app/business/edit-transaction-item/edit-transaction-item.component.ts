@@ -79,8 +79,8 @@ export class EditTransactionItemComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  getLanguage(locale: string): Language {
+  getLanguage(lang: string): Language {
     const lst: Language[]  = this.localStorageSvc.getItem('LANGUAGES');
-    return lst.find(l => l.locale === locale);
+    return lst.find(l => l.language === lang);
   }
 }

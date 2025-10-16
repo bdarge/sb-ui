@@ -36,6 +36,11 @@ export interface Role {
 }
 
 export interface Language {
-  locale: string;
+  id: number;
+  language: string;
   currency: string;
+}
+
+export interface LanguageResult {
+  data: Language[];
 }

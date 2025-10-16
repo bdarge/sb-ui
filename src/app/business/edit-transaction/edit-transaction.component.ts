@@ -72,7 +72,7 @@ export class EditTransactionComponent implements OnInit {
     const lst = this.localStorageSvc.getItem('LANGUAGES');
     lst.map((l) => {
       this.currencies.push({
-        value: l.locale, label: l.currency.toUpperCase()
+        value: l.currency, label: l.currency.toUpperCase()
       })
     });
   }
