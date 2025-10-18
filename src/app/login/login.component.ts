@@ -44,8 +44,8 @@ export class LoginComponent implements OnInit {
           const decoded = jwtDecode(result.token)
           this.localStorageSvc.setItem('ACCOUNT', decoded);
           this.localStorageSvc.setItem('TOKEN', result.token);
-          this.configWebService.getLangs().subscribe(result => {
-            this.localStorageSvc.setItem('LANGUAGES', result.data)
+          this.configWebService.getLangs().subscribe(r => {
+            this.localStorageSvc.setItem('LANGUAGES', r.data)
           })
           this.router.navigate(['business']);
         })
