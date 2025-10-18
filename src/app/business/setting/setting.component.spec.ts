@@ -10,7 +10,10 @@ describe('SettingComponent', () => {
   let component: SettingComponent;
   let fixture: ComponentFixture<SettingComponent>;
   const localStorageSvc = jasmine.createSpyObj(['setItem', 'getItem']);
-  localStorageSvc.getItem.and.returnValue([{locale: 'en'}, {locale: 'fr'}])
+  localStorageSvc.getItem.and.returnValue([
+    {id:1, language: 'en', currency: 'usd'},
+    {id:2, language: 'fr', currency: 'eu'}
+  ])
   const testStore = jasmine.createSpyObj('Store', ['pipe']);
 
   beforeEach(waitForAsync(() => {
