@@ -73,7 +73,6 @@
     "@types/jasmine": "^5.1.8",
     "@types/mocha": "5.2.7",
     "@types/node": "18.19.60",
-    "@types/pdfmake": "0.2.11",
     "@typescript-eslint/eslint-plugin": "8.24.0",
     "@typescript-eslint/parser": "8.24.0",
     "@web/test-runner": "^0.20.2",
