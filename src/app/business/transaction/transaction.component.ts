@@ -183,6 +183,8 @@ export class TransactionComponent implements OnInit {
       .subscribe((result) => {
         if (result.data) {
           tranViewModel.model.items = result.data.sort((a, b) => a.id - b.id);
+        } else {
+          tranViewModel.model.items = []
         }
         this.ref.detectChanges();
       });

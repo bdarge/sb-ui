@@ -118,7 +118,7 @@
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell class="delete-cell" *matCellDef="let transactionItem">
                       <button mat-button class="btn-link" aria-label="delete"
-                        (click)="deleteItem(element, transactionItem)">
+                        (click)="deleteItem(element, transactionItem); $event.stopPropagation()">
                         <fa-icon icon="trash"></fa-icon>
                       </button>
                     </td>
