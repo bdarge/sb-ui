@@ -20,7 +20,8 @@ export class AppComponent {
   constructor(
     private store: Store<State>,
     private titleService: Title
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void  {
     this.theme$ = this.store.pipe(select(selectTheme));
