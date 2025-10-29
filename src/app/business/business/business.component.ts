@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Store } from '@ngrx/store';
 import {
   routeAnimations,
   LocalStorageService
 } from '../../core/core.module';
-import { State } from '../../core/settings/settings.model';
 import { Account } from '../../model/account';
 import { Router } from '@angular/router';
+import { AuthWebService } from 'app/http/auth-web.service';
 
 @Component({
     selector: 'app-business',
@@ -34,7 +33,8 @@ export class BusinessComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private localStorageSvc: LocalStorageService
+    private localStorageSvc: LocalStorageService,
+    private authService: AuthWebService,
   ) {
     const acct = this.localStorageSvc.getItem('ACCOUNT') as Account
     const userName: string = acct?.email
@@ -46,9 +46,7 @@ export class BusinessComponent implements OnInit {
   }
 
   onLogoutClick() {
-    this.localStorageSvc.removeItem('ACCOUNT')
-    this.localStorageSvc.removeItem('TOKEN')
-    this.router.navigate(['login'])
+    this.authService.logout()
   }
 }
 
