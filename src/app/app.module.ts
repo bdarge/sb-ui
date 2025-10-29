@@ -8,7 +8,6 @@ import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoginComponent } from './login/login.component';
 import { ProviderModule } from './provider/provider.module';
 import { ServiceModule } from './services/service.module';
@@ -36,7 +35,6 @@ export function initConfig(configService: AppConfigService) {
     ProviderModule,
     ServiceModule,
     CoreModule,
-    FlexLayoutModule,
     AppRoutingModule], providers: [
       provideAppInitializer(() => {
         const initializerFn = (initConfig)(inject(AppConfigService));
