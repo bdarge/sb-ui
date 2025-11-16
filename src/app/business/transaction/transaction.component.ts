@@ -248,7 +248,7 @@ export class TransactionComponent implements OnInit {
 
       const headRow = [{name: 'Name', customer: 'Customer', requestType: 'Request Type'}]
 
-      let content = [];
+      const content = [];
 
       a.forEach((item) => {
         content.push({name: item.model.description, customer: item.model.customer.name, requestType: item.model.requestType})
