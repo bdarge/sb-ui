@@ -75,13 +75,13 @@ export class CustomerComponent implements OnInit {
   }
 
   delete(customer: Customer) {
-    this.customersService.delete(customer).subscribe(() => {
-      next: this.ds.fetch();
+    this.customersService.delete(customer).subscribe({
+      next: () => this.ds.fetch(),
       error: (e) => {
         this.notificationService.error(
           e ? e.message : `Failed to delete ${customer.name} record`
         );
-      };
+      },
     });
   }
 }
