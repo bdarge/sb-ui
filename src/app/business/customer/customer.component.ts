@@ -1,19 +1,19 @@
-import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { EditCustomerComponent} from '../edit-customer/edit-customer.component';
-import { Customer} from '../../model/customer';
-import { ROUTE_ANIMATIONS_ELEMENTS} from '../../core/core.module';
-import { TableDatasource} from '../../services/table.datasource';
-import { Query} from '../../model/page';
-import { CustomerWebService} from '../../http/customer-web.service';
+import { EditCustomerComponent } from '../edit-customer/edit-customer.component';
+import { Customer } from '../../model/customer';
+import { NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
+import { TableDatasource } from '../../services/table.datasource';
+import { Query } from '../../model/page';
+import { CustomerWebService } from '../../http/customer-web.service';
 
 @Component({
-    selector: 'app-customer',
-    templateUrl: './customer.component.html',
-    styleUrls: ['./customer.component.scss'],
-    standalone: false
+  selector: 'app-customer',
+  templateUrl: './customer.component.html',
+  styleUrls: ['./customer.component.scss'],
+  standalone: false
 })
 export class CustomerComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -27,13 +27,14 @@ export class CustomerComponent implements OnInit {
   displayedColumns = ['name', 'email', 'createdAt', 'edit'];
 
   constructor(private customersService: CustomerWebService,
-              private dialog: MatDialog) {}
+    private notificationService: NotificationService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.ds = new TableDatasource<Customer, Query>(
       (request, query) => this.customersService.page(request, query),
-      {active: 'id', direction: 'desc'},
-      {search: ''}
+      { active: 'id', direction: 'desc' },
+      { search: '' }
     )
   }
 
@@ -72,7 +73,10 @@ export class CustomerComponent implements OnInit {
   delete(customer: Customer) {
     this.customersService.delete(customer)
       .subscribe(() => {
-        this.ds.fetch()
+        next: this.ds.fetch()
+        error: (e) => {
+          this.notificationService.error(e ? e.message : `Failed to delete ${customer.name} record`)
+        }
       });
   }
 }

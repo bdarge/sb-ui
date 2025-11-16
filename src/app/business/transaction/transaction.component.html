@@ -4,6 +4,9 @@
       <button class="float-start" mat-raised-button color="primary" (click)="add()" data-testid="add-btn">{{
         "business.transaction.btn.add" |
         translate }}</button>
+      <button mat-button class="btn-link" aria-label="pdf" matTooltip="PDF" (click)="download();">
+        <fa-icon icon="download"></fa-icon>
+      </button>
     </div>
   </div>
 

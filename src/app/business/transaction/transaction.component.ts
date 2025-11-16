@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef, signal, effect, WritableSignal } from '@angular/core';
-import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { Component, OnInit, ChangeDetectorRef, Inject, LOCALE_ID } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LocalStorageService, NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
 import { EditTransactionComponent } from '../edit-transaction/edit-transaction.component';
@@ -20,6 +20,9 @@ import { Language } from 'app/model/user';
 import { DataSignalService } from 'app/services/data-signal.service';
 import { SbService } from 'app/http/sb.service';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { jsPDF } from 'jspdf';
+import { autoTable } from 'jspdf-autotable';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -49,15 +52,18 @@ export class TransactionComponent implements OnInit {
   currencyId = null;
   previousCurrencyId = null;
   currency = toObservable(this.signalSrv.currencyRec);
-
-  constructor(private transactionWebService: TransactionWebService,
+ 
+  constructor(
+    @Inject(LOCALE_ID) public locale: string,
+    private transactionWebService: TransactionWebService,
     private localStorageSvc: LocalStorageService,
     private dialog: MatDialog,
     private ref: ChangeDetectorRef,
     private store: Store<State>,
     private signalSrv: DataSignalService,
     private notificationSrv: NotificationService,
-    private sbSvc: SbService) {
+    private sbSvc: SbService
+  ) {
   }
 
   ngOnInit() {
@@ -84,11 +90,13 @@ export class TransactionComponent implements OnInit {
     );
     this.setting$ = this.store.pipe(select(selectSettings));
     const lst = this.localStorageSvc.getItem('LANGUAGES');
-    lst.forEach((l) => {
-      this.currencies.push({
-        value: l.currency, label: l.currency.toUpperCase()
-      })
-    });
+    if (lst) {
+      lst.forEach((l) => {
+        this.currencies.push({
+          value: l.currency, label: l.currency.toUpperCase()
+        })
+      });
+    }
   }
 
   /** Checks whether an element is expanded. */
@@ -233,4 +241,30 @@ export class TransactionComponent implements OnInit {
       }
     });
   }
+
+  download() {
+    this.dataSource.connect().subscribe((a) => {
+      const doc = new jsPDF("l");
+
+      const headRow = [{name: 'Name', customer: 'Customer', requestType: 'Request Type'}]
+
+      let content = [];
+
+      a.forEach((item) => {
+        content.push({name: item.model.description, customer: item.model.customer.name, requestType: item.model.requestType})
+      })
+
+      autoTable(doc, {
+          head: headRow,
+          startY: 25,
+          body: content,
+          horizontalPageBreak: true,
+      });
+
+      const d = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
+
+      doc.save(`transactions-${d}.pdf`);
+    });
+  }
 }
+

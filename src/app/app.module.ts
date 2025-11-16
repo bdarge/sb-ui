@@ -1,7 +1,7 @@
 import '../polyfills';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, inject, provideAppInitializer } from '@angular/core';
+import { LOCALE_ID, NgModule, inject, provideAppInitializer } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -40,7 +40,8 @@ export function initConfig(configService: AppConfigService) {
         const initializerFn = (initConfig)(inject(AppConfigService));
         return initializerFn();
       }),
-      provideHttpClient(withInterceptorsFromDi())
+      provideHttpClient(withInterceptorsFromDi()),
+      {provide: LOCALE_ID, useValue: 'en-US' }
     ]
 })
 export class AppModule { }

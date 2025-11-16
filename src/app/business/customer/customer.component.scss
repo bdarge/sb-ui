@@ -11,3 +11,12 @@
   width: 100%;
 }
 
+.customers-table {
+  .mat-mdc-row .mat-mdc-cell {
+    cursor: pointer;
+  }
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+    font-weight: bold;
+  }
+}

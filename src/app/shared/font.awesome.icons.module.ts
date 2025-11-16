@@ -9,7 +9,7 @@ import {
   faPlayCircle, faPlus,
   faPowerOff,
   faRocket, faSquare, faStream, faTasks, faTimes, faTrash,
-  faUser,
+  faUser, faDownload,
   faUserCircle, faWindowMaximize
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -47,7 +47,8 @@ export class FontAwesomeIconsModule {
       faAngleDown as IconDefinition,
       faTrash as IconDefinition,
       faLock as IconDefinition,
-      faUnlock as IconDefinition
+      faUnlock as IconDefinition,
+      faDownload as IconDefinition,
     )
   }
 }
