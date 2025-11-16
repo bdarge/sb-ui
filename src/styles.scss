@@ -43,13 +43,18 @@ mat.$theme-ignore-duplication-warnings: true;
   @include components-theme(n.$nature-theme);
 }
 
-.spacer {flex: 1 1 auto;}
+.spacer {
+  flex: 1 1 auto;
+}
 
-html, body { height: 100%; }
+html,
+body {
+  height: 100%;
+}
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 .icon-form-field {

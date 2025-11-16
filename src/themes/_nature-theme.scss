@@ -1,13 +1,19 @@
 @use '@angular/material' as mat;
-$anms-nature-primary: mat.m2-define-palette(mat.$m2-brown-palette, 700, 300, 900);
+$anms-nature-primary: mat.m2-define-palette(
+  mat.$m2-brown-palette,
+  700,
+  300,
+  900
+);
 $anms-nature-accent: mat.m2-define-palette(mat.$m2-deep-purple-palette, 300);
 $anms-nature-warn: mat.m2-define-palette(mat.$m2-red-palette, 600);
 
-$nature-theme: mat.m2-define-light-theme((
-  color: (
-    primary: $anms-nature-primary,
-    accent: $anms-nature-accent,
-    warn: $anms-nature-warn
+$nature-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $anms-nature-primary,
+      accent: $anms-nature-accent,
+      warn: $anms-nature-warn,
+    ),
   )
-));
-
+);

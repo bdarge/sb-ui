@@ -8,14 +8,19 @@ import { GeneralService } from '../../services/general.service';
  */
 @Injectable()
 export class AppErrorHandler extends ErrorHandler {
-  constructor(private notificationsService: NotificationService,
-              private generalService: GeneralService) {
-    super()
+  constructor(
+    private notificationsService: NotificationService,
+    private generalService: GeneralService
+  ) {
+    super();
   }
 
   handleError(error: Error | HttpErrorResponse) {
     if (error instanceof HttpErrorResponse) {
-      if (error.status === 401 || (error.url.includes('auth/refresh-token') && error.status === 403)) {
+      if (
+        error.status === 401 ||
+        (error.url.includes('auth/refresh-token') && error.status === 403)
+      ) {
         this.notificationsService.error('Your session has Expired.');
         this.generalService.logOut();
       }

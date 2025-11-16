@@ -1,9 +1,9 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SettingComponent } from './setting.component';
-import {of} from 'rxjs';
-import {Store} from '@ngrx/store';
-import {TranslateModule} from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
 import { LocalStorageService } from '../../core/local-storage/local-storage.service';
 
 describe('SettingComponent', () => {
@@ -11,28 +11,27 @@ describe('SettingComponent', () => {
   let fixture: ComponentFixture<SettingComponent>;
   const localStorageSvc = jasmine.createSpyObj(['setItem', 'getItem']);
   localStorageSvc.getItem.and.returnValue([
-    {id:1, language: 'en', currency: 'usd'},
-    {id:2, language: 'fr', currency: 'eu'}
-  ])
+    { id: 1, language: 'en', currency: 'usd' },
+    { id: 2, language: 'fr', currency: 'eu' },
+  ]);
   const testStore = jasmine.createSpyObj('Store', ['pipe']);
 
   beforeEach(waitForAsync(() => {
-    testStore.pipe.and.returnValue(of(''))
+    testStore.pipe.and.returnValue(of(''));
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
-      declarations: [ SettingComponent ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [SettingComponent],
       providers: [
         {
           provide: LocalStorageService,
-          useValue: localStorageSvc
+          useValue: localStorageSvc,
         },
         {
-          provide: Store, useValue: testStore
-        }]
-    })
-    .compileComponents();
+          provide: Store,
+          useValue: testStore,
+        },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

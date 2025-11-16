@@ -8,19 +8,32 @@
       <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="row">
           <mat-form-field class="col" [ngClass]="routeAnimationsElements">
-            <input matInput placeholder="{{ 'business.register.email.placeholder' | translate }}"
-                   formControlName="email" type="email">
+            <input
+              matInput
+              placeholder="{{
+                'business.register.email.placeholder' | translate
+              }}"
+              formControlName="email"
+              type="email"
+            />
             <mat-error *ngIf="form.get('email').hasError('required')">
               {{ 'business.register.email.error1' | translate }}
             </mat-error>
             <mat-error *ngIf="form.get('email').hasError('email')">
-              {{ 'business.register.email.error2' | translate }}</mat-error>
+              {{ 'business.register.email.error2' | translate }}</mat-error
+            >
           </mat-form-field>
         </div>
         <div class="row">
           <mat-form-field class="col" [ngClass]="routeAnimationsElements">
-            <input matInput placeholder="{{ 'business.register.password.placeholder' | translate }}"
-                   formControlName="password" type="password">
+            <input
+              matInput
+              placeholder="{{
+                'business.register.password.placeholder' | translate
+              }}"
+              formControlName="password"
+              type="password"
+            />
             <mat-error *ngIf="form.get('password').hasError('required')">
               {{ 'business.register.password.error' | translate }}
             </mat-error>
@@ -37,8 +50,14 @@
         </div>
         <div class="row">
           <mat-form-field class="col" [ngClass]="routeAnimationsElements">
-            <input matInput placeholder="{{ 'business.register.confirmPassword.placeholder' | translate }}"
-                   formControlName="confirmPassword" type="password">
+            <input
+              matInput
+              placeholder="{{
+                'business.register.confirmPassword.placeholder' | translate
+              }}"
+              formControlName="confirmPassword"
+              type="password"
+            />
             <mat-error *ngIf="form.get('confirmPassword').hasError('required')">
               {{ 'business.register.password.error' | translate }}
             </mat-error>
@@ -49,8 +68,12 @@
         </div>
         <div class="row d-flex pad">
           <div class="buttons">
-            <button mat-raised-button color="primary" type="submit"
-                    [ngClass]="routeAnimationsElements">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [ngClass]="routeAnimationsElements"
+            >
               {{ 'business.register.btn' | translate }}
             </button>
             <a class="login" [routerLink]="['/login']">Login</a>

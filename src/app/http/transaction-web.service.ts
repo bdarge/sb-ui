@@ -9,11 +9,16 @@ import { Account } from '../model/account';
 import { AppConfigService } from '../services/app.config.service';
 
 @Injectable()
-export class TransactionWebService implements IService<Transaction, TransactionItem> {
-  TRANSACTION_URL = ''
+export class TransactionWebService
+  implements IService<Transaction, TransactionItem>
+{
+  TRANSACTION_URL = '';
 
-  constructor(private http: HttpClient, private configService: AppConfigService) {
-    this.TRANSACTION_URL = `${this.configService.config.apiUrl}/transaction`
+  constructor(
+    private http: HttpClient,
+    private configService: AppConfigService
+  ) {
+    this.TRANSACTION_URL = `${this.configService.config.apiUrl}/transaction`;
   }
 
   page(request: PageRequest, query: TranQuery): Observable<Page<Transaction>> {
@@ -25,23 +30,26 @@ export class TransactionWebService implements IService<Transaction, TransactionI
       .set('SortProperty', request.sort.active)
       .set('Search', query.search);
 
-    return this.http.get<Page<Transaction>>(
-      this.TRANSACTION_URL,
-      {
-        params: params
-      });
+    return this.http.get<Page<Transaction>>(this.TRANSACTION_URL, {
+      params: params,
+    });
   }
 
-  delete(transaction:Transaction): Observable<boolean> {
-    return this.http.delete<boolean>(this.TRANSACTION_URL + '/' + transaction.id);
+  delete(transaction: Transaction): Observable<boolean> {
+    return this.http.delete<boolean>(
+      this.TRANSACTION_URL + '/' + transaction.id
+    );
   }
 
-  update(transaction:Transaction): Observable<Transaction> {
-    return this.http.patch<Transaction>(this.TRANSACTION_URL + '/' + transaction.id, transaction);
+  update(transaction: Transaction): Observable<Transaction> {
+    return this.http.patch<Transaction>(
+      this.TRANSACTION_URL + '/' + transaction.id,
+      transaction
+    );
   }
 
-  add(account: Account, transaction:Transaction): Observable<Transaction> {
-    const copy = (JSON.parse(JSON.stringify(transaction)));
+  add(account: Account, transaction: Transaction): Observable<Transaction> {
+    const copy = JSON.parse(JSON.stringify(transaction));
     copy.customerId = transaction.customer.id;
     copy.createdBy = account.userId;
     delete copy.customer;
@@ -50,18 +58,28 @@ export class TransactionWebService implements IService<Transaction, TransactionI
   }
 
   deleteItem(item: TransactionItem): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.TRANSACTION_URL}/${item.transactionId}/item/${item.id}`);
+    return this.http.delete<boolean>(
+      `${this.TRANSACTION_URL}/${item.transactionId}/item/${item.id}`
+    );
   }
 
   getItems(transactionId: number): Observable<Page<TransactionItem>> {
-    return this.http.get<Page<TransactionItem>>(`${this.TRANSACTION_URL}/${transactionId}/item`);
+    return this.http.get<Page<TransactionItem>>(
+      `${this.TRANSACTION_URL}/${transactionId}/item`
+    );
   }
 
   updateItem(item: TransactionItem): Observable<TransactionItem> {
-    return this.http.patch<TransactionItem>(`${this.TRANSACTION_URL}/${item.transactionId}/item/${item.id}`, item);
+    return this.http.patch<TransactionItem>(
+      `${this.TRANSACTION_URL}/${item.transactionId}/item/${item.id}`,
+      item
+    );
   }
 
   createItem(item: TransactionItem): Observable<TransactionItem> {
-    return this.http.post<TransactionItem>(`${this.TRANSACTION_URL}/${item.transactionId}/item`, item);
+    return this.http.post<TransactionItem>(
+      `${this.TRANSACTION_URL}/${item.transactionId}/item`,
+      item
+    );
   }
 }

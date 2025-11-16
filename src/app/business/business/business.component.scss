@@ -1,4 +1,4 @@
-@use "sass:map";
+@use 'sass:map';
 @use '../../../styles-variables' as v;
 
 .theme-wrapper {
@@ -9,7 +9,7 @@
 mat-sidenav-container {
   height: 100%;
   width: 100%;
-  position: unset!important; // fix safari issue https://stackoverflow.com/a/55245999
+  position: unset !important; // fix safari issue https://stackoverflow.com/a/55245999
 
   .toolbar {
     position: fixed;
@@ -116,4 +116,3 @@ mat-sidenav {
     padding-top: 0;
   }
 }
-

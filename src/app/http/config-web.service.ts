@@ -7,16 +7,19 @@ import { AppConfigService } from '../services/app.config.service';
 
 @Injectable()
 export class ConfigWebService {
-  BUSINESS_URL: string
-  USER_URL: string
-  ACCOUNT_URL: string
-  LANG_URL: string
+  BUSINESS_URL: string;
+  USER_URL: string;
+  ACCOUNT_URL: string;
+  LANG_URL: string;
 
-  constructor(private http: HttpClient, private configService: AppConfigService) {
-    this.BUSINESS_URL = `${this.configService.config.apiUrl}/business`
-    this.USER_URL = `${this.configService.config.apiUrl}/user`
-    this.ACCOUNT_URL = `${this.configService.config.apiUrl}/accounts`
-    this.LANG_URL = `${this.configService.config.apiUrl}/lang`
+  constructor(
+    private http: HttpClient,
+    private configService: AppConfigService
+  ) {
+    this.BUSINESS_URL = `${this.configService.config.apiUrl}/business`;
+    this.USER_URL = `${this.configService.config.apiUrl}/user`;
+    this.ACCOUNT_URL = `${this.configService.config.apiUrl}/accounts`;
+    this.LANG_URL = `${this.configService.config.apiUrl}/lang`;
   }
 
   mapUser(u: User): User {
@@ -33,30 +36,32 @@ export class ConfigWebService {
         country: u.address.country,
         landline: u.address.landline,
         mobile: u.address.mobile,
-      } as Address
-    } as User
+      } as Address,
+    } as User;
   }
 
   getUser(id: number): Observable<User> {
-    return this.http.get<User>(this.USER_URL + '/' + id)
-      .pipe(map(this.mapUser))
+    return this.http
+      .get<User>(this.USER_URL + '/' + id)
+      .pipe(map(this.mapUser));
   }
 
   getUserByAcctId(id: string): Observable<User> {
-    return this.http.get<User>(this.ACCOUNT_URL + '/' + id + '/user')
+    return this.http.get<User>(this.ACCOUNT_URL + '/' + id + '/user');
   }
 
   saveUser(user: User): Observable<User> {
-    return this.http.patch<User>(this.USER_URL + '/' + user.id, user)
-      .pipe(map(this.mapUser))
+    return this.http
+      .patch<User>(this.USER_URL + '/' + user.id, user)
+      .pipe(map(this.mapUser));
   }
 
   getBusiness(id: string): Observable<Business> {
-    return this.http.get<Business>(this.BUSINESS_URL + '/' + id)
+    return this.http.get<Business>(this.BUSINESS_URL + '/' + id);
   }
 
   saveBusiness(value: Business): Observable<Business> {
-    return this.http.patch<Business>(this.BUSINESS_URL + '/' + value.id, value)
+    return this.http.patch<Business>(this.BUSINESS_URL + '/' + value.id, value);
   }
 
   getLangs(): Observable<LanguageResult> {

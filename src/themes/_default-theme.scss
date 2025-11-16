@@ -4,11 +4,12 @@ $anms-primary: mat.m2-define-palette(mat.$m2-indigo-palette, 800, 300, 900);
 $anms-accent: mat.m2-define-palette(mat.$m2-light-blue-palette);
 $anms-warn: mat.m2-define-palette(mat.$m2-pink-palette, 600);
 
-$default-theme: mat.m2-define-light-theme((
-  color: (
-    primary: $anms-primary,
-    accent: $anms-accent,
-    warm: $anms-warn,
+$default-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $anms-primary,
+      accent: $anms-accent,
+      warm: $anms-warn,
+    ),
   )
-));
-
+);

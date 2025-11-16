@@ -1,5 +1,7 @@
 <div [class]="'theme-wrapper ' + (theme$ | async)">
-  <div [@routeAnimations]="op.isActivated && op.activatedRoute.routeConfig.path">
+  <div
+    [@routeAnimations]="op.isActivated && op.activatedRoute.routeConfig.path"
+  >
     <router-outlet #op="outlet"></router-outlet>
   </div>
 </div>

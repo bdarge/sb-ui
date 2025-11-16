@@ -13,7 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -63,10 +63,9 @@ import { SbCurrencyPipe } from '.././sb-currency.pipe';
     MatRippleModule,
     NgxMatSelectSearchModule,
     MatGridListModule,
-    SbCurrencyPipe
+    SbCurrencyPipe,
   ],
-  declarations: [
-  ],
+  declarations: [],
   exports: [
     TranslateModule,
     CommonModule,
@@ -101,7 +100,7 @@ import { SbCurrencyPipe } from '.././sb-currency.pipe';
     MatRippleModule,
     NgxMatSelectSearchModule,
     MatGridListModule,
-    SbCurrencyPipe
-  ]
+    SbCurrencyPipe,
+  ],
 })
 export class SharedModule {}

@@ -1,11 +1,9 @@
-import {
-  actionChangeLanguage
-} from './settings.actions';
+import { actionChangeLanguage } from './settings.actions';
 
 describe('Settings Actions', () => {
   it('should create ActionSettingsChangeLanguage action', () => {
     const action = actionChangeLanguage({
-      language: 'en'
+      language: 'en',
     });
 
     expect(action.type).toEqual(actionChangeLanguage.type);

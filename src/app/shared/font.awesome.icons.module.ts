@@ -1,16 +1,39 @@
 import { NgModule } from '@angular/core';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
-  faAngleDown, faUnlock,
+  FaIconLibrary,
+  FontAwesomeModule,
+} from '@fortawesome/angular-fontawesome';
+import {
+  faAngleDown,
+  faUnlock,
   faAngleUp,
-  faBars, faBook, faCaretDown, faCaretUp, faCheck,
-  faCog, faEdit, faExclamationTriangle, faFilter, faLanguage, faLightbulb, faLock, faPaintBrush,
-  faPlayCircle, faPlus,
+  faBars,
+  faBook,
+  faCaretDown,
+  faCaretUp,
+  faCheck,
+  faCog,
+  faEdit,
+  faExclamationTriangle,
+  faFilter,
+  faLanguage,
+  faLightbulb,
+  faLock,
+  faPaintBrush,
+  faPlayCircle,
+  faPlus,
   faPowerOff,
-  faRocket, faSquare, faStream, faTasks, faTimes, faTrash,
-  faUser, faDownload,
-  faUserCircle, faWindowMaximize
+  faRocket,
+  faSquare,
+  faStream,
+  faTasks,
+  faTimes,
+  faTrash,
+  faUser,
+  faDownload,
+  faUserCircle,
+  faWindowMaximize,
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
@@ -48,7 +71,7 @@ export class FontAwesomeIconsModule {
       faTrash as IconDefinition,
       faLock as IconDefinition,
       faUnlock as IconDefinition,
-      faDownload as IconDefinition,
-    )
+      faDownload as IconDefinition
+    );
   }
 }

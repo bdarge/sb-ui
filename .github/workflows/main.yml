@@ -36,8 +36,8 @@ jobs:
       contents: read
       packages: write
     env:
-        NODE_ENV: PROD
-        IMAGE_NAME: sb-ui
+      NODE_ENV: PROD
+      IMAGE_NAME: sb-ui
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2

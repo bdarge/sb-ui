@@ -1,9 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { TransactionWebService } from './transaction-web.service';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { Sort } from '@angular/material/sort';
 import { Transaction } from '../model/transaction';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('TransactionWebService', () => {
   let service: TransactionWebService;
@@ -11,9 +17,13 @@ describe('TransactionWebService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [TransactionWebService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [
+        TransactionWebService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
+    });
     service = TestBed.inject(TransactionWebService);
     httpMock = TestBed.inject(HttpTestingController);
   });

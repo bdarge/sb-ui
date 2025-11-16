@@ -11,18 +11,15 @@ import { AboutmeComponent } from './aboutme/aboutme.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [
-        SharedModule,
-        BusinessRoutingModule,
-        FontAwesomeIconsModule
-    ],
+  imports: [SharedModule, BusinessRoutingModule, FontAwesomeIconsModule],
   declarations: [
     SettingComponent,
     ProfileComponent,
     BusinessComponent,
     HomeComponent,
     AddressFormComponent,
-    AboutmeComponent]
+    AboutmeComponent,
+  ],
 })
 export class BusinessModule {
   constructor() {}

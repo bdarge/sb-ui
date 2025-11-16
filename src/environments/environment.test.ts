@@ -19,6 +19,6 @@ export const ENVIRONMENT = {
     angularCli: packageJson.devDependencies['@angular/cli'],
     typescript: packageJson.devDependencies['typescript'],
     cypress: packageJson.devDependencies['cypress'],
-    eslint: packageJson.devDependencies['eslint']
-  }
-}
+    eslint: packageJson.devDependencies['eslint'],
+  },
+};

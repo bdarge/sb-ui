@@ -5,13 +5,16 @@ import { AppConfigService } from 'app/services/app.config.service';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SbService {
-  URL: string
+  URL: string;
 
-  constructor(private http: HttpClient, private configService: AppConfigService) {
-    this.URL = `${this.configService.config.apiUrl}`
+  constructor(
+    private http: HttpClient,
+    private configService: AppConfigService
+  ) {
+    this.URL = `${this.configService.config.apiUrl}`;
   }
 
   convert(req: CurrencyRequest): Observable<Currency> {

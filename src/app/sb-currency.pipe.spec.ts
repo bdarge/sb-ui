@@ -7,7 +7,7 @@ describe('SbCurrencyPipe', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ { provide: LocalStorageService, useValue: service } ]
+      providers: [{ provide: LocalStorageService, useValue: service }],
     });
   });
 

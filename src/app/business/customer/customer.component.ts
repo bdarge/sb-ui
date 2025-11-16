@@ -4,7 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EditCustomerComponent } from '../edit-customer/edit-customer.component';
 import { Customer } from '../../model/customer';
-import { NotificationService, ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
+import {
+  NotificationService,
+  ROUTE_ANIMATIONS_ELEMENTS,
+} from '../../core/core.module';
 import { TableDatasource } from '../../services/table.datasource';
 import { Query } from '../../model/page';
 import { CustomerWebService } from '../../http/customer-web.service';
@@ -13,7 +16,7 @@ import { CustomerWebService } from '../../http/customer-web.service';
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.scss'],
-  standalone: false
+  standalone: false,
 })
 export class CustomerComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,16 +29,18 @@ export class CustomerComponent implements OnInit {
   ds: TableDatasource<Customer, Query>;
   displayedColumns = ['name', 'email', 'createdAt', 'edit'];
 
-  constructor(private customersService: CustomerWebService,
+  constructor(
+    private customersService: CustomerWebService,
     private notificationService: NotificationService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.ds = new TableDatasource<Customer, Query>(
       (request, query) => this.customersService.page(request, query),
       { active: 'id', direction: 'desc' },
       { search: '' }
-    )
+    );
   }
 
   edit(customer: any) {
@@ -46,12 +51,11 @@ export class CustomerComponent implements OnInit {
     dialogConfig.data = customer || {};
     const dialogRef = this.dialog.open(EditCustomerComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(data => {
+    dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this.customersService.update(data)
-          .subscribe(() => {
-            this.ds.fetch()
-          });
+        this.customersService.update(data).subscribe(() => {
+          this.ds.fetch();
+        });
       }
     });
   }
@@ -66,17 +70,18 @@ export class CustomerComponent implements OnInit {
     const dialogRef = this.dialog.open(EditCustomerComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(() => {
-      this.ds.fetch()
+      this.ds.fetch();
     });
   }
 
   delete(customer: Customer) {
-    this.customersService.delete(customer)
-      .subscribe(() => {
-        next: this.ds.fetch()
-        error: (e) => {
-          this.notificationService.error(e ? e.message : `Failed to delete ${customer.name} record`)
-        }
-      });
+    this.customersService.delete(customer).subscribe(() => {
+      next: this.ds.fetch();
+      error: (e) => {
+        this.notificationService.error(
+          e ? e.message : `Failed to delete ${customer.name} record`
+        );
+      };
+    });
   }
 }

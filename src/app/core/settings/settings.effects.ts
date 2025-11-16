@@ -5,11 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { TranslateService } from '@ngx-translate/core';
 import { merge, of } from 'rxjs';
-import {
-  tap,
-  withLatestFrom,
-  distinctUntilChanged
-} from 'rxjs/operators';
+import { tap, withLatestFrom, distinctUntilChanged } from 'rxjs/operators';
 
 import { selectSettingsState } from '../core.state';
 import { LocalStorageService } from '../local-storage/local-storage.service';
@@ -17,11 +13,14 @@ import { AnimationsService } from '../animations/animations.service';
 
 import {
   actionChangeCurrency,
-  actionChangeLanguage, actionChangeTheme
+  actionChangeLanguage,
+  actionChangeTheme,
 } from './settings.actions';
 
 import {
-  selectSettingsLanguage, selectTheme, selectCurrency
+  selectSettingsLanguage,
+  selectTheme,
+  selectCurrency,
 } from './settings.selectors';
 
 import { State } from './settings.model';
@@ -34,16 +33,11 @@ export class SettingsEffects {
   persistSettings = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(
-          actionChangeLanguage,
-          actionChangeTheme,
-          actionChangeCurrency
-        ),
+        ofType(actionChangeLanguage, actionChangeTheme, actionChangeCurrency),
         withLatestFrom(this.store.pipe(select(selectSettingsState))),
         tap(([_, settings]) => {
           this.localStorageService.setItem(SETTINGS_KEY, settings);
-          }
-        )
+        })
       ),
     { dispatch: false }
   );
@@ -53,8 +47,8 @@ export class SettingsEffects {
       this.store.pipe(
         select(selectSettingsLanguage),
         distinctUntilChanged(),
-        tap(language => {
-          this.translateService.use(language)
+        tap((language) => {
+          this.translateService.use(language);
         })
       ),
     { dispatch: false }
@@ -65,8 +59,8 @@ export class SettingsEffects {
       merge(INIT, this.actions$.pipe(ofType(actionChangeTheme))).pipe(
         withLatestFrom(this.store.pipe(select(selectTheme))),
         tap(([action, theme]) => {
-          const classList = this.overlayContainer.getContainerElement()
-            .classList;
+          const classList =
+            this.overlayContainer.getContainerElement().classList;
           const toRemove = Array.from(classList).filter((item: string) =>
             item.includes('-theme')
           );
@@ -85,7 +79,5 @@ export class SettingsEffects {
     private overlayContainer: OverlayContainer,
     private localStorageService: LocalStorageService,
     private translateService: TranslateService
-  ) {
-  }
+  ) {}
 }
-

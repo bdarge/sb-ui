@@ -5,43 +5,43 @@ import { ProfileComponent } from './profile/profile.component';
 import { BusinessComponent } from './business/business.component';
 import { AboutmeComponent } from './aboutme/aboutme.component';
 
-const routes: Routes = [{
-  path: '',
-  component: BusinessComponent,
-  children: [
-    {
-      path: '',
-      redirectTo: 'home',
-      pathMatch: 'full'
-    },
-    {
-      path: 'home',
-      loadChildren: () =>
-        import('./home/home.module').then(
-          (m) => m.HomeModule
-        )
-    },
-    {
-      path: 'setting',
-      component: SettingComponent,
-    },
-    {
-      path: 'profile',
-      component: ProfileComponent,
-    },
-    {
-      path: 'about',
-      component: AboutmeComponent,
-    },
-    {
-      path: '**',
-      redirectTo: 'home'
-    }]
-}];
+const routes: Routes = [
+  {
+    path: '',
+    component: BusinessComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+      {
+        path: 'home',
+        loadChildren: () =>
+          import('./home/home.module').then((m) => m.HomeModule),
+      },
+      {
+        path: 'setting',
+        component: SettingComponent,
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      },
+      {
+        path: 'about',
+        component: AboutmeComponent,
+      },
+      {
+        path: '**',
+        redirectTo: 'home',
+      },
+    ],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class BusinessRoutingModule {}
-

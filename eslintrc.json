@@ -43,8 +43,16 @@
     "@typescript-eslint/naming-convention": [
       "error",
       { "selector": "variable", "format": ["camelCase"] },
-      { "selector": "variable", "modifiers": ["const"], "format": ["UPPER_CASE", "camelCase"] },
-      { "selector": "classProperty", "modifiers": ["readonly"], "format": ["UPPER_CASE", "camelCase"] }
+      {
+        "selector": "variable",
+        "modifiers": ["const"],
+        "format": ["UPPER_CASE", "camelCase"]
+      },
+      {
+        "selector": "classProperty",
+        "modifiers": ["readonly"],
+        "format": ["UPPER_CASE", "camelCase"]
+      }
     ],
     "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-empty-interface": "error",

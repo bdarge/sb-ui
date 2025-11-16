@@ -1,4 +1,4 @@
-import * as jose from 'jose'
+import * as jose from 'jose';
 describe('User Login', () => {
   beforeEach(function () {
     const token = new jose.SignJWT({
@@ -6,49 +6,56 @@ describe('User Login', () => {
       accountId: 'test_id',
       email: 'mike@gmail.com',
       roles: ['admin'],
-      businessId: 'bus_test_id'
-    }).setProtectedHeader({alg: 'HS256'}).sign(new TextEncoder().encode('some_key'));
+      businessId: 'bus_test_id',
+    })
+      .setProtectedHeader({ alg: 'HS256' })
+      .sign(new TextEncoder().encode('some_key'));
 
     cy.wrap(token).then((result) =>
-      cy.intercept(
-        {
-          method: 'POST',
-          url: 'http://127.0.0.1:8080/v1/auth/login',
-        },
-        {
-          token: result
-        }
-      ).as('login').then(() =>
-        cy.intercept(
+      cy
+        .intercept(
           {
-            method: 'GET',
-            url: 'http://127.0.0.1:8080/v1/transaction?RequestType=&Page=0&Limit=5&SortDirection=desc&SortProperty=id&Search=',
+            method: 'POST',
+            url: 'http://127.0.0.1:8080/v1/auth/login',
           },
           {
-            status: 200,
-            total: 0,
-            page: 0,
-            data: []
+            token: result,
           }
-        ).as('transaction')
-      )
-    )
-  })
+        )
+        .as('login')
+        .then(() =>
+          cy
+            .intercept(
+              {
+                method: 'GET',
+                url: 'http://127.0.0.1:8080/v1/transaction?RequestType=&Page=0&Limit=5&SortDirection=desc&SortProperty=id&Search=',
+              },
+              {
+                status: 200,
+                total: 0,
+                page: 0,
+                data: [],
+              }
+            )
+            .as('transaction')
+        )
+    );
+  });
 
   it('should visit login page', () => {
-    cy.visit('/')
+    cy.visit('/');
     cy.getBySel('login-username').should('exist');
     cy.getBySel('login-password').should('exist');
     cy.getBySel('login-submit').should('exist');
     cy.getBySel('register').should('exist');
-  })
+  });
 
   it('should login user', () => {
     const userInfo = {
       username: 'mike@gmail.com',
-      password: 'P@ssword'
-    }
-    cy.visit('/')
+      password: 'P@ssword',
+    };
+    cy.visit('/');
     cy.getBySel('login-username').type(userInfo.username);
     cy.getBySel('login-password').type(userInfo.password);
     // Login User
@@ -58,5 +65,5 @@ describe('User Login', () => {
     cy.getBySel('search-input').should('exist');
     cy.getBySel('tran-table').should('exist');
     cy.getBySel('header').should('exist');
-  })
-})
+  });
+});

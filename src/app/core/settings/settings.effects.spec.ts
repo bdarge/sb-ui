@@ -4,17 +4,15 @@ import { Actions, getEffectsMetadata } from '@ngrx/effects';
 import { TestScheduler } from 'rxjs/testing';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { AnimationsService } from '../animations/animations.service'
-import {
-  LocalStorageService
-} from '../local-storage/local-storage.service';
+import { AnimationsService } from '../animations/animations.service';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 import { SettingsEffects, SETTINGS_KEY } from './settings.effects';
 import { SettingsState, State } from './settings.model';
 import { actionChangeTheme } from './settings.actions';
 
 const scheduler = new TestScheduler((actual, expected) =>
-    expect(actual).toEqual(expected)
+  expect(actual).toEqual(expected)
 );
 
 describe('SettingsEffects', () => {
@@ -25,10 +23,10 @@ describe('SettingsEffects', () => {
 
   beforeEach(() => {
     localStorageService = jasmine.createSpyObj('LocalStorageService', [
-      'setItem'
+      'setItem',
     ]);
     overlayContainer = jasmine.createSpyObj('OverlayContainer', [
-      'getContainerElement'
+      'getContainerElement',
     ]);
 
     translateService = jasmine.createSpyObj('TranslateService', ['use']);
@@ -52,13 +50,13 @@ describe('SettingsEffects', () => {
         translateService
       );
       const metadata = getEffectsMetadata(effect);
-      
+
       expect(metadata.persistSettings.dispatch).toEqual(false);
     });
   });
 
   it('should call methods on LocalStorageService for PERSIST action', () => {
-    scheduler.run(helpers => {
+    scheduler.run((helpers) => {
       const { cold } = helpers;
 
       const settings: SettingsState = {

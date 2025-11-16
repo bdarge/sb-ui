@@ -1,7 +1,13 @@
 <div [formGroup]="form">
   <div class="row">
     <mat-form-field [ngClass]="routeAnimationsElements" class="col">
-      <input formControlName="street" matInput matTooltip="Street" placeholder="Street" (blur)="onTouched()" />
+      <input
+        formControlName="street"
+        matInput
+        matTooltip="Street"
+        placeholder="Street"
+        (blur)="onTouched()"
+      />
     </mat-form-field>
   </div>
   <div class="row">
@@ -17,12 +23,24 @@
   </div>
   <div class="row">
     <mat-form-field [ngClass]="routeAnimationsElements" class="col">
-      <input formControlName="city" matTooltip="City" matInput placeholder="City" (blur)="onTouched()"/>
+      <input
+        formControlName="city"
+        matTooltip="City"
+        matInput
+        placeholder="City"
+        (blur)="onTouched()"
+      />
     </mat-form-field>
   </div>
   <div class="row">
     <mat-form-field [ngClass]="routeAnimationsElements" class="col">
-      <input formControlName="country" matTooltip="Country" matInput placeholder="Country" (blur)="onTouched()" />
+      <input
+        formControlName="country"
+        matTooltip="Country"
+        matInput
+        placeholder="Country"
+        (blur)="onTouched()"
+      />
     </mat-form-field>
   </div>
   <div class="row">

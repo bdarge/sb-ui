@@ -18,5 +18,5 @@ export interface Transaction {
 }
 
 export interface TranQuery extends Query {
-  requestType: string
+  requestType: string;
 }

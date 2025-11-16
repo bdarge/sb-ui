@@ -1,18 +1,23 @@
-import { Component, Inject, OnInit} from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators} from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Customer} from '../../model/customer';
-import { NotificationService} from '../../core/core.module';
-import { CustomerWebService} from '../../http/customer-web.service';
+import { Customer } from '../../model/customer';
+import { NotificationService } from '../../core/core.module';
+import { CustomerWebService } from '../../http/customer-web.service';
 
 @Component({
-    selector: 'app-edit-customer',
-    templateUrl: './edit-customer.component.html',
-    styleUrls: ['./edit-customer.component.scss'],
-    standalone: false
+  selector: 'app-edit-customer',
+  templateUrl: './edit-customer.component.html',
+  styleUrls: ['./edit-customer.component.scss'],
+  standalone: false,
 })
 export class EditCustomerComponent implements OnInit {
-
   form: UntypedFormGroup;
   title: string;
   orgName: string;
@@ -22,11 +27,12 @@ export class EditCustomerComponent implements OnInit {
     private customersService: CustomerWebService,
     private fb: UntypedFormBuilder,
     private dialogRef: MatDialogRef<EditCustomerComponent>,
-    @Inject(MAT_DIALOG_DATA) {
-      id, name, postalCode, street, city, country, email, phone
-    }: Customer) {
-
-    this.title = id ? 'business.customer.edit.title' : 'business.customer.add.title';
+    @Inject(MAT_DIALOG_DATA)
+    { id, name, postalCode, street, city, country, email, phone }: Customer
+  ) {
+    this.title = id
+      ? 'business.customer.edit.title'
+      : 'business.customer.add.title';
 
     this.form = this.fb.group({
       id: [id],
@@ -36,7 +42,7 @@ export class EditCustomerComponent implements OnInit {
       city: [city],
       country: [country],
       email: [email, Validators.required],
-      phone: [phone]
+      phone: [phone],
     });
   }
 
@@ -44,10 +50,10 @@ export class EditCustomerComponent implements OnInit {
 
   save() {
     if (this.form.valid) {
-      if(this.form.value.id) {
-        this._edit()
+      if (this.form.value.id) {
+        this._edit();
       } else {
-        this._add()
+        this._add();
       }
     } else {
       this.validateAllFormControl(this.form);
@@ -60,17 +66,20 @@ export class EditCustomerComponent implements OnInit {
   }
 
   validateAllFormControl(form) {
-    Object.keys(form.controls).forEach(key => {
+    Object.keys(form.controls).forEach((key) => {
       const controlErrors: ValidationErrors = this.form.get(key).errors;
       if (controlErrors != null) {
-        Object.keys(controlErrors).forEach(keyError => {
-          console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+        Object.keys(controlErrors).forEach((keyError) => {
+          console.log(
+            'Key control: ' + key + ', keyError: ' + keyError + ', err value: ',
+            controlErrors[keyError]
+          );
         });
       }
 
       const control = this.form.get(key);
       if (control instanceof UntypedFormControl) {
-        control.markAsTouched({onlySelf: true});
+        control.markAsTouched({ onlySelf: true });
       } else if (control instanceof UntypedFormGroup) {
         this.validateAllFormControl(control);
       }
@@ -78,16 +87,14 @@ export class EditCustomerComponent implements OnInit {
   }
 
   private _edit() {
-    this.customersService.update(this.form.value)
-      .subscribe(() => {
-        this.dialogRef.close(this.form.value);
-      });
+    this.customersService.update(this.form.value).subscribe(() => {
+      this.dialogRef.close(this.form.value);
+    });
   }
 
   private _add() {
-    this.customersService.add(this.form.value)
-      .subscribe(() => {
-        this.dialogRef.close(this.form.value);
-      });
+    this.customersService.add(this.form.value).subscribe(() => {
+      this.dialogRef.close(this.form.value);
+    });
   }
 }

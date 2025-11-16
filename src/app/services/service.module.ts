@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
-import {CustomerDatasource} from './customer.datasource';
+import { CustomerDatasource } from './customer.datasource';
 
 @NgModule({
-  providers: [
-    CustomerDatasource
-  ]
+  providers: [CustomerDatasource],
 })
 export class ServiceModule {}

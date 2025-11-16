@@ -3,13 +3,13 @@ import { SettingsState } from './settings.model';
 import {
   actionChangeLanguage,
   actionChangeTheme,
-  actionChangeCurrency
+  actionChangeCurrency,
 } from './settings.actions';
 
 export const initialState: SettingsState = {
   language: 'en',
   theme: 'DEFAULT-THEME',
-  currency: 'usd'
+  currency: 'usd',
 };
 
 const reducer = createReducer(
@@ -19,8 +19,8 @@ const reducer = createReducer(
     actionChangeTheme,
     actionChangeCurrency,
     (state, action) => ({ ...state, ...action })
-   )
-)
+  )
+);
 
 export function settingsReducer(
   state: SettingsState | undefined,

@@ -1,21 +1,24 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
-import {SharedModule} from '../../shared/shared.module';
-import {FontAwesomeIconsModule} from '../../shared/font.awesome.icons.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { SharedModule } from '../../shared/shared.module';
+import { FontAwesomeIconsModule } from '../../shared/font.awesome.icons.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import {TranslateModule} from '@ngx-translate/core';
-import {NotificationService} from '../../core/notifications/notification.service';
-import {MatDialog} from '@angular/material/dialog';
-import {LocalStorageService} from '../../core/local-storage/local-storage.service';
-import {of} from 'rxjs';
-import {User, Address, Business, Role} from '../../model/user';
+import { TranslateModule } from '@ngx-translate/core';
+import { NotificationService } from '../../core/notifications/notification.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LocalStorageService } from '../../core/local-storage/local-storage.service';
+import { of } from 'rxjs';
+import { User, Address, Business, Role } from '../../model/user';
 import { ConfigWebService } from '../../http/config-web.service';
 import { Account } from '../../model/account';
-import {AddressFormComponent} from '../address-form/address-form.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { AddressFormComponent } from '../address-form/address-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -24,11 +27,11 @@ describe('ProfileComponent', () => {
   let getItemSpy;
 
   beforeEach(waitForAsync(() => {
-    const user  = {
+    const user = {
       id: 1,
       username: 'mike',
       business: {
-        id: 7
+        id: 7,
       } as Business,
       address: {
         id: 1,
@@ -37,56 +40,65 @@ describe('ProfileComponent', () => {
         city: 'ss',
         country: 'usa',
         landline: '2346754843',
-        mobile: '2346754843'
+        mobile: '2346754843',
       } as Address,
-      roles: [{
-        id: 1,
-        name: 'admin'
-      } as Role],
-      accountId: '34'
-    } as User
+      roles: [
+        {
+          id: 1,
+          name: 'admin',
+        } as Role,
+      ],
+      accountId: '34',
+    } as User;
 
-    const account  = {
+    const account = {
       accountId: 34,
       email: 'em@gmail.com',
       userId: 1,
       businessId: '7',
-      roles: ['admin']
-    } as Account
+      roles: ['admin'],
+    } as Account;
 
-    const localStorageSvcStub = jasmine.createSpyObj('LocalStorageService', ['getItem']);
-    getItemSpy = localStorageSvcStub.getItem.and.returnValue(account)
+    const localStorageSvcStub = jasmine.createSpyObj('LocalStorageService', [
+      'getItem',
+    ]);
+    getItemSpy = localStorageSvcStub.getItem.and.returnValue(account);
 
-    const configWebServiceStub = jasmine.createSpyObj('ConfigWebService', ['getUser']);
-    getUserSpy = configWebServiceStub.getUser.and.returnValue(of(user))
+    const configWebServiceStub = jasmine.createSpyObj('ConfigWebService', [
+      'getUser',
+    ]);
+    getUserSpy = configWebServiceStub.getUser.and.returnValue(of(user));
 
     TestBed.configureTestingModule({
-    declarations: [ProfileComponent, AddressFormComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    imports: [SharedModule,
+      declarations: [ProfileComponent, AddressFormComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [
+        SharedModule,
         FormsModule,
         FontAwesomeIconsModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
-        TranslateModule.forRoot()],
-    providers: [
+        TranslateModule.forRoot(),
+      ],
+      providers: [
         {
-            provide: NotificationService
+          provide: NotificationService,
         },
         {
-            provide: LocalStorageService, useValue: localStorageSvcStub
+          provide: LocalStorageService,
+          useValue: localStorageSvcStub,
         },
         {
-            provide: ConfigWebService, useValue: configWebServiceStub
+          provide: ConfigWebService,
+          useValue: configWebServiceStub,
         },
         {
-            provide: MatDialog
+          provide: MatDialog,
         },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
-      .compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

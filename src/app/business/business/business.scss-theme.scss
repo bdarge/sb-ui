@@ -28,7 +28,10 @@
             background-color: mat.m2-get-color-from-palette($accent) !important;
 
             &:hover {
-              background-color: mat.m2-get-color-from-palette($accent, darker) !important;
+              background-color: mat.m2-get-color-from-palette(
+                $accent,
+                darker
+              ) !important;
             }
           }
         }

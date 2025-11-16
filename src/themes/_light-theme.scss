@@ -3,11 +3,12 @@ $anms-light-primary: mat.m2-define-palette(mat.$m2-grey-palette, 600, 500, 300);
 $anms-light-accent: mat.m2-define-palette(mat.$m2-brown-palette, 200);
 $anms-light-warn: mat.m2-define-palette(mat.$m2-deep-orange-palette, 600);
 
-$light-theme: mat.m2-define-light-theme((
-  color: (
-    primary: $anms-light-primary,
-    accent: $anms-light-accent,
-    warn: $anms-light-warn
+$light-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $anms-light-primary,
+      accent: $anms-light-accent,
+      warn: $anms-light-warn,
+    ),
   )
-));
-
+);

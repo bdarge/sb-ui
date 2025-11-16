@@ -11,8 +11,7 @@ import { AuthWebService } from '../http/auth-web.service';
     ConfigWebService,
     CustomerWebService,
     AuthWebService,
-    GeneralService
-  ]
+    GeneralService,
+  ],
 })
 export class ProviderModule {}
-

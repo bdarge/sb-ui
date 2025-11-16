@@ -1,72 +1,91 @@
 <div class="container">
-  <button mat-raised-button color="primary" (click)="add()">{{ "business.customer.btn.add" | translate}}</button>
-  <br/>
-  <br/>
+  <button mat-raised-button color="primary" (click)="add()">
+    {{ 'business.customer.btn.add' | translate }}
+  </button>
+  <br />
+  <br />
   <mat-form-field [ngClass]="routeAnimationsElements">
-    <input matInput placeholder="{{ 'business.customer.search' | translate}}" #input
-           (input)="ds.queryBy({search: input.value})">
+    <input
+      matInput
+      placeholder="{{ 'business.customer.search' | translate }}"
+      #input
+      (input)="ds.queryBy({ search: input.value })"
+    />
   </mat-form-field>
 
   <div class="mat-elevation-z8">
-
-    <mat-table class="customers-table"
-               [dataSource]="ds"
-               matSort matSortActive="updatedAt"
-               matSortDirection="asc"
-               matSortDisableClear [ngClass]="routeAnimationsElements"
-               (matSortChange)="ds.sortBy($event)">
-
+    <mat-table
+      class="customers-table"
+      [dataSource]="ds"
+      matSort
+      matSortActive="updatedAt"
+      matSortDirection="asc"
+      matSortDisableClear
+      [ngClass]="routeAnimationsElements"
+      (matSortChange)="ds.sortBy($event)"
+    >
       <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header="name">{{
+          'business.customer.name' | translate
+        }}</mat-header-cell>
 
-        <mat-header-cell *matHeaderCellDef mat-sort-header="name">{{'business.customer.name' | translate}}</mat-header-cell>
-
-        <mat-cell class="description-cell"
-                  *matCellDef="let customer">{{customer.name}}</mat-cell>
-
+        <mat-cell class="description-cell" *matCellDef="let customer">{{
+          customer.name
+        }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header="email">{{
+          'business.customer.contact.info' | translate
+        }}</mat-header-cell>
 
-        <mat-header-cell *matHeaderCellDef mat-sort-header="email">{{'business.customer.contact.info' | translate}}</mat-header-cell>
-
-        <mat-cell class="description-cell"
-                  *matCellDef="let customer">{{customer.email}} <br>{{customer.phone}}</mat-cell>
-
+        <mat-cell class="description-cell" *matCellDef="let customer"
+          >{{ customer.email }} <br />{{ customer.phone }}</mat-cell
+        >
       </ng-container>
 
       <ng-container matColumnDef="createdAt">
-
         <mat-header-cell *matHeaderCellDef mat-sort-header="createdAt">
-          {{'business.customer.created' | translate}}
+          {{ 'business.customer.created' | translate }}
         </mat-header-cell>
 
         <mat-cell class="description-cell" *matCellDef="let customer">
-          {{customer.createdAt | date:'medium'}}
+          {{ customer.createdAt | date: 'medium' }}
         </mat-cell>
-
       </ng-container>
 
       <ng-container matColumnDef="edit">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell class="description-cell" *matCellDef="let elt">
-          <button mat-button class="btn-link" aria-label="delete" (click)="delete(elt); $event.stopPropagation()">
+          <button
+            mat-button
+            class="btn-link"
+            aria-label="delete"
+            (click)="delete(elt); $event.stopPropagation()"
+          >
             <fa-icon icon="trash"></fa-icon>
           </button>
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+      ></mat-header-row>
 
-      <mat-row *matRowDef="let row; columns: displayedColumns" (click)="edit(row)"></mat-row>
-
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="edit(row)"
+      ></mat-row>
     </mat-table>
 
-    <mat-paginator *ngIf="ds.page$ | async as page"
-                   [length]="page.total"
-                   [pageSize]="page.limit"
-                   [pageSizeOptions]="[3, 5, 10]"
-                   (page)="ds.fetch($event.pageIndex, $event.pageSize)"
-                   [ngClass]="routeAnimationsElements">
+    <mat-paginator
+      *ngIf="ds.page$ | async as page"
+      [length]="page.total"
+      [pageSize]="page.limit"
+      [pageSizeOptions]="[3, 5, 10]"
+      (page)="ds.fetch($event.pageIndex, $event.pageSize)"
+      [ngClass]="routeAnimationsElements"
+    >
     </mat-paginator>
   </div>
 </div>

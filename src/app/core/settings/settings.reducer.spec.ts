@@ -1,8 +1,6 @@
 import { initialState, settingsReducer } from './settings.reducer';
 
-import {
-  actionChangeLanguage
-} from './settings.actions';
+import { actionChangeLanguage } from './settings.actions';
 
 describe('SettingsReducer', () => {
   it('should return default state', () => {

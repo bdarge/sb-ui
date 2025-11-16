@@ -1,12 +1,14 @@
-<nav mat-tab-nav-bar  [tabPanel]="tabPanel">
-  <a mat-tab-link
-     *ngFor="let tab of tabs"
-     #rla="routerLinkActive"
-     [active]="rla.isActive"
-     [routerLink]="tab.link"
-     class="text-decoration-none"
-     routerLinkActive="active-link">
-    {{tab.label | translate}}
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <a
+    mat-tab-link
+    *ngFor="let tab of tabs"
+    #rla="routerLinkActive"
+    [active]="rla.isActive"
+    [routerLink]="tab.link"
+    class="text-decoration-none"
+    routerLinkActive="active-link"
+  >
+    {{ tab.label | translate }}
   </a>
 </nav>
 

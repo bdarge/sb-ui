@@ -7,7 +7,7 @@ describe('SbService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ { provide: SbService, useValue: service } ]
+      providers: [{ provide: SbService, useValue: service }],
     });
   });
 

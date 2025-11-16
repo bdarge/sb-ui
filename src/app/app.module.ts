@@ -1,8 +1,16 @@
 import '../polyfills';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, NgModule, inject, provideAppInitializer } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  LOCALE_ID,
+  NgModule,
+  inject,
+  provideAppInitializer,
+} from '@angular/core';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,15 +25,11 @@ import { AppConfigService } from './services/app.config.service';
 
 export function initConfig(configService: AppConfigService) {
   // load the config file in this function
-  return () => configService.load()
+  return () => configService.load();
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent
-  ],
+  declarations: [AppComponent, LoginComponent, RegisterComponent],
   bootstrap: [AppComponent],
   imports: [
     BrowserAnimationsModule,
@@ -35,13 +39,15 @@ export function initConfig(configService: AppConfigService) {
     ProviderModule,
     ServiceModule,
     CoreModule,
-    AppRoutingModule], providers: [
-      provideAppInitializer(() => {
-        const initializerFn = (initConfig)(inject(AppConfigService));
-        return initializerFn();
-      }),
-      provideHttpClient(withInterceptorsFromDi()),
-      {provide: LOCALE_ID, useValue: 'en-US' }
-    ]
+    AppRoutingModule,
+  ],
+  providers: [
+    provideAppInitializer(() => {
+      const initializerFn = initConfig(inject(AppConfigService));
+      return initializerFn();
+    }),
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: LOCALE_ID, useValue: 'en-US' },
+  ],
 })
-export class AppModule { }
+export class AppModule {}

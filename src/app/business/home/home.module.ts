@@ -1,4 +1,4 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { HomeRoutingModule } from './home-routing.module';
 import { TransactionComponent } from '../transaction/transaction.component';
 import { CustomerComponent } from '../customer/customer.component';
@@ -10,22 +10,20 @@ import { FontAwesomeIconsModule } from '../../shared/font.awesome.icons.module';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @NgModule({
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    declarations: [
-        TransactionComponent,
-        CustomerComponent,
-        EditTransactionComponent,
-        EditCustomerComponent,
-        EditTransactionItemComponent
-    ],
-    imports: [
-        SharedModule,
-        HomeRoutingModule,
-        FontAwesomeIconsModule,
-        NgxMaskDirective
-    ],
-    providers: [
-        provideNgxMask()
-    ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  declarations: [
+    TransactionComponent,
+    CustomerComponent,
+    EditTransactionComponent,
+    EditCustomerComponent,
+    EditTransactionItemComponent,
+  ],
+  imports: [
+    SharedModule,
+    HomeRoutingModule,
+    FontAwesomeIconsModule,
+    NgxMaskDirective,
+  ],
+  providers: [provideNgxMask()],
 })
-export class HomeModule { }
+export class HomeModule {}

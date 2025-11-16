@@ -1,38 +1,51 @@
-<h2 mat-dialog-title>{{title | translate}} <i>{{name}}</i></h2>
+<h2 mat-dialog-title>
+  {{ title | translate }} <i>{{ name }}</i>
+</h2>
 
 <mat-dialog-content [formGroup]="form">
-    <mat-form-field appearance="outline">
-      <input matInput placeholder="description" formControlName="description">
-      <mat-label>description</mat-label>
-      @if (form.get('description').hasError("required")) {
-        <mat-error>required</mat-error>
-      }
-    </mat-form-field>
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="description" formControlName="description" />
+    <mat-label>description</mat-label>
+    @if (form.get('description').hasError('required')) {
+      <mat-error>required</mat-error>
+    }
+  </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <input matInput placeholder="unit" formControlName="unit">
-      <mat-label>unit</mat-label>
-      <mat-error *ngIf="form.get('unit').hasError('required')">
+  <mat-form-field appearance="outline">
+    <input matInput placeholder="unit" formControlName="unit" />
+    <mat-label>unit</mat-label>
+    <mat-error *ngIf="form.get('unit').hasError('required')">
       required
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <input type="text" mask="separator.2" thousandSeparator=","  matInput placeholder="unit price" formControlName="unitPrice">
-      <mat-label>unit price</mat-label>
-      <mat-error *ngIf="form.get('unitPrice').hasError('required')">
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <input
+      type="text"
+      mask="separator.2"
+      thousandSeparator=","
+      matInput
+      placeholder="unit price"
+      formControlName="unitPrice"
+    />
+    <mat-label>unit price</mat-label>
+    <mat-error *ngIf="form.get('unitPrice').hasError('required')">
       required
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <input matInput mask="0*" placeholder="quantity" formControlName="qty">
-      <mat-label>quantity</mat-label>
-      <mat-error *ngIf="form.get('qty').hasError('required')">
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <input matInput mask="0*" placeholder="quantity" formControlName="qty" />
+    <mat-label>quantity</mat-label>
+    <mat-error *ngIf="form.get('qty').hasError('required')">
       required
-      </mat-error>
-    </mat-form-field>
+    </mat-error>
+  </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-flat-button class="basic" (click)="close()">{{ "business.btn.cancel" | translate}}</button>
-  <button mat-flat-button color="primary" (click)="save()">{{ "business.btn.save" | translate}}</button>
+  <button mat-flat-button class="basic" (click)="close()">
+    {{ 'business.btn.cancel' | translate }}
+  </button>
+  <button mat-flat-button color="primary" (click)="save()">
+    {{ 'business.btn.save' | translate }}
+  </button>
 </mat-dialog-actions>

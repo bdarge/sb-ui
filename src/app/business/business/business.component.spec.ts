@@ -1,13 +1,13 @@
-import {ComponentFixture, getTestBed, TestBed} from '@angular/core/testing';
+import { ComponentFixture, getTestBed, TestBed } from '@angular/core/testing';
 
-import {BusinessComponent} from './business.component';
-import {SharedModule} from '../../shared/shared.module';
-import {FontAwesomeIconsModule} from '../../shared/font.awesome.icons.module';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { BusinessComponent } from './business.component';
+import { SharedModule } from '../../shared/shared.module';
+import { FontAwesomeIconsModule } from '../../shared/font.awesome.icons.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import {TranslateModule} from '@ngx-translate/core';
-import {NotificationService} from '../../core/notifications/notification.service';
-import {LocalStorageService} from '../../core/local-storage/local-storage.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { NotificationService } from '../../core/notifications/notification.service';
+import { LocalStorageService } from '../../core/local-storage/local-storage.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -15,7 +15,10 @@ import { BusinessModule } from '../business.module';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('BusinessComponent', () => {
   let component: BusinessComponent;
@@ -25,32 +28,34 @@ describe('BusinessComponent', () => {
   let router;
 
   beforeEach(async () => {
-    testStore.pipe.and.returnValue(of(''))
+    testStore.pipe.and.returnValue(of(''));
 
     await TestBed.configureTestingModule({
-    declarations: [BusinessComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    imports: [SharedModule,
+      declarations: [BusinessComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [
+        SharedModule,
         FontAwesomeIconsModule,
         BusinessModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
-        RouterTestingModule],
-    providers: [
+        RouterTestingModule,
+      ],
+      providers: [
         {
-            provide: Store, useValue: testStore
+          provide: Store,
+          useValue: testStore,
         },
         {
-            provide: NotificationService
+          provide: NotificationService,
         },
         {
-            provide: LocalStorageService
+          provide: LocalStorageService,
         },
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
-      .compileComponents();
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
 
     const injector = getTestBed();
     location = injector.inject(Location);

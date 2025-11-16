@@ -1,27 +1,27 @@
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { CustomerComponent } from "./customer.component";
-import { MatButtonHarness } from "@angular/material/button/testing";
-import { MatDialogHarness } from "@angular/material/dialog/testing";
-import { HarnessLoader } from "@angular/cdk/testing";
-import { SharedModule } from "../../shared/shared.module";
-import { TranslateModule } from "@ngx-translate/core";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed";
-import { EditCustomerComponent } from "../edit-customer/edit-customer.component";
-import { NotificationService } from "../../core/notifications/notification.service";
-import { MatDialog } from "@angular/material/dialog";
-import { provideHttpClientTesting } from "@angular/common/http/testing";
-import { PageRequest, Page, Query } from "../../model/page";
-import { from, Observable, of } from "rxjs";
-import { Customer } from "../../model/customer";
-import { FontAwesomeIconsModule } from "app/shared/font.awesome.icons.module";
-import { CustomerWebService } from "../../http/customer-web.service";
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { CustomerComponent } from './customer.component';
+import { MatButtonHarness } from '@angular/material/button/testing';
+import { MatDialogHarness } from '@angular/material/dialog/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { SharedModule } from '../../shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { EditCustomerComponent } from '../edit-customer/edit-customer.component';
+import { NotificationService } from '../../core/notifications/notification.service';
+import { MatDialog } from '@angular/material/dialog';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { PageRequest, Page, Query } from '../../model/page';
+import { from, Observable, of } from 'rxjs';
+import { Customer } from '../../model/customer';
+import { FontAwesomeIconsModule } from 'app/shared/font.awesome.icons.module';
+import { CustomerWebService } from '../../http/customer-web.service';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
-} from "@angular/common/http";
+} from '@angular/common/http';
 
-describe("CustomerComponent", () => {
+describe('CustomerComponent', () => {
   let component: CustomerComponent;
   let fixture: ComponentFixture<CustomerComponent>;
   let customerService: CustomerWebService;
@@ -43,15 +43,15 @@ describe("CustomerComponent", () => {
             resolve({
               data: [
                 {
-                  id: "1",
-                  name: "alex",
+                  id: '1',
+                  name: 'alex',
                 } as Customer,
               ],
               total: 1,
               limit: request.size,
               page: request.page,
             } as Page<Customer>);
-          }),
+          })
         );
       },
     };
@@ -92,17 +92,17 @@ describe("CustomerComponent", () => {
     rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it("should add button available", async () => {
+  it('should add button available', async () => {
     fixture.detectChanges();
     const removeDoneTodosButton = await getAddButton();
     expect(removeDoneTodosButton).toBeTruthy();
   });
 
-  it("should open a dialog when add button clicked", async () => {
+  it('should open a dialog when add button clicked', async () => {
     fixture.detectChanges();
     const addButton = await getAddButton();
     await addButton.click();

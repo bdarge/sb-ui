@@ -1,5 +1,10 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { Router } from '@angular/router';
@@ -7,10 +12,11 @@ import { Router } from '@angular/router';
 /** Passes token */
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector,
+  constructor(
+    private injector: Injector,
     private router: Router,
-    private localStorageSvc: LocalStorageService) {
-  }
+    private localStorageSvc: LocalStorageService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -23,8 +29,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         withCredentials: true,
         setHeaders: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       return next.handle(inReq);
     }

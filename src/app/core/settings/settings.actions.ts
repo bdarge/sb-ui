@@ -14,4 +14,3 @@ export const actionChangeCurrency = createAction(
   '[Settings] Change Currency',
   props<{ currency: string }>()
 );
-

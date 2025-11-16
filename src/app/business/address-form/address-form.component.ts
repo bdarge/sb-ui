@@ -4,32 +4,36 @@ import {
   ControlValueAccessor,
   FormBuilder,
   FormControl,
-  FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR,
-  Validator
+  FormGroup,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  Validator,
 } from '@angular/forms';
 import { ROUTE_ANIMATIONS_ELEMENTS } from '../../core/core.module';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-address-form',
-    templateUrl: './address-form.component.html',
-    styleUrls: ['./address-form.component.scss'],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            multi: true,
-            useExisting: AddressFormComponent
-        },
-        {
-            provide: NG_VALIDATORS,
-            multi: true,
-            useExisting: AddressFormComponent
-        },
-    ],
-    standalone: false
+  selector: 'app-address-form',
+  templateUrl: './address-form.component.html',
+  styleUrls: ['./address-form.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: AddressFormComponent,
+    },
+    {
+      provide: NG_VALIDATORS,
+      multi: true,
+      useExisting: AddressFormComponent,
+    },
+  ],
+  standalone: false,
 })
-export class AddressFormComponent implements OnInit, ControlValueAccessor, OnDestroy, Validator  {
-  routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS
+export class AddressFormComponent
+  implements OnInit, ControlValueAccessor, OnDestroy, Validator
+{
+  routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
 
   onChangeSubs: Subscription[] = [];
 
@@ -41,7 +45,7 @@ export class AddressFormComponent implements OnInit, ControlValueAccessor, OnDes
     country: new FormControl<string>(''),
     landline: new FormControl<string>(''),
     mobile: new FormControl<string>(''),
-  })
+  });
 
   onTouched: Function = () => {};
 
@@ -51,8 +55,7 @@ export class AddressFormComponent implements OnInit, ControlValueAccessor, OnDes
     }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   registerOnChange(fn: any): void {
     const sub = this.form.valueChanges.subscribe(fn);
@@ -71,19 +74,18 @@ export class AddressFormComponent implements OnInit, ControlValueAccessor, OnDes
 
   setDisabledState(disabled: boolean): void {
     if (disabled) {
-      this.form.disable()
+      this.form.disable();
     } else {
       this.form.enable();
     }
   }
 
   validate(control: AbstractControl) {
-
     if (this.form.valid) {
       return null;
     }
 
-    let errors : any = {};
+    let errors: any = {};
 
     errors = this.addControlErrors(errors, 'street');
     errors = this.addControlErrors(errors, 'postalCode');
@@ -93,9 +95,8 @@ export class AddressFormComponent implements OnInit, ControlValueAccessor, OnDes
     return errors;
   }
 
-  addControlErrors(allErrors: any, controlName:string) {
-
-    const errors = {...allErrors};
+  addControlErrors(allErrors: any, controlName: string) {
+    const errors = { ...allErrors };
 
     const controlErrors = this.form.controls[controlName].errors;
 
